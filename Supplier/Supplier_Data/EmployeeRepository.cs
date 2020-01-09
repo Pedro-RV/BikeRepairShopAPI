@@ -30,7 +30,8 @@ namespace Supplier_Data
 
         public bool Insert(Employee add)
         {
-            bool ret = false;
+            //Comentario de prueba
+            bool result;
 
             try
             {
@@ -46,7 +47,7 @@ namespace Supplier_Data
 
                 dbContext.Employee.Add(add);
                 dbContext.SaveChanges();
-                ret = true;
+                result = true;
                 
             }
             catch (SupplierException)
@@ -58,7 +59,7 @@ namespace Supplier_Data
                 throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
-            return ret;
+            return result;
         }
 
         public Employee Read(int EmployeeId)
