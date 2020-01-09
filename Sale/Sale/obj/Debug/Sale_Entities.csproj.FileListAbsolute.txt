@@ -1,0 +1,11 @@
+C:\Users\pjrodriguez\source\repos\Sale\Sale\bin\Debug\Sale_Entities.exe.config
+C:\Users\pjrodriguez\source\repos\Sale\Sale\bin\Debug\Sale_Entities.exe
+C:\Users\pjrodriguez\source\repos\Sale\Sale\bin\Debug\Sale_Entities.pdb
+C:\Users\pjrodriguez\source\repos\Sale\Sale\bin\Debug\EntityFramework.dll
+C:\Users\pjrodriguez\source\repos\Sale\Sale\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\pjrodriguez\source\repos\Sale\Sale\bin\Debug\EntityFramework.xml
+C:\Users\pjrodriguez\source\repos\Sale\Sale\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\pjrodriguez\source\repos\Sale\Sale\obj\Debug\Sale_Entities.csproj.CopyComplete
+C:\Users\pjrodriguez\source\repos\Sale\Sale\obj\Debug\Sale_Entities.exe
+C:\Users\pjrodriguez\source\repos\Sale\Sale\obj\Debug\Sale_Entities.pdb
+C:\Users\pjrodriguez\source\repos\Sale\Sale\obj\Debug\Sale_Entities.csprojAssemblyReference.cache

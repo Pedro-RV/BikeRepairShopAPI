@@ -1,0 +1,6 @@
+C:\Users\pjrodriguez\source\repos\Sale\Sale_Helper\bin\Debug\Sale_Helper.exe.config
+C:\Users\pjrodriguez\source\repos\Sale\Sale_Helper\bin\Debug\Sale_Helper.exe
+C:\Users\pjrodriguez\source\repos\Sale\Sale_Helper\bin\Debug\Sale_Helper.pdb
+C:\Users\pjrodriguez\source\repos\Sale\Sale_Helper\obj\Debug\Sale_Helper.csprojAssemblyReference.cache
+C:\Users\pjrodriguez\source\repos\Sale\Sale_Helper\obj\Debug\Sale_Helper.exe
+C:\Users\pjrodriguez\source\repos\Sale\Sale_Helper\obj\Debug\Sale_Helper.pdb
