@@ -1,0 +1,11 @@
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\bin\Debug\Supplier_Entities.exe.config
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\bin\Debug\Supplier_Entities.exe
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\bin\Debug\Supplier_Entities.pdb
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\bin\Debug\EntityFramework.dll
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\bin\Debug\EntityFramework.xml
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\obj\Debug\Supplier_Entities.csprojAssemblyReference.cache
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\obj\Debug\Supplier_Entities.csproj.CopyComplete
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\obj\Debug\Supplier_Entities.exe
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\obj\Debug\Supplier_Entities.pdb

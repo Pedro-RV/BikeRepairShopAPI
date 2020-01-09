@@ -1,0 +1,13 @@
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\bin\Debug\Supplier.exe.config
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\bin\Debug\Supplier.exe
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\bin\Debug\Supplier.pdb
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\bin\Debug\EntityFramework.dll
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\bin\Debug\EntityFramework.xml
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\obj\Debug\Supplier.csprojAssemblyReference.cache
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\obj\Debug\Supplier.csproj.CopyComplete
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\obj\Debug\Supplier.exe
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\obj\Debug\Supplier.pdb
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\obj\Debug\Supplier.Migrations.Primera.resources
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier\obj\Debug\Supplier.csproj.GenerateResource.cache

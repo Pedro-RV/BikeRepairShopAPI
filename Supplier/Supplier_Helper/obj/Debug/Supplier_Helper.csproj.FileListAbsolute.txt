@@ -1,0 +1,6 @@
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier_Helper\obj\Debug\Supplier_Helper.csprojAssemblyReference.cache
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier_Helper\bin\Debug\Supplier_Helper.exe.config
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier_Helper\bin\Debug\Supplier_Helper.exe
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier_Helper\bin\Debug\Supplier_Helper.pdb
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier_Helper\obj\Debug\Supplier_Helper.exe
+C:\Users\pjrodriguez\source\repos\Supplier\Supplier_Helper\obj\Debug\Supplier_Helper.pdb
