@@ -18,7 +18,7 @@ namespace PoC.Controllers
         // GET api/values/5
         public string Get(int id)
         {
-            return "value";
+            return "Abra Cadabra";
         }
 
         // POST api/values
