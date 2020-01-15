@@ -54,11 +54,9 @@ C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\Newtonsoft.Json.dll
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\Supplier_Bussiness.exe
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\Supplier_Entities.exe
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\System.Net.Http.Formatting.dll
-C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\System.Web.Helpers.dll
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\System.Web.Http.dll
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\System.Web.Http.WebHost.dll
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\System.Web.Mvc.dll
-C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\System.Web.Optimization.dll
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\System.Web.Razor.dll
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\System.Web.WebPages.Deployment.dll
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\System.Web.WebPages.dll
@@ -73,11 +71,9 @@ C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\Supplier_Bussiness.pdb
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\Supplier_Bussiness.exe.config
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\Newtonsoft.Json.xml
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\System.Net.Http.Formatting.xml
-C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\System.Web.Helpers.xml
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\System.Web.Http.xml
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\System.Web.Http.WebHost.xml
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\System.Web.Mvc.xml
-C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\System.Web.Optimization.xml
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\System.Web.Razor.xml
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\System.Web.WebPages.xml
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\System.Web.WebPages.Deployment.xml
@@ -90,11 +86,9 @@ C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\Supplier_Helper.pdb
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\Supplier_Helper.exe.config
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\EntityFramework.xml
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\es\System.Net.Http.Formatting.resources.dll
-C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\es\System.Web.Helpers.resources.dll
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\es\System.Web.Http.resources.dll
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\es\System.Web.Http.WebHost.resources.dll
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\es\System.Web.Mvc.resources.dll
-C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\es\System.Web.Optimization.resources.dll
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\es\System.Web.Razor.resources.dll
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\es\System.Web.WebPages.resources.dll
 C:\REPO\becaPedro\Supplier\Ejemplo2_ConWebApi\bin\es\System.Web.WebPages.Deployment.resources.dll

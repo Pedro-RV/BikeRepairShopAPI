@@ -80,3 +80,6 @@ C:\REPO\becaPedro\Supplier\Supplier_Service\bin\es\System.Web.Razor.resources.dl
 C:\REPO\becaPedro\Supplier\Supplier_Service\bin\es\System.Web.WebPages.resources.dll
 C:\REPO\becaPedro\Supplier\Supplier_Service\bin\es\System.Web.WebPages.Deployment.resources.dll
 C:\REPO\becaPedro\Supplier\Supplier_Service\bin\es\System.Web.WebPages.Razor.resources.dll
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\System.Web.Http.WebHost.dll
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\System.Web.Http.WebHost.xml
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\es\System.Web.Http.WebHost.resources.dll
