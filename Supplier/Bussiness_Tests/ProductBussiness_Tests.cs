@@ -99,7 +99,11 @@ namespace Bussiness_Tests
             bool correct;
             ProductBussiness productBussiness = new ProductBussiness();
 
-            correct = productBussiness.UpdateProduct(2, "Secador", 50, 0, 0, 0);
+            Product change = productBussiness.ReadProduct(2);
+            change.ProductDescription = "Secador";
+            change.Prize = 50;
+
+            correct = productBussiness.UpdateProduct(change);
 
             Product productGotten = productBussiness.ReadProduct(2);
 

@@ -62,14 +62,17 @@ namespace Bussiness_Tests
         {
             bool correct;
             WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
-            DateTime change = new DateTime(2019, 10, 03, 10, 51, 00);
+            DateTime modify = new DateTime(2019, 10, 03, 10, 51, 00);
 
-            correct = warehouseAdminBussiness.UpdateWarehouseAdmin(2, change, 0);
+            WarehouseAdmin change = warehouseAdminBussiness.ReadWarehouseAdmin(2);
+            change.StartDate = modify;
+
+            correct = warehouseAdminBussiness.UpdateWarehouseAdmin(change);
 
             WarehouseAdmin warehouseAdminCompare = warehouseAdminBussiness.ReadWarehouseAdmin(2);
 
             Assert.AreEqual(true, correct);
-            Assert.AreEqual(warehouseAdminCompare.StartDate, change);
+            Assert.AreEqual(warehouseAdminCompare.StartDate, modify);
 
         }
 

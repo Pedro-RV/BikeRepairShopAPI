@@ -57,7 +57,11 @@ namespace Bussiness_Tests
             bool correct;
             SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
 
-            correct = supplyCompanyBussiness.UpdateSupplyCompany(2, "Tecnologia RapidMax", "555");
+            SupplyCompany change = supplyCompanyBussiness.ReadSupplyCompany(2);
+            change.SupplyCompanyName = "Tecnologia RapidMax";
+            change.TelephoneNum = "555";
+
+            correct = supplyCompanyBussiness.UpdateSupplyCompany(change);
 
             SupplyCompany supplyCompanyGotten = supplyCompanyBussiness.ReadSupplyCompany(2);
 

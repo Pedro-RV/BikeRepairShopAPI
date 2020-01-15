@@ -95,7 +95,11 @@ namespace Bussiness_Tests
             bool correct;
             WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
 
-            correct = warehouseBussiness.UpdateWarehouse(2, "Calle Nilo", 1000, 0);
+            Warehouse change = warehouseBussiness.ReadWarehouse(2);
+            change.WarehouseAddress = "Calle Nilo";
+            change.Extension = 1000;
+
+            correct = warehouseBussiness.UpdateWarehouse(change);
 
             Warehouse warehouseGotten = warehouseBussiness.ReadWarehouse(2);
 

@@ -55,7 +55,10 @@ namespace Bussiness_Tests
             bool correct;
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();
 
-            correct = productStateBussiness.UpdateProductState(2, "Agotado");
+            ProductState change = productStateBussiness.ReadProductState(2);
+            change.ProductStateDescription = "Agotado";
+
+            correct = productStateBussiness.UpdateProductState(change);
 
             ProductState productStateGotten = productStateBussiness.ReadProductState(2);
 

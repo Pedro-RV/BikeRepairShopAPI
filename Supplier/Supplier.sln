@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ejemplo", "Ejemplo\Ejemplo.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ejemplo2_ConWebApi", "Ejemplo2_ConWebApi\Ejemplo2_ConWebApi.csproj", "{3057EFAB-179C-467B-BFB7-F8675784578B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Supplier_Service", "Supplier_Service\Supplier_Service.csproj", "{0D94AE93-86B2-43F0-AA6B-7ADB8719BE4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{3057EFAB-179C-467B-BFB7-F8675784578B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3057EFAB-179C-467B-BFB7-F8675784578B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3057EFAB-179C-467B-BFB7-F8675784578B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D94AE93-86B2-43F0-AA6B-7ADB8719BE4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D94AE93-86B2-43F0-AA6B-7ADB8719BE4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D94AE93-86B2-43F0-AA6B-7ADB8719BE4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D94AE93-86B2-43F0-AA6B-7ADB8719BE4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +88,7 @@ Global
 		{7C618267-BAD5-44D0-9286-5FC7826E7D00} = {640CE6CB-D37E-4F2F-B09D-5DF0A035E95C}
 		{E84BA9A8-890A-49DF-89E7-8F56BC569731} = {9A8FB673-99E9-47D0-BC28-16EF152A6904}
 		{3057EFAB-179C-467B-BFB7-F8675784578B} = {9A8FB673-99E9-47D0-BC28-16EF152A6904}
+		{0D94AE93-86B2-43F0-AA6B-7ADB8719BE4F} = {9A8FB673-99E9-47D0-BC28-16EF152A6904}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B9F0CCC9-57C8-4064-9CFA-022357C69BEF}

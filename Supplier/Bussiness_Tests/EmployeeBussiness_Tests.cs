@@ -87,7 +87,11 @@ namespace Bussiness_Tests
             EmployeeBussiness employeeBussiness = new EmployeeBussiness();
             bool correct;
 
-            correct = employeeBussiness.UpdateEmployee(2, "Domingo", null, null, null, null, null, "621");
+            Employee change = employeeBussiness.ReadEmployee(2);
+            change.EmployeeName = "Domingo";
+            change.MobileNum = "621";
+
+            correct = employeeBussiness.UpdateEmployee(change);
 
             Employee employeeCompare = employeeBussiness.ReadEmployee(2);
 

@@ -109,9 +109,11 @@ namespace Bussiness_Tests
             bool correct;
             PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
 
-            DateTime emptyDateTime = new DateTime(1, 1, 1);
+            Purchase change = purchaseBussiness.ReadPurchase(2);
+            change.Cuantity = 9;
+            change.Prize = 85;
 
-            correct = purchaseBussiness.UpdatePurchase(2, emptyDateTime, 9, 85, 0, 0);
+            correct = purchaseBussiness.UpdatePurchase(change);
 
             Purchase purchaseGotten = purchaseBussiness.ReadPurchase(2);
 
