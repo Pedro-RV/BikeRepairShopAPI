@@ -81,7 +81,7 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool UpdateSupplyCompany(int SupplyCompanyId, string SupplyCompanyName, string TelephoneNum)
+        public bool UpdateSupplyCompany(SupplyCompany update)
         {
             bool ret;
 
@@ -89,19 +89,11 @@ namespace Supplier_Bussiness
             {
                 SupplyCompanyRepository supplyCompanyRepository = new SupplyCompanyRepository(dbContext, exceptionController);
 
-                SupplyCompany update = supplyCompanyRepository.Read(SupplyCompanyId);
+                SupplyCompany current = supplyCompanyRepository.Read(update.SupplyCompanyId);
 
-                if (SupplyCompanyName != null)
-                {
-                    update.SupplyCompanyName = SupplyCompanyName;
-                }
+                current = update;
 
-                if (TelephoneNum != null)
-                {
-                    update.TelephoneNum = TelephoneNum;
-                }
-
-                ret = supplyCompanyRepository.Update(update);
+                ret = supplyCompanyRepository.Update(current);
 
             }
             catch (SupplierException)

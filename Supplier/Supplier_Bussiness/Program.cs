@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Supplier_Data;
+using Supplier_Data.Context;
+using Supplier_Entities.EntityModel;
+using Supplier_Helper.ExceptionController;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,19 +14,25 @@ namespace Supplier_Bussiness
     {
         static void Main(string[] args)
         {
-            //EmployeeBussiness aux = new EmployeeBussiness();
-            //aux.InsertEmployee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
-            //DateTime aux2 = new DateTime(2019, 12, 03, 9, 38, 00);
-            //WarehouseAdminBussiness aux3 = new WarehouseAdminBussiness();
-            //aux3.InsertWarehouseAdmin(aux2, 1);
 
-            //WarehouseBussiness aux4 = new WarehouseBussiness();
+            //EmployeeBussiness employeeBussiness = new EmployeeBussiness();
 
-            //aux4.InsertWarehouse("Calle Ebro", 120, 1);
+            //Employee request = employeeBussiness.ReadEmployee(1);
 
-            //WarehouseBussiness aux8 = new WarehouseBussiness();
 
-            //bool correct = aux8.DeleteWarehouseAndAdmin(1);
+
+
+            //SupplierContext dbContext;
+
+            //ExceptionController exceptionController;
+
+            //SupplierContextProvider.InitializeSupplierContext();
+            //dbContext = SupplierContextProvider.GetSupplierContext();
+            //exceptionController = new ExceptionController();
+
+            //EmployeeRepository a = new EmployeeRepository(dbContext, exceptionController);
+
+            //Employee b = a.Read(1);
 
 
         }

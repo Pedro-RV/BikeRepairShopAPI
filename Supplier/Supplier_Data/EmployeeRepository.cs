@@ -13,7 +13,7 @@ namespace Supplier_Data
     {
         private SupplierContext dbContext;
 
-        private ExceptionController exceptionController; 
+        private ExceptionController exceptionController;
 
         public EmployeeRepository(SupplierContext dbContext, ExceptionController exceptionController)
         {

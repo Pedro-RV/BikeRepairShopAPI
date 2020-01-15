@@ -18,7 +18,7 @@ namespace Supplier_Bussiness.Interfaces
 
         Product ReadProduct(int ProductId);
 
-        bool UpdateProduct(int ProductId, String ProductDescription, double Prize, int Cuantity, int WarehouseId, int ProductStateId);
+        bool UpdateProduct(Product update);
 
         bool DeleteProduct(int ProductId);
     }

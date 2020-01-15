@@ -13,7 +13,7 @@ namespace Supplier_Bussiness.Interfaces
 
         WarehouseAdmin ReadWarehouseAdmin(int WarehouseAdminId);
 
-        bool UpdateWarehouseAdmin(int WarehouseAdminId, DateTime StartDate, int EmployeeId);
+        bool UpdateWarehouseAdmin(WarehouseAdmin update);
 
         bool DeleteWarehouseAdmin(int WarehouseAdminId);
     }

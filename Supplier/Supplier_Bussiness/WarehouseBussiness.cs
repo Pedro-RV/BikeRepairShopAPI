@@ -141,7 +141,7 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool UpdateWarehouse(int WarehouseId, string WarehouseAddress, int Extension, int WarehouseAdminId)
+        public bool UpdateWarehouse(Warehouse update)
         {
             bool ret;
 
@@ -149,26 +149,11 @@ namespace Supplier_Bussiness
             {
                 WarehouseRepository warehouseRepository = new WarehouseRepository(dbContext, exceptionController);
 
-                Warehouse update = warehouseRepository.Read(WarehouseId);
+                Warehouse current = warehouseRepository.Read(update.WarehouseId);
 
-                if (WarehouseAddress != null)
-                {
-                    update.WarehouseAddress = WarehouseAddress;
-                }
+                current = update;
 
-                if (Extension != 0)
-                {
-                    update.Extension = Extension;
-                }
-
-                if (WarehouseAdminId != 0)
-                {
-                    WarehouseAdminRepository warehouseAdminRepository = new WarehouseAdminRepository(dbContext, exceptionController);
-                    WarehouseAdmin change = warehouseAdminRepository.Read(WarehouseAdminId);
-                    update.WarehouseAdmin = change;
-                }
-
-                ret = warehouseRepository.Update(update);
+                ret = warehouseRepository.Update(current);
 
             }
             catch (SupplierException)

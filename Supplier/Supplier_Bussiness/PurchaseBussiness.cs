@@ -142,7 +142,7 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool UpdatePurchase(int PurchaseId, DateTime PurchaseDate, int Cuantity, double Prize, int ProductId, int SupplyCompanyId)
+        public bool UpdatePurchase(Purchase update)
         {
             bool ret;
 
@@ -150,38 +150,11 @@ namespace Supplier_Bussiness
             {
                 PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
 
-                Purchase update = purchaseRepository.Read(PurchaseId);
+                Purchase current = purchaseRepository.Read(update.PurchaseId);
 
-                if (PurchaseDate.Year != 1)
-                {
-                    update.PurchaseDate = PurchaseDate;
-                }
+                current = update;
 
-                if (Cuantity != 0)
-                {
-                    update.Cuantity = Cuantity;
-                }
-
-                if (Prize != 0)
-                {
-                    update.Prize = Prize;
-                }
-
-                if (ProductId != 0)
-                {
-                    ProductRepository productRepository = new ProductRepository(dbContext, exceptionController);
-                    Product change = productRepository.Read(ProductId);
-                    update.Product = change;
-                }
-
-                if (SupplyCompanyId != 0)
-                {
-                    SupplyCompanyRepository supplyCompanyRepository = new SupplyCompanyRepository(dbContext, exceptionController);
-                    SupplyCompany change2 = supplyCompanyRepository.Read(SupplyCompanyId);
-                    update.SupplyCompany = change2;
-                }
-
-                ret = purchaseRepository.Update(update);
+                ret = purchaseRepository.Update(current);
 
             }
             catch (SupplierException)

@@ -20,7 +20,7 @@ namespace Supplier_Bussiness.Interfaces
 
         Warehouse ReadWarehouse(int WarehouseId);
 
-        bool UpdateWarehouse(int WarehouseId, string WarehouseAddress, int Extension, int WarehouseAdminId);
+        bool UpdateWarehouse(Warehouse update);
 
         bool DeleteWarehouse(int WarehouseId);
     }

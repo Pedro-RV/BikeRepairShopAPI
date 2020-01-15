@@ -13,7 +13,7 @@ namespace Supplier_Bussiness.Interfaces
 
         ProductState ReadProductState(int ProductId);
 
-        bool UpdateProductState(int ProductStateId, string ProductStateDescription);
+        bool UpdateProductState(ProductState update);
 
         bool DeleteProductState(int ProductStateId);
     }

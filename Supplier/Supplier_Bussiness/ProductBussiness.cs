@@ -103,7 +103,7 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool UpdateProduct(int ProductId, String ProductDescription, double Prize, int Cuantity, int WarehouseId, int ProductStateId)
+        public bool UpdateProduct(Product update)
         {
             bool ret;
 
@@ -111,38 +111,11 @@ namespace Supplier_Bussiness
             {
                 ProductRepository productRepository = new ProductRepository(dbContext, exceptionController);
 
-                Product update = productRepository.Read(ProductId);
+                Product current = productRepository.Read(update.ProductId);
 
-                if (ProductDescription != null)
-                {
-                    update.ProductDescription = ProductDescription;
-                }
+                current = update;
 
-                if (Prize != 0)
-                {
-                    update.Prize = Prize;
-                }
-
-                if (Cuantity != 0)
-                {
-                    update.Cuantity = Cuantity;
-                }
-
-                if (WarehouseId != 0)
-                {
-                    WarehouseRepository warehouseRepository = new WarehouseRepository(dbContext, exceptionController);
-                    Warehouse change = warehouseRepository.Read(WarehouseId);
-                    update.Warehouse = change;
-                }
-
-                if (ProductStateId != 0)
-                {
-                    ProductStateRepository productStateRepository = new ProductStateRepository(dbContext, exceptionController);
-                    ProductState change = productStateRepository.Read(ProductStateId);
-                    update.ProductState = change;
-                }
-
-                ret = productRepository.Update(update);
+                ret = productRepository.Update(current);
 
             }
             catch (SupplierException)

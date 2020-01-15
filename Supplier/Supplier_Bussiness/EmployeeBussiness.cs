@@ -68,7 +68,7 @@ namespace Supplier_Bussiness
             Employee ret;
 
             try
-            {              
+            {
                 EmployeeRepository employeeRepository = new EmployeeRepository(dbContext, exceptionController);
 
                 ret = employeeRepository.Read(EmployeeId);
@@ -117,7 +117,7 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool UpdateEmployee(int EmployeeId, string EmployeeName, string Surname, string DNI, string Email, string EmployeeAddress, string CP, string MobileNum)
+        public bool UpdateEmployee(Employee update)
         {
             bool ret;
 
@@ -125,44 +125,11 @@ namespace Supplier_Bussiness
             {
                 EmployeeRepository employeeRepository = new EmployeeRepository(dbContext, exceptionController);
 
-                Employee update = employeeRepository.Read(EmployeeId);
+                Employee current = employeeRepository.Read(update.EmployeeId);
 
-                if (EmployeeName != null)
-                {
-                    update.EmployeeName = EmployeeName;
-                }
+                current = update;
 
-                if (Surname != null)
-                {
-                    update.Surname = Surname;
-                }
-
-                if (DNI != null)
-                {
-                    update.DNI = DNI;
-                }
-
-                if (Email != null)
-                {
-                    update.Email = Email;
-                }
-
-                if (EmployeeAddress != null)
-                {
-                    update.EmployeeAddress = EmployeeAddress;
-                }
-
-                if (CP != null)
-                {
-                    update.CP = CP;
-                }
-
-                if (MobileNum != null)
-                {
-                    update.MobileNum = MobileNum;
-                }
-
-                ret = employeeRepository.Update(update);
+                ret = employeeRepository.Update(current);
 
             }
             catch (SupplierException)

@@ -82,7 +82,7 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool UpdateWarehouseAdmin(int WarehouseAdminId, DateTime StartDate, int EmployeeId)
+        public bool UpdateWarehouseAdmin(WarehouseAdmin update)
         {
             bool ret;
 
@@ -90,21 +90,11 @@ namespace Supplier_Bussiness
             {
                 WarehouseAdminRepository warehouseAdminRepository = new WarehouseAdminRepository(dbContext, exceptionController);
 
-                WarehouseAdmin update = warehouseAdminRepository.Read(WarehouseAdminId);
+                WarehouseAdmin current = warehouseAdminRepository.Read(update.WarehouseAdminId);
 
-                if (StartDate.Year != 0)
-                {
-                    update.StartDate = StartDate;
-                }
+                current = update;
 
-                if (EmployeeId != 0)
-                {
-                    EmployeeRepository employeeRepository = new EmployeeRepository(dbContext, exceptionController);
-                    Employee change = employeeRepository.Read(EmployeeId);
-                    update.Employee = change;
-                }
-
-                ret = warehouseAdminRepository.Update(update);
+                ret = warehouseAdminRepository.Update(current);
 
             }
             catch (SupplierException)

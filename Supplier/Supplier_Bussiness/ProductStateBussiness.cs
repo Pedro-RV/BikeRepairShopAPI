@@ -81,7 +81,7 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool UpdateProductState(int ProductStateId, string ProductStateDescription)
+        public bool UpdateProductState(ProductState update)
         {
             bool ret;
 
@@ -89,14 +89,11 @@ namespace Supplier_Bussiness
             {
                 ProductStateRepository productStateRepository = new ProductStateRepository(dbContext, exceptionController);
 
-                ProductState update = productStateRepository.Read(ProductStateId);
+                ProductState current = productStateRepository.Read(update.ProductStateId);
 
-                if (ProductStateDescription != null)
-                {
-                    update.ProductStateDescription = ProductStateDescription;
-                }
+                current = update;
 
-                ret = productStateRepository.Update(update);
+                ret = productStateRepository.Update(current);
 
             }
             catch (SupplierException)

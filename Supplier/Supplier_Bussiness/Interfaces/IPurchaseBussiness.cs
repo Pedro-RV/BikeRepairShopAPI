@@ -17,7 +17,7 @@ namespace Supplier_Bussiness.Interfaces
 
         Purchase ReadPurchase(int PurchaseId);
 
-        bool UpdatePurchase(int PurchaseId, DateTime PurchaseDate, int Cuantity, double Prize, int ProductId, int SupplyCompanyId);
+        bool UpdatePurchase(Purchase update);
 
         bool DeletePurchase(int PurchaseId);
 

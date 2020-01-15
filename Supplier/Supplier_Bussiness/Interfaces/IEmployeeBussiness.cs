@@ -17,7 +17,7 @@ namespace Supplier_Bussiness.Interfaces
 
         Employee ReadEmployeeDNI(string DNI);
 
-        bool UpdateEmployee(int EmployeeId, string EmployeeName, string Surname, string DNI, string Email, string EmployeeAddress, string CP, string MobileNum);
+        bool UpdateEmployee(Employee update);
 
         bool DeleteEmployee(int EmployeeId);
 

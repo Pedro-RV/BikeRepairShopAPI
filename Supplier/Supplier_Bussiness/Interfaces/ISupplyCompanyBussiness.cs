@@ -13,7 +13,7 @@ namespace Supplier_Bussiness.Interfaces
 
         SupplyCompany ReadSupplyCompany(int SupplyCompanyId);
 
-        bool UpdateSupplyCompany(int SupplyCompanyId, string SupplyCompanyName, string TelephoneNum);
+        bool UpdateSupplyCompany(SupplyCompany update);
 
         bool DeleteSupplyCompany(int SupplyCompanyId);
     }
