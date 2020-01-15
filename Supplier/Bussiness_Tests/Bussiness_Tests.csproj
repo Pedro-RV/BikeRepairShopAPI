@@ -89,13 +89,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Supplier\Supplier_Entities.csproj">
-      <Project>{e3ca51c6-e8b5-40a8-8018-5a25050bf825}</Project>
-      <Name>Supplier_Entities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Supplier_Bussiness\Supplier_Bussiness.csproj">
       <Project>{08805a98-a0a5-4df8-8de6-d805c8ae48ed}</Project>
       <Name>Supplier_Bussiness</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Supplier_Entities\Supplier_Entities.csproj">
+      <Project>{E3CA51C6-E8B5-40A8-8018-5A25050BF825}</Project>
+      <Name>Supplier_Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

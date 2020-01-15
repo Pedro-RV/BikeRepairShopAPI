@@ -83,7 +83,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Supplier\Supplier_Entities.csproj">
+    <ProjectReference Include="..\Supplier_Entities\Supplier_Entities.csproj">
       <Project>{e3ca51c6-e8b5-40a8-8018-5a25050bf825}</Project>
       <Name>Supplier_Entities</Name>
     </ProjectReference>
