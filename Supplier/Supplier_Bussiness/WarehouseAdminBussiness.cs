@@ -92,7 +92,9 @@ namespace Supplier_Bussiness
 
                 WarehouseAdmin current = warehouseAdminRepository.Read(update.WarehouseAdminId);
 
-                current = update;
+                current.StartDate = update.StartDate.Year != 1 ? update.StartDate : current.StartDate;
+                current.Employee = update.Employee != null ? update.Employee : current.Employee;
+                current.EmployeeId = update.Employee != null ? update.EmployeeId : current.EmployeeId;
 
                 ret = warehouseAdminRepository.Update(current);
 

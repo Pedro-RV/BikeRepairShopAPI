@@ -130,7 +130,7 @@ namespace Supplier_Data
                 dbContext.Entry(update).State = EntityState.Modified;
                 dbContext.SaveChanges();
                 ret = true;
-                
+
             }
             catch (SupplierException)
             {

@@ -15,11 +15,11 @@ namespace Bussiness_Tests
         [TestFixtureSetUp]
         public void Init()
         {
-            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
+            EmployeeBussiness employeeBussiness = new EmployeeBussiness();           
 
-            employeeBussiness.InsertEmployee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
-            employeeBussiness.InsertEmployee("Rodolfo", "Suarez", "88", "rodolf@correo", "Avnd Institucion", "123", "321");
-            employeeBussiness.InsertEmployee("Marco", "Polo", "99", "marco@correo", "Avnd Marco Polo", "000", "000");
+            employeeBussiness.InsertEmployee(new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
+            employeeBussiness.InsertEmployee(new Employee("Rodolfo", "Suarez", "88", "rodolf@correo", "Avnd Institucion", "123", "321"));
+            employeeBussiness.InsertEmployee(new Employee("Marco", "Polo", "99", "marco@correo", "Avnd Marco Polo", "000", "000"));
 
         }
 
@@ -42,7 +42,7 @@ namespace Bussiness_Tests
             bool correct;
             EmployeeBussiness employeeBussiness = new EmployeeBussiness();
 
-            correct = employeeBussiness.InsertEmployee("antonio", "carrasco", "22", "carrasco@correo", "calle malagon", "56", "87");
+            correct = employeeBussiness.InsertEmployee(new Employee("antonio", "carrasco", "22", "carrasco@correo", "calle malagon", "56", "87"));
 
             Employee employeeGotten = employeeBussiness.ReadEmployee(4);
 

@@ -21,6 +21,7 @@ namespace Supplier_Entities.EntityModel
 
         #region Properties
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int WarehouseId { get; set; }
 
         public int WarehouseAdminId { get; set; }

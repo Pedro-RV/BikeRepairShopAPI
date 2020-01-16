@@ -11,7 +11,7 @@ namespace Supplier_Bussiness.Interfaces
     {
         List<Employee> EmployeesList();
 
-        bool InsertEmployee(string EmployeeName, string Surname, string DNI, string Email, string EmployeeAddress, string CP, string MobileNum);
+        bool InsertEmployee(Employee add);
 
         Employee ReadEmployee(int EmployeeId);
 

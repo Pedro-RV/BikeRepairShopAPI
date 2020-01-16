@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Ejemplo2_ConWebApi
+namespace Supplier_Service
 {
     public class RouteConfig
     {

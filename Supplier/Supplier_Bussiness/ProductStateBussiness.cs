@@ -91,7 +91,7 @@ namespace Supplier_Bussiness
 
                 ProductState current = productStateRepository.Read(update.ProductStateId);
 
-                current = update;
+                current.ProductStateDescription = !String.IsNullOrEmpty(update.ProductStateDescription) ? update.ProductStateDescription : current.ProductStateDescription;
 
                 ret = productStateRepository.Update(current);
 

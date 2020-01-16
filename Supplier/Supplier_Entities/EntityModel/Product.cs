@@ -18,13 +18,32 @@ namespace Supplier_Entities.EntityModel
             this.Prize = Prize;
             this.Cuantity = Cuantity;
             this.Warehouse = Warehouse;
-            this.WarehouseId = Warehouse.WarehouseId;
+
+            if(Warehouse != null)
+            {
+                this.WarehouseId = Warehouse.WarehouseId;
+            }
+            else
+            {
+                this.WarehouseId = 0;
+            }
+
             this.ProductState = ProductState;
-            this.ProductStateId = ProductState.ProductStateId;
+
+            if(ProductState != null)
+            {
+                this.ProductStateId = ProductState.ProductStateId;
+            }
+            else
+            {
+                this.ProductStateId = 0;
+            }
+            
         }
 
         #region Properties
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProductId { get; set; }
 
         public int WarehouseId { get; set; }

@@ -152,7 +152,13 @@ namespace Supplier_Bussiness
 
                 Purchase current = purchaseRepository.Read(update.PurchaseId);
 
-                current = update;
+                current.PurchaseDate = update.PurchaseDate.Year != 1 ? update.PurchaseDate : current.PurchaseDate;
+                current.Cuantity = update.Cuantity != 0 ? update.Cuantity : current.Cuantity;
+                current.Prize = update.Prize != 0 ? update.Prize : current.Prize;
+                current.Product = update.Product != null ? update.Product : current.Product;
+                current.ProductId = update.Product != null ? update.ProductId : current.ProductId;
+                current.SupplyCompany = update.SupplyCompany != null ? update.SupplyCompany : current.SupplyCompany;
+                current.SupplyCompanyId = update.SupplyCompany != null ? update.SupplyCompanyId : current.SupplyCompanyId;
 
                 ret = purchaseRepository.Update(current);
 

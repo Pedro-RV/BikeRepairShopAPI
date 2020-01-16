@@ -33,15 +33,12 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool InsertEmployee(string EmployeeName, string Surname, string DNI, string Email, string EmployeeAddress, string CP, string MobileNum)
+        public bool InsertEmployee(Employee add)
         {
             bool ret;
 
             try
             {
-                //Comentario de prueba.
-                Employee add = new Employee(EmployeeName, Surname, DNI, Email, EmployeeAddress, CP, MobileNum);
-
                 EmployeeRepository employeeRepository = new EmployeeRepository(dbContext, exceptionController);
 
                 ret = employeeRepository.Insert(add);
@@ -127,23 +124,29 @@ namespace Supplier_Bussiness
 
                 Employee current = employeeRepository.Read(update.EmployeeId);
 
-                current = update;
+                current.EmployeeName = !String.IsNullOrEmpty(update.EmployeeName) ? update.EmployeeName : current.EmployeeName;
+                current.Surname = !String.IsNullOrEmpty(update.Surname) ? update.Surname : current.Surname;
+                current.Email = !String.IsNullOrEmpty(update.Email) ? update.Email : current.Email;
+                current.DNI = !String.IsNullOrEmpty(update.DNI) ? update.DNI : current.DNI;
+                current.Email = !String.IsNullOrEmpty(update.Email) ? update.Email : current.Email;
+                current.CP = !String.IsNullOrEmpty(update.CP) ? update.CP : current.CP;
+                current.MobileNum = !String.IsNullOrEmpty(update.MobileNum) ? update.MobileNum : current.MobileNum;
 
                 ret = employeeRepository.Update(current);
 
             }
-            catch (SupplierException)
-            {
-                throw;
-            }
-            catch (MissingMethodException)
-            {
-                throw this.exceptionController.CreateMyException(ExceptionEnum.MethodNotExist);
-            }
-            catch (Exception)
-            {
-                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
-            }
+                catch (SupplierException)
+                {
+                    throw;
+                }
+                catch (MissingMethodException)
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.MethodNotExist);
+                }
+                catch (Exception)
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+                }
 
             return ret;
         }

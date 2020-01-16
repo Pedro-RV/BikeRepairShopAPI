@@ -151,7 +151,10 @@ namespace Supplier_Bussiness
 
                 Warehouse current = warehouseRepository.Read(update.WarehouseId);
 
-                current = update;
+                current.WarehouseAddress = !String.IsNullOrEmpty(update.WarehouseAddress) ? update.WarehouseAddress : current.WarehouseAddress;
+                current.Extension = update.Extension != 0 ? update.Extension : current.Extension;
+                current.WarehouseAdmin = update.WarehouseAdmin != null ? update.WarehouseAdmin : current.WarehouseAdmin;
+                current.WarehouseAdminId = update.WarehouseAdmin != null ? update.WarehouseAdminId : current.WarehouseAdminId;
 
                 ret = warehouseRepository.Update(current);
 

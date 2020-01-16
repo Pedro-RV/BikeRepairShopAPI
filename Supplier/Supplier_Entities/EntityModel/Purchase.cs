@@ -24,6 +24,7 @@ namespace Supplier_Entities.EntityModel
 
         #region Properties
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PurchaseId { get; set; }
 
         public int ProductId { get; set; }

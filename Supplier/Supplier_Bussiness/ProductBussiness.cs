@@ -113,7 +113,13 @@ namespace Supplier_Bussiness
 
                 Product current = productRepository.Read(update.ProductId);
 
-                current = update;
+                current.ProductDescription = !String.IsNullOrEmpty(update.ProductDescription) ? update.ProductDescription : current.ProductDescription;
+                current.Prize = update.Prize != 0 ? update.Prize : current.Prize;
+                current.Cuantity = update.Cuantity != 0 ? update.Cuantity : current.Cuantity;
+                current.Warehouse = update.Warehouse != null ? update.Warehouse : current.Warehouse;
+                current.WarehouseId = update.Warehouse != null ? update.WarehouseId : current.WarehouseId;
+                current.ProductState = update.ProductState != null ? update.ProductState : current.ProductState;
+                current.ProductStateId = update.ProductState != null ? update.ProductStateId : current.ProductStateId;
 
                 ret = productRepository.Update(current);
 

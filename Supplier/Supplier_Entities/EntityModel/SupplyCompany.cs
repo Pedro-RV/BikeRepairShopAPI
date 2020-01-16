@@ -19,6 +19,7 @@ namespace Supplier_Entities.EntityModel
 
         #region Properties
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SupplyCompanyId { get; set; }
 
         [MaxLength(30)]

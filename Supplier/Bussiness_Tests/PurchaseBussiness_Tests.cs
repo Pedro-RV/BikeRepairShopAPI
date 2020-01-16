@@ -16,7 +16,7 @@ namespace Bussiness_Tests
         public void Init()
         {
             EmployeeBussiness employeeBussiness = new EmployeeBussiness();
-            employeeBussiness.InsertEmployee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
+            employeeBussiness.InsertEmployee(new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
             DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
             WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
             warehouseAdminBussiness.InsertWarehouseAdmin(dateTime, 1);

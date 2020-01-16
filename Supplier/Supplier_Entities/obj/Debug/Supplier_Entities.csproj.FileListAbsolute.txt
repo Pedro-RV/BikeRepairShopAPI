@@ -20,3 +20,14 @@ C:\REPO\becaPedro\Supplier\Supplier\obj\Debug\Supplier_Entities.csprojAssemblyRe
 C:\REPO\becaPedro\Supplier\Supplier\obj\Debug\Supplier_Entities.csproj.CopyComplete
 C:\REPO\becaPedro\Supplier\Supplier\obj\Debug\Supplier_Entities.exe
 C:\REPO\becaPedro\Supplier\Supplier\obj\Debug\Supplier_Entities.pdb
+C:\REPO\becaPedro\Supplier\Supplier_Entities\bin\Debug\Supplier_Entities.exe.config
+C:\REPO\becaPedro\Supplier\Supplier_Entities\bin\Debug\Supplier_Entities.exe
+C:\REPO\becaPedro\Supplier\Supplier_Entities\bin\Debug\Supplier_Entities.pdb
+C:\REPO\becaPedro\Supplier\Supplier_Entities\bin\Debug\EntityFramework.dll
+C:\REPO\becaPedro\Supplier\Supplier_Entities\bin\Debug\EntityFramework.SqlServer.dll
+C:\REPO\becaPedro\Supplier\Supplier_Entities\bin\Debug\EntityFramework.xml
+C:\REPO\becaPedro\Supplier\Supplier_Entities\bin\Debug\EntityFramework.SqlServer.xml
+C:\REPO\becaPedro\Supplier\Supplier_Entities\obj\Debug\Supplier_Entities.csprojAssemblyReference.cache
+C:\REPO\becaPedro\Supplier\Supplier_Entities\obj\Debug\Supplier_Entities.csproj.CopyComplete
+C:\REPO\becaPedro\Supplier\Supplier_Entities\obj\Debug\Supplier_Entities.exe
+C:\REPO\becaPedro\Supplier\Supplier_Entities\obj\Debug\Supplier_Entities.pdb

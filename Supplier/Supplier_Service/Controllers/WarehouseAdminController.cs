@@ -1,20 +1,17 @@
-﻿using Supplier_Bussiness;
-using Supplier_Entities.EntityModel;
-using Supplier_Entities.Specific;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace Ejemplo2_ConWebApi.Controllers
+namespace Supplier_Service.Controllers
 {
-    public class EmployeeController : ApiController
+    public class WarehouseAdminController : ApiController
     {
         // GET
         [HttpGet]
-        [Route("api/employee/EmployeesList")]
+        [Route("api/warehouseAdmin/EmployeesList")]
         public List<Employee> EmployeesList()
         {
             EmployeeBussiness employeeBussiness = new EmployeeBussiness();
@@ -57,7 +54,7 @@ namespace Ejemplo2_ConWebApi.Controllers
 
             bool introduced_well = employeeBussiness.InsertEmployee(employeeAdd); // Modificar todos los inserts
 
-            if(introduced_well == true)
+            if (introduced_well == true)
             {
                 return "Employee introduced satisfactorily";
             }
