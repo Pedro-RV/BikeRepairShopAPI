@@ -17,9 +17,9 @@ namespace Bussiness_Tests
         {
             SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
 
-            supplyCompanyBussiness.InsertSupplyCompany("Ruedas Hermanos Carrasco", "123");
-            supplyCompanyBussiness.InsertSupplyCompany("Tecnologia ComputerMax", "001");
-            supplyCompanyBussiness.InsertSupplyCompany("Ropa Osuna", "002");
+            supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompany("Ruedas Hermanos Carrasco", "123"));
+            supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompany("Tecnologia ComputerMax", "001"));
+            supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompany("Ropa Osuna", "002"));
 
         }
 
@@ -29,7 +29,7 @@ namespace Bussiness_Tests
             bool correct;
             SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
 
-            correct = supplyCompanyBussiness.InsertSupplyCompany("Pesas Cañada", "003");
+            correct = supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompany("Pesas Cañada", "003"));
 
             SupplyCompany supplyCompanyGotten = supplyCompanyBussiness.ReadSupplyCompany(4);
 

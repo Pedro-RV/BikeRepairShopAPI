@@ -19,14 +19,14 @@ namespace Bussiness_Tests
             employeeBussiness.InsertEmployee(new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
             DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
             WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
-            warehouseAdminBussiness.InsertWarehouseAdmin(dateTime, 1);
+            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeBussiness.ReadEmployee(1)));
 
             WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
 
-            warehouseBussiness.InsertWarehouse("Calle Ebro", 120, 1);
-            warehouseBussiness.InsertWarehouse("Calle Guadalquivir", 200, 1);
-            warehouseBussiness.InsertWarehouse("Calle Genil", 180, 1);
-            warehouseBussiness.InsertWarehouse("Avenida Pajaro Carpintero", 150, 1);
+            warehouseBussiness.InsertWarehouse(new Warehouse("Calle Ebro", 120, warehouseAdminBussiness.ReadWarehouseAdmin(1)));
+            warehouseBussiness.InsertWarehouse(new Warehouse("Calle Guadalquivir", 200, warehouseAdminBussiness.ReadWarehouseAdmin(1)));
+            warehouseBussiness.InsertWarehouse(new Warehouse("Calle Genil", 180, warehouseAdminBussiness.ReadWarehouseAdmin(1)));
+            warehouseBussiness.InsertWarehouse(new Warehouse("Avenida Pajaro Carpintero", 150, warehouseAdminBussiness.ReadWarehouseAdmin(1)));
 
         }
 
@@ -48,8 +48,9 @@ namespace Bussiness_Tests
             bool correct;
 
             WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
+            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
 
-            correct = warehouseBussiness.InsertWarehouse("Calle Tajo", 300, 1);
+            correct = warehouseBussiness.InsertWarehouse(new Warehouse("Calle Tajo", 300, warehouseAdminBussiness.ReadWarehouseAdmin(1)));
 
             Warehouse warehouseGotten = warehouseBussiness.ReadWarehouse(5);
 
@@ -66,8 +67,9 @@ namespace Bussiness_Tests
             DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
 
             WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
+            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
 
-            correct = warehouseBussiness.InsertWarehouseAndAdmin("Calle Tajo", 300, dateTime, 1);
+            correct = warehouseBussiness.InsertWarehouseAndAdmin(new WarehouseAdmin(dateTime, employeeBussiness.ReadEmployee(1)), new Warehouse("Calle Tajo", 300, null));
 
             Warehouse warehouseGotten = warehouseBussiness.ReadWarehouse(6);
 

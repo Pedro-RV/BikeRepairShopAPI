@@ -55,11 +55,11 @@ namespace Ejemplo2_ConWebApi.Controllers
         {
             EmployeeBussiness employeeBussiness = new EmployeeBussiness();
 
-            bool introduced_well = employeeBussiness.InsertEmployee(employeeAdd); // Modificar todos los inserts
+            bool introduced_well = employeeBussiness.InsertEmployee(employeeAdd);
 
             if(introduced_well == true)
             {
-                return "Employee introduced satisfactorily";
+                return "Employee introduced satisfactorily.";
             }
             else
             {
@@ -79,7 +79,7 @@ namespace Ejemplo2_ConWebApi.Controllers
 
             if (updated_well == true)
             {
-                return "Employee updated satisfactorily";
+                return "Employee updated satisfactorily.";
             }
             else
             {
@@ -99,7 +99,7 @@ namespace Ejemplo2_ConWebApi.Controllers
 
             if (deleted_well == true)
             {
-                return "Employee deleted satisfactorily";
+                return "Employee deleted satisfactorily.";
             }
             else
             {

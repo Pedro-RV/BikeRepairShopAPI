@@ -16,7 +16,16 @@ namespace Supplier_Entities.EntityModel
             this.WarehouseAddress = WarehouseAddress;
             this.Extension = Extension;
             this.WarehouseAdmin = WarehouseAdmin;
-            this.WarehouseAdminId = WarehouseAdmin.WarehouseAdminId;    
+
+            if(WarehouseAdmin != null)
+            {
+                this.WarehouseAdminId = WarehouseAdmin.WarehouseAdminId;
+            }
+            else
+            {
+                this.WarehouseAdminId = 0;
+            }
+
         }
 
         #region Properties

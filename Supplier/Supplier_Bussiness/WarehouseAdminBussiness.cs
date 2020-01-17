@@ -24,16 +24,12 @@ namespace Supplier_Bussiness
             exceptionController = new ExceptionController();
         }
 
-        public bool InsertWarehouseAdmin(DateTime StartDate, int EmployeeId)
+        public bool InsertWarehouseAdmin(WarehouseAdmin add)
         {
             bool ret;
 
             try
             {
-                EmployeeRepository employeeRepository = new EmployeeRepository(dbContext, exceptionController);
-                Employee attach = employeeRepository.Read(EmployeeId);
-                WarehouseAdmin add = new WarehouseAdmin(StartDate, attach);
-
                 WarehouseAdminRepository warehouseAdminRepository = new WarehouseAdminRepository(dbContext, exceptionController);
 
                 ret = warehouseAdminRepository.Insert(add);

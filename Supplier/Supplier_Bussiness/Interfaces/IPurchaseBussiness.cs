@@ -11,9 +11,9 @@ namespace Supplier_Bussiness.Interfaces
     {
         List<Purchase> PurchasesBiggerThanAPrizeList(double prize);
 
-        bool InsertPurchase(DateTime PurchaseDate, int Cuantity, double Prize, int ProductId, int SupplyCompanyId);
+        bool InsertPurchase(Purchase add);
 
-        bool InsertPurchaseAndProduct(DateTime PurchaseDate, int PurchaseCuantity, double PurchasePrize, int SupplyCompanyId, String ProductDescription, double ProductPrize, int WarehouseId, int ProductStateId);
+        bool InsertPurchaseAndProduct(Product add1, Purchase add2);
 
         Purchase ReadPurchase(int PurchaseId);
 

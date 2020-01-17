@@ -21,9 +21,9 @@ namespace Bussiness_Tests
 
             WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
 
-            warehouseAdminBussiness.InsertWarehouseAdmin(dateTime, 1);
-            warehouseAdminBussiness.InsertWarehouseAdmin(dateTime, 1);
-            warehouseAdminBussiness.InsertWarehouseAdmin(dateTime, 1);
+            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeBussiness.ReadEmployee(1)));
+            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeBussiness.ReadEmployee(1)));
+            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeBussiness.ReadEmployee(1)));
 
         }
 
@@ -34,8 +34,9 @@ namespace Bussiness_Tests
             DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
 
             WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
+            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
 
-            correct = warehouseAdminBussiness.InsertWarehouseAdmin(dateTime, 1);
+            correct = warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeBussiness.ReadEmployee(1)));
 
             WarehouseAdmin warehouseAdminGotten = warehouseAdminBussiness.ReadWarehouseAdmin(4);
 

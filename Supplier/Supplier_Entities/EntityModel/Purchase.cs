@@ -17,9 +17,26 @@ namespace Supplier_Entities.EntityModel
             this.Cuantity = Cuantity;
             this.Prize = Prize;
             this.Product = Product;
+            
+            if(Product != null)
+            {
+                this.ProductId = Product.ProductId;
+            }
+            else
+            {
+                this.ProductId = 0;
+            }
+
             this.SupplyCompany = SupplyCompany;
-            this.ProductId = Product.ProductId;
-            this.SupplyCompanyId = SupplyCompany.SupplyCompanyId;
+
+            if (Product != null)
+            {
+                this.SupplyCompanyId = SupplyCompany.SupplyCompanyId;
+            }
+            else
+            {
+                this.SupplyCompanyId = 0;
+            }        
         }
 
         #region Properties

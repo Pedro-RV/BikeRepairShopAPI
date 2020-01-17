@@ -9,7 +9,7 @@ namespace Supplier_Bussiness.Interfaces
 {
     public interface IWarehouseAdminBussiness
     {
-        bool InsertWarehouseAdmin(DateTime StartDate, int EmployeeId);
+        bool InsertWarehouseAdmin(WarehouseAdmin add);
 
         WarehouseAdmin ReadWarehouseAdmin(int WarehouseAdminId);
 

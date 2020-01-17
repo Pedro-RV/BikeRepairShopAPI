@@ -25,14 +25,12 @@ namespace Supplier_Bussiness
             exceptionController = new ExceptionController();
         }
 
-        public bool InsertSupplyCompany(string SupplyCompanyName, string TelephoneNum)
+        public bool InsertSupplyCompany(SupplyCompany add)
         {
             bool ret;
 
             try
             {
-                SupplyCompany add = new SupplyCompany(SupplyCompanyName, TelephoneNum);
-
                 SupplyCompanyRepository supplyCompanyRepository = new SupplyCompanyRepository(dbContext, exceptionController);
 
                 ret = supplyCompanyRepository.Insert(add);

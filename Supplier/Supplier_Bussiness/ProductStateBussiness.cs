@@ -25,14 +25,12 @@ namespace Supplier_Bussiness
             exceptionController = new ExceptionController();
         }
 
-        public bool InsertProductState(string ProductStateDescription)
+        public bool InsertProductState(ProductState add)
         {
             bool ret;
 
             try
             {
-                ProductState add = new ProductState(ProductStateDescription);
-
                 ProductStateRepository productStateRepository = new ProductStateRepository(dbContext, exceptionController);
 
                 ret = productStateRepository.Insert(add);

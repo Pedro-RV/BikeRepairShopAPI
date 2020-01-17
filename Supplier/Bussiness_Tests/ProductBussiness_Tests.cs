@@ -20,17 +20,17 @@ namespace Bussiness_Tests
             employeeBussiness.InsertEmployee(new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
             DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
             WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
-            warehouseAdminBussiness.InsertWarehouseAdmin(dateTime, 1);
+            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeBussiness.ReadEmployee(1)));
             WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
-            warehouseBussiness.InsertWarehouse("Calle Ebro", 120, 1);
+            warehouseBussiness.InsertWarehouse(new Warehouse("Calle Ebro", 120, warehouseAdminBussiness.ReadWarehouseAdmin(1)));
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();
-            productStateBussiness.InsertProductState("No disponible");
+            productStateBussiness.InsertProductState(new ProductState("No disponible"));
 
             ProductBussiness productBussiness = new ProductBussiness();
 
-            productBussiness.InsertProduct("Pelota", 20, 5, 1, 1);
-            productBussiness.InsertProduct("Peine", 4, 10, 1, 1);
-            productBussiness.InsertProduct("Zapatillas Adidas", 80, 15, 1, 1);
+            productBussiness.InsertProduct(new Product("Pelota", 20, 5, warehouseBussiness.ReadWarehouse(1), productStateBussiness.ReadProductState(1)));
+            productBussiness.InsertProduct(new Product("Peine", 4, 10, warehouseBussiness.ReadWarehouse(1), productStateBussiness.ReadProductState(1)));
+            productBussiness.InsertProduct(new Product("Zapatillas Adidas", 80, 15, warehouseBussiness.ReadWarehouse(1), productStateBussiness.ReadProductState(1)));
 
         }
 
@@ -68,8 +68,10 @@ namespace Bussiness_Tests
         {
             bool correct;
             ProductBussiness productBussiness = new ProductBussiness();
+            WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
+            ProductStateBussiness productStateBussiness = new ProductStateBussiness();
 
-            correct = productBussiness.InsertProduct("Teclado", 60, 20, 1, 1);
+            correct = productBussiness.InsertProduct(new Product("Teclado", 60, 20, warehouseBussiness.ReadWarehouse(1), productStateBussiness.ReadProductState(1)));
 
             Product productGotten = productBussiness.ReadProduct(4);
 

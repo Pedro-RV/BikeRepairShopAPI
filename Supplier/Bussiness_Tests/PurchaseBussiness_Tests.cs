@@ -19,23 +19,23 @@ namespace Bussiness_Tests
             employeeBussiness.InsertEmployee(new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
             DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
             WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
-            warehouseAdminBussiness.InsertWarehouseAdmin(dateTime, 1);
+            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeBussiness.ReadEmployee(1)));
             WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
-            warehouseBussiness.InsertWarehouse("Calle Ebro", 120, 1);
+            warehouseBussiness.InsertWarehouse(new Warehouse("Calle Ebro", 120, warehouseAdminBussiness.ReadWarehouseAdmin(1)));
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();
-            productStateBussiness.InsertProductState("No disponible");
+            productStateBussiness.InsertProductState(new ProductState("No disponible"));
             ProductBussiness productBussiness = new ProductBussiness();
-            productBussiness.InsertProduct("Pelota", 20, 5, 1, 1);
+            productBussiness.InsertProduct(new Product("Pelota", 20, 5, warehouseBussiness.ReadWarehouse(1), productStateBussiness.ReadProductState(1)));
             SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
-            supplyCompanyBussiness.InsertSupplyCompany("Ruedas Hermanos Carrasco", "123");
+            supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompany("Ruedas Hermanos Carrasco", "123"));
             DateTime dateTime2 = new DateTime(2019, 05, 17, 13, 05, 00);
 
             PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
 
-            purchaseBussiness.InsertPurchase(dateTime2, 2, 30, 1, 1);
-            purchaseBussiness.InsertPurchase(dateTime2, 1, 10, 1, 1);
-            purchaseBussiness.InsertPurchase(dateTime2, 5, 120, 1, 1);
-            purchaseBussiness.InsertPurchase(dateTime2, 3, 80, 1, 1);
+            purchaseBussiness.InsertPurchase(new Purchase(dateTime2, 2, 30, productBussiness.ReadProduct(1), supplyCompanyBussiness.ReadSupplyCompany(1)));
+            purchaseBussiness.InsertPurchase(new Purchase(dateTime2, 1, 10, productBussiness.ReadProduct(1), supplyCompanyBussiness.ReadSupplyCompany(1)));
+            purchaseBussiness.InsertPurchase(new Purchase(dateTime2, 5, 120, productBussiness.ReadProduct(1), supplyCompanyBussiness.ReadSupplyCompany(1)));
+            purchaseBussiness.InsertPurchase(new Purchase(dateTime2, 3, 80, productBussiness.ReadProduct(1), supplyCompanyBussiness.ReadSupplyCompany(1)));
 
         }
 
@@ -57,8 +57,10 @@ namespace Bussiness_Tests
             DateTime dateTime = new DateTime(2019, 05, 17, 13, 05, 00);
 
             PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
+            ProductBussiness productBussiness = new ProductBussiness();
+            SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
 
-            correct = purchaseBussiness.InsertPurchase(dateTime, 10, 500, 1, 1);
+            correct = purchaseBussiness.InsertPurchase(new Purchase(dateTime, 10, 500, productBussiness.ReadProduct(1), supplyCompanyBussiness.ReadSupplyCompany(1)));
 
             Purchase purchaseGotten = purchaseBussiness.ReadPurchase(5);
 
@@ -76,8 +78,11 @@ namespace Bussiness_Tests
             DateTime dateTime = new DateTime(2019, 05, 17, 13, 05, 00);
 
             PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
+            WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
+            ProductStateBussiness productStateBussiness = new ProductStateBussiness();
+            SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
 
-            correct = purchaseBussiness.InsertPurchaseAndProduct(dateTime, 100, 50, 1, "Luz led", 0.7, 1, 1);
+            correct = purchaseBussiness.InsertPurchaseAndProduct(new Product("Luz led", 0.7, 50, warehouseBussiness.ReadWarehouse(1), productStateBussiness.ReadProductState(1)), new Purchase(dateTime, 100, 50, null, supplyCompanyBussiness.ReadSupplyCompany(1)));
 
             Purchase purchaseGotten = purchaseBussiness.ReadPurchase(6);
 

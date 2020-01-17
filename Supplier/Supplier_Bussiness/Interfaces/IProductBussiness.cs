@@ -14,7 +14,7 @@ namespace Supplier_Bussiness.Interfaces
 
         List<ProductData> ProductDataList();
 
-        bool InsertProduct(String ProductDescription, double Prize, int Cuantity, int WarehouseId, int ProductStateId);
+        bool InsertProduct(Product add);
 
         Product ReadProduct(int ProductId);
 

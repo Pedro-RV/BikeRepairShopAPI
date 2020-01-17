@@ -16,7 +16,16 @@ namespace Supplier_Entities.EntityModel
         {
             this.StartDate = StartDate;
             this.Employee = Employee;
-            this.EmployeeId = Employee.EmployeeId;
+
+            if(Employee != null)
+            {
+                this.EmployeeId = Employee.EmployeeId;
+            }
+            else
+            {
+                this.EmployeeId = 0;
+            }
+
         }
 
         #region Properties

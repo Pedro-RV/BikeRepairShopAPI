@@ -17,9 +17,9 @@ namespace Bussiness_Tests
         {
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();
 
-            productStateBussiness.InsertProductState("No disponible");
-            productStateBussiness.InsertProductState("Sin existencias");
-            productStateBussiness.InsertProductState("Con existencias");
+            productStateBussiness.InsertProductState(new ProductState("No disponible"));
+            productStateBussiness.InsertProductState(new ProductState("Sin existencias"));
+            productStateBussiness.InsertProductState(new ProductState("Con existencias"));
 
         }
 
@@ -29,7 +29,7 @@ namespace Bussiness_Tests
             bool correct;
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();
 
-            correct = productStateBussiness.InsertProductState("Fuera de venta");
+            correct = productStateBussiness.InsertProductState(new ProductState("Fuera de venta"));
 
             ProductState productStateGotten = productStateBussiness.ReadProductState(4);
 

@@ -9,7 +9,7 @@ namespace Supplier_Bussiness.Interfaces
 {
     public interface IProductStateBussiness
     {
-        bool InsertProductState(string ProductStateDescription);
+        bool InsertProductState(ProductState add);
 
         ProductState ReadProductState(int ProductId);
 

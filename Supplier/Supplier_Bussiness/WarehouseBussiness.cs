@@ -43,16 +43,12 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool InsertWarehouse(string WarehouseAddress, int Extension, int WarehouseAdminId)
+        public bool InsertWarehouse(Warehouse add)
         {
             bool ret;
 
             try
             {
-                WarehouseAdminRepository warehouseAdminRepository = new WarehouseAdminRepository(dbContext, exceptionController);
-                WarehouseAdmin attach = warehouseAdminRepository.Read(WarehouseAdminId);
-                Warehouse add = new Warehouse(WarehouseAddress, Extension, attach);
-
                 WarehouseRepository warehouseRepository = new WarehouseRepository(dbContext, exceptionController);
 
                 ret = warehouseRepository.Insert(add);
@@ -74,22 +70,18 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool InsertWarehouseAndAdmin(string WarehouseAddress, int Extension, DateTime StartDate, int EmployeeId)
+        public bool InsertWarehouseAndAdmin(WarehouseAdmin add1, Warehouse add2)
         {
             bool ret;
 
             try
             {
-                EmployeeRepository employeeRepository = new EmployeeRepository(dbContext, exceptionController);
-                Employee attach = employeeRepository.Read(EmployeeId);
-                WarehouseAdmin add = new WarehouseAdmin(StartDate, attach);
-
                 WarehouseAdminRepository warehouseAdminRepository = new WarehouseAdminRepository(dbContext, exceptionController);
 
-                bool ret2 = warehouseAdminRepository.Insert(add);
+                bool ret2 = warehouseAdminRepository.Insert(add1);
 
-                WarehouseAdmin attach2 = warehouseAdminRepository.Read(add.WarehouseAdminId);
-                Warehouse add2 = new Warehouse(WarehouseAddress, Extension, add);
+                add2.WarehouseAdminId = add1.WarehouseAdminId;
+                add2.WarehouseAdmin = add1;
 
                 WarehouseRepository warehouseRepository = new WarehouseRepository(dbContext, exceptionController);
 

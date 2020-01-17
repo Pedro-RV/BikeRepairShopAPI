@@ -43,18 +43,12 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool InsertProduct(String ProductDescription, double Prize, int Cuantity, int WarehouseId, int ProductStateId)
+        public bool InsertProduct(Product add)
         {
             bool ret;
 
             try
             {
-                WarehouseRepository warehouseRepository = new WarehouseRepository(dbContext, exceptionController);
-                Warehouse attach = warehouseRepository.Read(WarehouseId);
-                ProductStateRepository productStateRepository = new ProductStateRepository(dbContext, exceptionController);
-                ProductState attach2 = productStateRepository.Read(ProductStateId);
-                Product add = new Product(ProductDescription, Prize, Cuantity, attach, attach2);
-
                 ProductRepository productRepository = new ProductRepository(dbContext, exceptionController);
 
                 ret = productRepository.Insert(add);

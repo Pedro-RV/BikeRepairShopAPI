@@ -34,21 +34,12 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool InsertPurchase(DateTime PurchaseDate, int Cuantity, double Prize, int ProductId, int SupplyCompanyId)
+        public bool InsertPurchase(Purchase add)
         {
             bool ret;
 
             try
             {
-                ProductRepository productRepository = new ProductRepository(dbContext, exceptionController);
-                Product update = productRepository.Read(ProductId);
-                update.Cuantity += Cuantity;
-                productRepository.Update(update);
-                Product attach = productRepository.Read(ProductId);
-                SupplyCompanyRepository supplyCompanyRepository = new SupplyCompanyRepository(dbContext, exceptionController);
-                SupplyCompany attach2 = supplyCompanyRepository.Read(SupplyCompanyId);
-                Purchase add = new Purchase(PurchaseDate, Cuantity, Prize, attach, attach2);
-
                 PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
 
                 ret = purchaseRepository.Insert(add);
@@ -70,27 +61,18 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool InsertPurchaseAndProduct(DateTime PurchaseDate, int PurchaseCuantity, double PurchasePrize, int SupplyCompanyId, String ProductDescription, double ProductPrize, int WarehouseId, int ProductStateId)
+        public bool InsertPurchaseAndProduct(Product add1, Purchase add2)
         {
             bool ret;
 
             try
             {
-                WarehouseRepository warehouseRepository = new WarehouseRepository(dbContext, exceptionController);
-                Warehouse attach = warehouseRepository.Read(WarehouseId);
-                ProductStateRepository productStateRepository = new ProductStateRepository(dbContext, exceptionController);
-                ProductState attach2 = productStateRepository.Read(ProductStateId);
-                Product add = new Product(ProductDescription, ProductPrize, PurchaseCuantity, attach, attach2);
-
                 ProductRepository productRepository = new ProductRepository(dbContext, exceptionController);
 
-                bool ret2 = productRepository.Insert(add);
+                bool ret2 = productRepository.Insert(add1);
 
-
-                Product attach3 = productRepository.Read(add.ProductId);
-                SupplyCompanyRepository supplyCompanyRepository = new SupplyCompanyRepository(dbContext, exceptionController);
-                SupplyCompany attach4 = supplyCompanyRepository.Read(SupplyCompanyId);
-                Purchase add2 = new Purchase(PurchaseDate, PurchaseCuantity, PurchasePrize, attach3, attach4);
+                add2.ProductId = add1.ProductId;
+                add2.Product = add1;
 
                 PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
 

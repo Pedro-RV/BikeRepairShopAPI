@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Supplier_Bussiness;
+using Supplier_Entities.EntityModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,96 +13,77 @@ namespace Supplier_Service.Controllers
     {
         // GET
         [HttpGet]
-        [Route("api/warehouseAdmin/EmployeesList")]
-        public List<Employee> EmployeesList()
+        [Route("api/warehouseAdmin/GetWarehouseAdmin/{warehouseAdminId}")]
+        public WarehouseAdmin GetWarehouseAdmin(int warehouseAdminId)
         {
-            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
+            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
 
-            List<Employee> request = employeeBussiness.EmployeesList();
-
-            return request;
-        }
-
-        // GET
-        [HttpGet]
-        [Route("api/employee/GetEmployee/{employeeId}")]
-        public Employee GetEmployee(int employeeId)
-        {
-            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
-
-            Employee request = employeeBussiness.ReadEmployee(employeeId);
-
-            return request;
-        }
-
-        // GET
-        [HttpGet]
-        [Route("api/employee/GetEmployeeDNI/{dni}")]
-        public Employee GetEmployeeDNI(string dni)
-        {
-            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
-
-            Employee request = employeeBussiness.ReadEmployeeDNI(dni);
+            WarehouseAdmin request = warehouseAdminBussiness.ReadWarehouseAdmin(warehouseAdminId);
 
             return request;
         }
 
         // POST
         [HttpPost]
-        [Route("api/employee/InsertEmployee")]
-        public string InsertEmployee(Employee employeeAdd)
+        [Route("api/warehouseAdmin/InsertWarehouseAdmin")]
+        public string InsertWarehouseAdmin(WarehouseAdmin warehouseAdminAdd)
         {
+            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
             EmployeeBussiness employeeBussiness = new EmployeeBussiness();
 
-            bool introduced_well = employeeBussiness.InsertEmployee(employeeAdd); // Modificar todos los inserts
+            Employee attach = employeeBussiness.ReadEmployee(warehouseAdminAdd.EmployeeId);
+
+            warehouseAdminAdd.Employee = attach;
+
+            bool introduced_well = warehouseAdminBussiness.InsertWarehouseAdmin(warehouseAdminAdd);
 
             if (introduced_well == true)
             {
-                return "Employee introduced satisfactorily";
+                return "WarehouseAdmin introduced satisfactorily.";
             }
             else
             {
-                return "Error !!! Employee could not be introduced.";
+                return "Error !!! WarehouseAdmin could not be introduced.";
             }
 
         }
 
         // PUT
         [HttpPut]
-        [Route("api/employee/UpdateEmployee")]
-        public string UpdateEmployee(Employee update)
+        [Route("api/warehouseAdmin/UpdateWarehouseAdmin")]
+        public string UpdateWarehouseAdmin(WarehouseAdmin update)
         {
-            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
+            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
 
-            bool updated_well = employeeBussiness.UpdateEmployee(update);
+            bool updated_well = warehouseAdminBussiness.UpdateWarehouseAdmin(update);
 
             if (updated_well == true)
             {
-                return "Employee updated satisfactorily";
+                return "WarehouseAdmin updated satisfactorily.";
             }
             else
             {
-                return "Error !!! Employee could not be updated.";
+                return "Error !!! WarehouseAdmin could not be updated.";
             }
 
         }
 
         // DELETE
         [HttpDelete]
-        [Route("api/employee/DeleteEmployee/{employeeId}")]
-        public string DeleteEmployee(int employeeId)
+        [Route("api/warehouseAdmin/DeleteWarehouseAdmin/{warehouseAdminId}")]
+        public string DeleteWarehouseAdmin(int warehouseAdminId)
         {
-            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
+            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
 
-            bool deleted_well = employeeBussiness.DeleteEmployee(employeeId);
+            bool deleted_well = warehouseAdminBussiness.DeleteWarehouseAdmin(warehouseAdminId);
 
             if (deleted_well == true)
             {
-                return "Employee deleted satisfactorily";
+                return "WarehouseAdmin deleted satisfactorily.";
             }
             else
             {
-                return "Error !!! Employee could not be deleted.";
+                return "Error !!! WarehouseAdmin could not be deleted.";
             }
 
         }
