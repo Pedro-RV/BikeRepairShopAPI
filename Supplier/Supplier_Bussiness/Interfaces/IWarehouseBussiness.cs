@@ -14,9 +14,9 @@ namespace Supplier_Bussiness.Interfaces
 
         List<WarehouseData> WarehouseDataList();
 
-        bool InsertWarehouse(Warehouse add);
+        bool InsertWarehouse(Warehouse warehouseAdd);
 
-        bool InsertWarehouseAndAdmin(WarehouseAdmin add1, Warehouse add2);
+        bool InsertWarehouseAndAdmin(WarehouseAdmin warehouseAdminAdd, Warehouse warehouseAdd);
 
         Warehouse ReadWarehouse(int WarehouseId);
 

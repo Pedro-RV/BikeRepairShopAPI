@@ -56,9 +56,9 @@ namespace Supplier_Service.Controllers
             WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
             WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
 
-            WarehouseAdmin attach = warehouseAdminBussiness.ReadWarehouseAdmin(warehouseAdd.WarehouseAdminId);
+            WarehouseAdmin attachWarehouseAdmin = warehouseAdminBussiness.ReadWarehouseAdmin(warehouseAdd.WarehouseAdminId);
 
-            warehouseAdd.WarehouseAdmin = attach;
+            warehouseAdd.WarehouseAdmin = attachWarehouseAdmin;
 
             bool introduced_well = warehouseBussiness.InsertWarehouse(warehouseAdd);
 
@@ -81,9 +81,9 @@ namespace Supplier_Service.Controllers
             WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
             EmployeeBussiness employeeBussiness = new EmployeeBussiness();
 
-            Employee attach1 = employeeBussiness.ReadEmployee(warehouseAdminAdd.EmployeeId);
+            Employee attachEmployee = employeeBussiness.ReadEmployee(warehouseAdminAdd.EmployeeId);
 
-            warehouseAdminAdd.Employee = attach1;
+            warehouseAdminAdd.Employee = attachEmployee;
 
             bool introduced_well = warehouseBussiness.InsertWarehouseAndAdmin(warehouseAdminAdd, warehouseAdd);
 

@@ -34,7 +34,7 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool InsertPurchase(Purchase add)
+        public bool InsertPurchase(Purchase purchaseAdd)
         {
             bool ret;
 
@@ -42,7 +42,7 @@ namespace Supplier_Bussiness
             {
                 PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
 
-                ret = purchaseRepository.Insert(add);
+                ret = purchaseRepository.Insert(purchaseAdd);
 
             }
             catch (SupplierException)
@@ -61,7 +61,7 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool InsertPurchaseAndProduct(Product add1, Purchase add2)
+        public bool InsertPurchaseAndProduct(Product productAdd, Purchase purchaseAdd)
         {
             bool ret;
 
@@ -69,14 +69,14 @@ namespace Supplier_Bussiness
             {
                 ProductRepository productRepository = new ProductRepository(dbContext, exceptionController);
 
-                bool ret2 = productRepository.Insert(add1);
+                bool ret2 = productRepository.Insert(productAdd);
 
-                add2.ProductId = add1.ProductId;
-                add2.Product = add1;
+                purchaseAdd.ProductId = productAdd.ProductId;
+                purchaseAdd.Product = productAdd;
 
                 PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
 
-                bool ret3 = purchaseRepository.Insert(add2);
+                bool ret3 = purchaseRepository.Insert(purchaseAdd);
 
                 ret = (ret2 && ret3);
 

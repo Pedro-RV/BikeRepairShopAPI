@@ -31,9 +31,9 @@ namespace Supplier_Service.Controllers
             WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
             EmployeeBussiness employeeBussiness = new EmployeeBussiness();
 
-            Employee attach = employeeBussiness.ReadEmployee(warehouseAdminAdd.EmployeeId);
+            Employee attachEmployee = employeeBussiness.ReadEmployee(warehouseAdminAdd.EmployeeId);
 
-            warehouseAdminAdd.Employee = attach;
+            warehouseAdminAdd.Employee = attachEmployee;
 
             bool introduced_well = warehouseAdminBussiness.InsertWarehouseAdmin(warehouseAdminAdd);
 

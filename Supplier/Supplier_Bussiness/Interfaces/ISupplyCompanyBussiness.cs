@@ -9,7 +9,7 @@ namespace Supplier_Bussiness.Interfaces
 {
     public interface ISupplyCompanyBussiness
     {
-        bool InsertSupplyCompany(SupplyCompany add);
+        bool InsertSupplyCompany(SupplyCompany supplyCompanyAdd);
 
         SupplyCompany ReadSupplyCompany(int SupplyCompanyId);
 

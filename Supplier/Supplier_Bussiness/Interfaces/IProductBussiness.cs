@@ -14,7 +14,7 @@ namespace Supplier_Bussiness.Interfaces
 
         List<ProductData> ProductDataList();
 
-        bool InsertProduct(Product add);
+        bool InsertProduct(Product productAdd);
 
         Product ReadProduct(int ProductId);
 

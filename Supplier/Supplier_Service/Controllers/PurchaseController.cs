@@ -44,13 +44,13 @@ namespace Supplier_Service.Controllers
             ProductBussiness productBussiness = new ProductBussiness();
             SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
 
-            Product attach1 = productBussiness.ReadProduct(purchaseAdd.ProductId);
+            Product attachProduct = productBussiness.ReadProduct(purchaseAdd.ProductId);
 
-            purchaseAdd.Product = attach1;
+            purchaseAdd.Product = attachProduct;
 
-            SupplyCompany attach2 = supplyCompanyBussiness.ReadSupplyCompany(purchaseAdd.SupplyCompanyId);
+            SupplyCompany attachSupplyCompany = supplyCompanyBussiness.ReadSupplyCompany(purchaseAdd.SupplyCompanyId);
 
-            purchaseAdd.SupplyCompany = attach2;
+            purchaseAdd.SupplyCompany = attachSupplyCompany;
 
             bool introduced_well = purchaseBussiness.InsertPurchase(purchaseAdd);
 
@@ -75,17 +75,17 @@ namespace Supplier_Service.Controllers
             WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();
 
-            Warehouse attach1 = warehouseBussiness.ReadWarehouse(productAdd.WarehouseId);
+            Warehouse attachWarehouse = warehouseBussiness.ReadWarehouse(productAdd.WarehouseId);
 
-            productAdd.Warehouse = attach1;
+            productAdd.Warehouse = attachWarehouse;
 
-            ProductState attach2 = productStateBussiness.ReadProductState(productAdd.ProductStateId);
+            ProductState attachProductState = productStateBussiness.ReadProductState(productAdd.ProductStateId);
 
-            productAdd.ProductState = attach2;
+            productAdd.ProductState = attachProductState;
 
-            SupplyCompany attach3 = supplyCompanyBussiness.ReadSupplyCompany(purchaseAdd.SupplyCompanyId);
+            SupplyCompany attachSupplyCompany = supplyCompanyBussiness.ReadSupplyCompany(purchaseAdd.SupplyCompanyId);
 
-            purchaseAdd.SupplyCompany = attach3;
+            purchaseAdd.SupplyCompany = attachSupplyCompany;
 
             bool introduced_well = purchaseBussiness.InsertPurchaseAndProduct(productAdd, purchaseAdd);
 

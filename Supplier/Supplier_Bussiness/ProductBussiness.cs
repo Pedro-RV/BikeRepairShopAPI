@@ -43,7 +43,7 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool InsertProduct(Product add)
+        public bool InsertProduct(Product productAdd)
         {
             bool ret;
 
@@ -51,7 +51,7 @@ namespace Supplier_Bussiness
             {
                 ProductRepository productRepository = new ProductRepository(dbContext, exceptionController);
 
-                ret = productRepository.Insert(add);
+                ret = productRepository.Insert(productAdd);
 
             }
             catch (SupplierException)

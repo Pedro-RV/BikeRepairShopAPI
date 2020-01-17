@@ -43,7 +43,7 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool InsertWarehouse(Warehouse add)
+        public bool InsertWarehouse(Warehouse warehouseAdd)
         {
             bool ret;
 
@@ -51,7 +51,7 @@ namespace Supplier_Bussiness
             {
                 WarehouseRepository warehouseRepository = new WarehouseRepository(dbContext, exceptionController);
 
-                ret = warehouseRepository.Insert(add);
+                ret = warehouseRepository.Insert(warehouseAdd);
 
             }
             catch (SupplierException)
@@ -70,7 +70,7 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool InsertWarehouseAndAdmin(WarehouseAdmin add1, Warehouse add2)
+        public bool InsertWarehouseAndAdmin(WarehouseAdmin warehouseAdminAdd, Warehouse warehouseAdd)
         {
             bool ret;
 
@@ -78,14 +78,14 @@ namespace Supplier_Bussiness
             {
                 WarehouseAdminRepository warehouseAdminRepository = new WarehouseAdminRepository(dbContext, exceptionController);
 
-                bool ret2 = warehouseAdminRepository.Insert(add1);
+                bool ret2 = warehouseAdminRepository.Insert(warehouseAdminAdd);
 
-                add2.WarehouseAdminId = add1.WarehouseAdminId;
-                add2.WarehouseAdmin = add1;
+                warehouseAdd.WarehouseAdminId = warehouseAdminAdd.WarehouseAdminId;
+                warehouseAdd.WarehouseAdmin = warehouseAdminAdd;
 
                 WarehouseRepository warehouseRepository = new WarehouseRepository(dbContext, exceptionController);
 
-                bool ret3 = warehouseRepository.Insert(add2);
+                bool ret3 = warehouseRepository.Insert(warehouseAdd);
 
                 ret = (ret2 && ret3);
 

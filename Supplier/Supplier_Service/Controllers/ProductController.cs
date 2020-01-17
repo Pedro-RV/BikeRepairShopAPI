@@ -57,13 +57,13 @@ namespace Ejemplo2_ConWebApi.Controllers
             WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();
 
-            Warehouse attach1 = warehouseBussiness.ReadWarehouse(productAdd.WarehouseId);
+            Warehouse attachWarehouse = warehouseBussiness.ReadWarehouse(productAdd.WarehouseId);
 
-            productAdd.Warehouse = attach1;
+            productAdd.Warehouse = attachWarehouse;
 
-            ProductState attach2 = productStateBussiness.ReadProductState(productAdd.ProductStateId);
+            ProductState attachProductState = productStateBussiness.ReadProductState(productAdd.ProductStateId);
 
-            productAdd.ProductState = attach2;
+            productAdd.ProductState = attachProductState;
 
             bool introduced_well = productBussiness.InsertProduct(productAdd);
 

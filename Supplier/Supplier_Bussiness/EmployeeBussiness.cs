@@ -33,7 +33,7 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool InsertEmployee(Employee add)
+        public bool InsertEmployee(Employee employeeAdd)
         {
             bool ret;
 
@@ -41,7 +41,7 @@ namespace Supplier_Bussiness
             {
                 EmployeeRepository employeeRepository = new EmployeeRepository(dbContext, exceptionController);
 
-                ret = employeeRepository.Insert(add);
+                ret = employeeRepository.Insert(employeeAdd);
             }
             catch (SupplierException)
             {

@@ -24,7 +24,7 @@ namespace Supplier_Bussiness
             exceptionController = new ExceptionController();
         }
 
-        public bool InsertWarehouseAdmin(WarehouseAdmin add)
+        public bool InsertWarehouseAdmin(WarehouseAdmin warehouseAdminAdd)
         {
             bool ret;
 
@@ -32,7 +32,7 @@ namespace Supplier_Bussiness
             {
                 WarehouseAdminRepository warehouseAdminRepository = new WarehouseAdminRepository(dbContext, exceptionController);
 
-                ret = warehouseAdminRepository.Insert(add);
+                ret = warehouseAdminRepository.Insert(warehouseAdminAdd);
 
             }
             catch (SupplierException)
