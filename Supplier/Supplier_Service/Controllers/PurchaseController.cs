@@ -1,5 +1,6 @@
 ﻿using Supplier_Bussiness;
 using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,19 @@ namespace Supplier_Service.Controllers
             List<Purchase> request = purchaseBussiness.PurchasesBiggerThanAPrizeList(prize);
 
             return request;
-        }      
+        }
+
+        // GET
+        [HttpGet]
+        [Route("api/purchase/PurchaseDataList")]
+        public List<PurchaseData> PurchaseDataList()
+        {
+            PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
+
+            List<PurchaseData> request = purchaseBussiness.PurchaseDataList();
+
+            return request;
+        }
 
         // GET
         [HttpGet]

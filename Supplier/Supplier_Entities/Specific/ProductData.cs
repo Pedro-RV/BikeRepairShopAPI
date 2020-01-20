@@ -20,10 +20,10 @@ namespace Supplier_Entities.Specific
         [DataMember(Name = "productId")]
         public int ProductId { get; set; }
 
-        [DataMember(Name = "productName")]
+        [DataMember(Name = "productDescription")]
         public string ProductName { get; set; }
 
-        [DataMember(Name = "productStateName")]
+        [DataMember(Name = "productStateDescription")]
         public string ProductStateName { get; set; }
     }
 }

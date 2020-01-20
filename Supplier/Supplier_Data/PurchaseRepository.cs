@@ -6,6 +6,7 @@ using Supplier_Data.Interfaces;
 using System;
 using Supplier_Helper.ExceptionController;
 using System.Collections.Generic;
+using Supplier_Entities.Specific;
 
 namespace Supplier_Data
 {
@@ -24,6 +25,36 @@ namespace Supplier_Data
         public List<Purchase> PurchasesBiggerThanAPrizeList(double prize)
         {
             List<Purchase> ret = dbContext.Purchase.Where(x => x.Prize > prize).ToList();
+
+            return ret;
+        }
+
+        public List<PurchaseData> PurchaseDataList()
+        {
+            var ret = dbContext.Purchase
+                .Join(dbContext.Product,
+                    purchase => purchase.ProductId,
+                    product => product.ProductId,
+                    (purchase, product) => new
+                    {
+                        Purchase = purchase,
+                        Product = product
+                    })
+                .Join(
+                    dbContext.SupplyCompany,
+                    combined => combined.Purchase.SupplyCompanyId,
+                    supplyCompany => supplyCompany.SupplyCompanyId,
+                    (combined, supplyCompany) => new PurchaseData()
+                    {
+                        PurchaseId = combined.Purchase.PurchaseId,
+                        PurchaseDate = combined.Purchase.PurchaseDate,
+                        Cuantity = combined.Purchase.Cuantity,
+                        Prize = combined.Purchase.Prize,
+                        ProductId = combined.Product.ProductId,
+                        ProductDescription = combined.Product.ProductDescription,
+                        SupplyCompanyId = supplyCompany.SupplyCompanyId,
+                        SupplyCompanyName = supplyCompany.SupplyCompanyName
+                    }).ToList();
 
             return ret;
         }

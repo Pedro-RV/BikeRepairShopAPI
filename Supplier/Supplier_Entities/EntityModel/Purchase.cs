@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 
 namespace Supplier_Entities.EntityModel
 {
+    [DataContract]
     [Table("Purchase")]
     public class Purchase
     {
@@ -41,25 +43,33 @@ namespace Supplier_Entities.EntityModel
 
         #region Properties
 
+        [DataMember(Name = "purchaseId")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PurchaseId { get; set; }
 
+        [DataMember(Name = "productId")]
         public int ProductId { get; set; }
 
+        [DataMember(Name = "supplyCompanyId")]
         public int SupplyCompanyId { get; set; }
 
+        [DataMember(Name = "purchaseDate")]
         public DateTime PurchaseDate { get; set; }
 
+        [DataMember(Name = "cuantity")]
         public int Cuantity { get; set; }
 
+        [DataMember(Name = "prize")]
         public double Prize { get; set; }
 
         #endregion
 
         #region Foreing keys
 
+        [DataMember(Name = "product")]
         public Product Product { get; set; }
 
+        [DataMember(Name = "supplyCompany")]
         public SupplyCompany SupplyCompany { get; set; }
 
         #endregion

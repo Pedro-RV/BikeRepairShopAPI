@@ -1,9 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 
 namespace Supplier_Entities.EntityModel
 {
+    [DataContract]
     [Table("Product")]
     public class Product
     {
@@ -43,26 +45,34 @@ namespace Supplier_Entities.EntityModel
 
         #region Properties
 
+        [DataMember(Name = "productId")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProductId { get; set; }
 
+        [DataMember(Name = "warehouseId")]
         public int WarehouseId { get; set; }
 
+        [DataMember(Name = "productStateId")]
         public int ProductStateId { get; set; }
 
+        [DataMember(Name = "productDescription")]
         [MaxLength(100)]
         public string ProductDescription { get; set; }
 
+        [DataMember(Name = "prize")]
         public double Prize { get; set; }
 
+        [DataMember(Name = "cuantity")]
         public int Cuantity { get; set; }
 
         #endregion
 
         #region Foreing keys
 
+        [DataMember(Name = "warehouse")]
         public Warehouse Warehouse { get; set; }
 
+        [DataMember(Name = "productState")]
         public ProductState ProductState { get; set; }
 
         #endregion

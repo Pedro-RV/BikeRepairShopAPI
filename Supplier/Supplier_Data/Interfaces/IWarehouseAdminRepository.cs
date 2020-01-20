@@ -1,4 +1,5 @@
 ﻿using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace Supplier_Data.Interfaces
 {
     public interface IWarehouseAdminRepository
     {
+        List<WarehouseAdminData> WarehouseAdminDataList();
+
         bool Insert(WarehouseAdmin add);
 
         WarehouseAdmin Read(int WarehouseAdminId);

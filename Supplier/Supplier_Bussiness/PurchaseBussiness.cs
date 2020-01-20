@@ -2,6 +2,7 @@
 using Supplier_Data;
 using Supplier_Data.Context;
 using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using Supplier_Helper.ExceptionController;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,15 @@ namespace Supplier_Bussiness
             PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
 
             List<Purchase> ret = purchaseRepository.PurchasesBiggerThanAPrizeList(prize);
+
+            return ret;
+        }
+
+        public List<PurchaseData> PurchaseDataList()
+        {
+            PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
+
+            List<PurchaseData> ret = purchaseRepository.PurchaseDataList();
 
             return ret;
         }

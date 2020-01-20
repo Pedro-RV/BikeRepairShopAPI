@@ -2,6 +2,7 @@
 using Supplier_Data;
 using Supplier_Data.Context;
 using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using Supplier_Helper.ExceptionController;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,15 @@ namespace Supplier_Bussiness
             SupplierContextProvider.InitializeSupplierContext();
             dbContext = SupplierContextProvider.GetSupplierContext();
             exceptionController = new ExceptionController();
+        }
+
+        public List<WarehouseAdminData> WarehouseAdminDataList()
+        {
+            WarehouseAdminRepository warehouseAdminRepository = new WarehouseAdminRepository(dbContext, exceptionController);
+
+            List<WarehouseAdminData> ret = warehouseAdminRepository.WarehouseAdminDataList();
+
+            return ret;
         }
 
         public bool InsertWarehouseAdmin(WarehouseAdmin warehouseAdminAdd)

@@ -5,6 +5,8 @@ using System.Data.Entity;
 using Supplier_Data.Interfaces;
 using System;
 using Supplier_Helper.ExceptionController;
+using Supplier_Entities.Specific;
+using System.Collections.Generic;
 
 namespace Supplier_Data
 {
@@ -18,6 +20,24 @@ namespace Supplier_Data
         {
             this.dbContext = dbContext;
             this.exceptionController = exceptionController;
+        }
+
+        public List<WarehouseAdminData> WarehouseAdminDataList()
+        {
+            var ret = dbContext.WarehouseAdmin
+                .Join(dbContext.Employee,
+                    warehouseAdmin => warehouseAdmin.EmployeeId,
+                    employee => employee.EmployeeId,
+                    (warehouseAdmin, employee) => new WarehouseAdminData()
+                    {
+                        WarehouseAdminId = warehouseAdmin.WarehouseAdminId,
+                        StartDate = warehouseAdmin.StartDate,
+                        EmployeeId = employee.EmployeeId,                  
+                        EmployeeName = employee.EmployeeName,
+                        DNI = employee.DNI
+                    }).ToList();
+
+            return ret;
         }
 
         public bool Insert(WarehouseAdmin add)
@@ -69,7 +89,7 @@ namespace Supplier_Data
             }
             catch (Exception)
             {
-                //throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
             return ret;

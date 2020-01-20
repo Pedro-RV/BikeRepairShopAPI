@@ -1,5 +1,6 @@
 ﻿using Supplier_Bussiness;
 using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,18 @@ namespace Supplier_Service.Controllers
 {
     public class WarehouseAdminController : ApiController
     {
+        // GET
+        [HttpGet]
+        [Route("api/warehouseAdmin/WarehouseAdminDataList")]
+        public List<WarehouseAdminData> WarehouseAdminDataList()
+        {
+            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
+
+            List<WarehouseAdminData> request = warehouseAdminBussiness.WarehouseAdminDataList();
+
+            return request;
+        }
+
         // GET
         [HttpGet]
         [Route("api/warehouseAdmin/GetWarehouseAdmin/{warehouseAdminId}")]
