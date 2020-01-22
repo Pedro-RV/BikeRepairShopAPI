@@ -1,0 +1,9 @@
+﻿# ignore packages
+\packages
+!\packages\repositories.config
+# ignore bin folders
+\*\bin
+# ignore obj folders
+\*\obj
+# ignore .vs folder
+\.vs*
