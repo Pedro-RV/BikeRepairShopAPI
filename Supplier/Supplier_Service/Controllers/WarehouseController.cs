@@ -27,11 +27,11 @@ namespace Supplier_Service.Controllers
         // GET
         [HttpGet]
         [Route("api/warehouse/WarehouseDataList")]
-        public List<WarehouseData> WarehouseDataList()
+        public List<WarehouseData> WarehouseDataList(string warehouseAddress)
         {
             WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
 
-            List<WarehouseData> request = warehouseBussiness.WarehouseDataList();
+            List<WarehouseData> request = warehouseBussiness.WarehouseDataList(warehouseAddress);
 
             return request;
         }

@@ -36,3 +36,6 @@ C:\REPO\becaPedro\Supplier\Supplier_Data\obj\Debug\Supplier_Data.csproj.Generate
 C:\REPO\becaPedro\Supplier\Supplier_Data\obj\Debug\Supplier_Data.csproj.CopyComplete
 C:\REPO\becaPedro\Supplier\Supplier_Data\obj\Debug\Supplier_Data.exe
 C:\REPO\becaPedro\Supplier\Supplier_Data\obj\Debug\Supplier_Data.pdb
+C:\REPO\becaPedro\Supplier\Supplier_Data\obj\Debug\Supplier_Data.Context.Migrations.Segunda.resources
+C:\REPO\becaPedro\Supplier\Supplier_Data\bin\Debug\Dapper.dll
+C:\REPO\becaPedro\Supplier\Supplier_Data\bin\Debug\Dapper.xml

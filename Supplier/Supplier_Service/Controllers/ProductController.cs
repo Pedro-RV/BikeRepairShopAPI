@@ -8,7 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace Ejemplo2_ConWebApi.Controllers
+namespace Supplier_Service.Controllers
 {
     public class ProductController : ApiController
     {

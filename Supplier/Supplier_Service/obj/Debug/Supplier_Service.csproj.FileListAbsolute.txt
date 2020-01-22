@@ -105,3 +105,5 @@ C:\REPO\becaPedro\Supplier\Supplier_Service\obj\Debug\Supplier_Service.pdb
 C:\REPO\becaPedro\Supplier\Supplier_Service\obj\Debug\Supplier_Service.csprojAssemblyReference.cache
 C:\REPO\becaPedro\Supplier\Supplier_Service\bin\EntityFramework.SqlServer.dll
 C:\REPO\becaPedro\Supplier\Supplier_Service\bin\EntityFramework.SqlServer.xml
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\Dapper.dll
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\Dapper.xml

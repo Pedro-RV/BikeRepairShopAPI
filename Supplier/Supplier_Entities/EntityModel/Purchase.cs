@@ -31,7 +31,7 @@ namespace Supplier_Entities.EntityModel
 
             this.SupplyCompany = SupplyCompany;
 
-            if (Product != null)
+            if (SupplyCompany != null)
             {
                 this.SupplyCompanyId = SupplyCompany.SupplyCompanyId;
             }

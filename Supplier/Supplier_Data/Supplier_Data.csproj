@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.0.30\lib\net461\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.3.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -44,6 +47,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -67,6 +71,10 @@
     <Compile Include="Migrations\201912190935298_Primera.cs" />
     <Compile Include="Migrations\201912190935298_Primera.designer.cs">
       <DependentUpon>201912190935298_Primera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001210917383_Segunda.cs" />
+    <Compile Include="Migrations\202001210917383_Segunda.designer.cs">
+      <DependentUpon>202001210917383_Segunda.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProductRepository.cs" />
@@ -95,6 +103,11 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201912190935298_Primera.resx">
       <DependentUpon>201912190935298_Primera.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001210917383_Segunda.resx">
+      <DependentUpon>202001210917383_Segunda.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

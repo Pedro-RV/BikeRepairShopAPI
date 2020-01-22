@@ -30,7 +30,6 @@ namespace Supplier_Data
 
         public bool Insert(Employee add)
         {
-            //Comentario de prueba
             bool result;
 
             try

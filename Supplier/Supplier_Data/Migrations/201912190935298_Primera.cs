@@ -101,6 +101,7 @@
                     })
                 .PrimaryKey(t => t.SupplyCompanyId);
 
+
             string path = Path.GetFullPath("../../");
             string sqlFile = path + "CrearEmpleado_Supplier_CodeFirst.sql";
             Sql(File.ReadAllText(sqlFile));

@@ -94,7 +94,7 @@ namespace Bussiness_Tests
         }
 
         [Test]
-        public void Read_Test()
+        public void ReadPurchase_Test()
         {
             PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
 
@@ -109,7 +109,7 @@ namespace Bussiness_Tests
         }
 
         [Test]
-        public void Update_Test()
+        public void UpdatePurchase_Test()
         {
             bool correct;
             PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
@@ -129,7 +129,7 @@ namespace Bussiness_Tests
         }
 
         [Test]
-        public void Delete_Test()
+        public void DeletePurchase_Test()
         {
             bool correct;
             PurchaseBussiness purchaseBussiness = new PurchaseBussiness();

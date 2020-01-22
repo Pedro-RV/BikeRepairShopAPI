@@ -1,13 +1,6 @@
 ﻿using NUnit.Framework;
-using Supplier_Data;
 using Supplier_Data.Context;
-using Supplier_Entities.EntityModel;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data_Tests
 {
@@ -27,7 +20,7 @@ namespace Data_Tests
             string del = path + "Supplier_Data.Context.SupplierContext_log.ldf";
             File.Delete(del);
             File.Copy(sourceFile, destFile, true);
-            
+
         }
 
     }

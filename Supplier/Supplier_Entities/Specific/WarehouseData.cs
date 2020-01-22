@@ -15,25 +15,21 @@ namespace Supplier_Entities.Specific
 
         }
 
-        public WarehouseData(int WarehouseId, string Address, string DNI, string Email)
+        public WarehouseData(int WarehouseId, string WarehouseAddress, EmployeeWarehouseData EmployeeWarehouseData)
         {
             this.WarehouseId = WarehouseId;
-            this.Address = Address;
-            this.DNI = DNI;
-            this.Email = Email;
+            this.WarehouseAddress = WarehouseAddress;
+            this.EmployeeWarehouseData = EmployeeWarehouseData;
         }
 
         [DataMember(Name = "warehouseId")]
         public int WarehouseId { get; set; }
 
-        [DataMember(Name = "address")]
-        public string Address { get; set; }
+        [DataMember(Name = "warehouseAddress")]
+        public string WarehouseAddress { get; set; }
 
-        [DataMember(Name = "DNI")]
-        public string DNI { get; set; }
-
-        [DataMember(Name = "email")]
-        public string Email { get; set; }
+        [DataMember(Name = "employeeWarehouseData")]
+        public EmployeeWarehouseData EmployeeWarehouseData;
 
     }
 }

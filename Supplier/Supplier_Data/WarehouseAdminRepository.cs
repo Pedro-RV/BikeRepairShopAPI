@@ -71,7 +71,7 @@ namespace Supplier_Data
 
         public WarehouseAdmin Read(int WarehouseAdminId)
         {
-            WarehouseAdmin ret = new WarehouseAdmin(); //
+            WarehouseAdmin ret = new WarehouseAdmin();
 
             try
             {
@@ -148,7 +148,7 @@ namespace Supplier_Data
             }
             catch (Exception)
             {
-                //throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
             return ret;

@@ -14,6 +14,8 @@ namespace Supplier_Data.Interfaces
 
         List<WarehouseData> WarehouseDataList();
 
+        List<WarehouseData> WarehouseDataListWithDapper(string warehouseAddress);
+
         bool Insert(Warehouse add);
 
         Warehouse Read(int WarehouseId);

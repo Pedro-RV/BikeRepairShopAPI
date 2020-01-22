@@ -24,7 +24,7 @@ namespace Bussiness_Tests
         }
 
         [Test]
-        public void Insert_Test()
+        public void InsertProductState_Test()
         {
             bool correct;
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();
@@ -39,7 +39,7 @@ namespace Bussiness_Tests
         }
 
         [Test]
-        public void Read_Test()
+        public void ReadProductState_Test()
         {
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();
 
@@ -50,7 +50,7 @@ namespace Bussiness_Tests
         }
 
         [Test]
-        public void Update_Test()
+        public void UpdateProductState_Test()
         {
             bool correct;
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();
@@ -68,7 +68,7 @@ namespace Bussiness_Tests
         }
 
         [Test]
-        public void Delete_Test()
+        public void DeleteProductState_Test()
         {
             bool correct;
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();

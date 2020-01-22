@@ -63,20 +63,20 @@ namespace Supplier_Bussiness
                 ret = supplyCompanyRepository.Read(SupplyCompanyId);
 
             }
-            catch (SupplierException)
-            {
-                throw;
-            }
-            catch (MissingMethodException)
-            {
-                throw this.exceptionController.CreateMyException(ExceptionEnum.MethodNotExist);
-            }
-            catch (Exception)
-            {
-                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
-            }
+                catch (SupplierException)
+                {
+                    throw;
+                }
+                catch (MissingMethodException)
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.MethodNotExist);
+                }
+                catch (Exception)
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+                }
 
-            return ret;
+                return ret;
         }
 
         public bool UpdateSupplyCompany(SupplyCompany update)

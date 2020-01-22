@@ -12,7 +12,7 @@ namespace Supplier_Bussiness.Interfaces
     {
         List<Warehouse> WarehousesBiggerThanAnExtensionList(int extension);
 
-        List<WarehouseData> WarehouseDataList();
+        List<WarehouseData> WarehouseDataList(string warehouseAddress);
 
         bool InsertWarehouse(Warehouse warehouseAdd);
 

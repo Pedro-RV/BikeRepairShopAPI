@@ -24,7 +24,7 @@ namespace Bussiness_Tests
         }
 
         [Test]
-        public void Insert_Test()
+        public void InsertSupplyCompany_Test()
         {
             bool correct;
             SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
@@ -40,7 +40,7 @@ namespace Bussiness_Tests
         }
 
         [Test]
-        public void Read_Test()
+        public void ReadSupplyCompany_Test()
         {
             SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
 
@@ -52,7 +52,7 @@ namespace Bussiness_Tests
         }
 
         [Test]
-        public void Update_Test()
+        public void UpdateSupplyCompany_Test()
         {
             bool correct;
             SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
@@ -72,7 +72,7 @@ namespace Bussiness_Tests
         }
 
         [Test]
-        public void Delete_Test()
+        public void DeleteSupplyCompany_Test()
         {
             bool correct;
             SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();

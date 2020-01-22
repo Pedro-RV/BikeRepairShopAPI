@@ -64,10 +64,12 @@
     <Compile Include="EntityModel\SupplyCompany.cs" />
     <Compile Include="EntityModel\Warehouse.cs" />
     <Compile Include="EntityModel\WarehouseAdmin.cs" />
+    <Compile Include="Specific\EmployeeWarehouseData.cs" />
     <Compile Include="Specific\ProductData.cs" />
     <Compile Include="Specific\PurchaseData.cs" />
     <Compile Include="Specific\WarehouseAdminData.cs" />
     <Compile Include="Specific\WarehouseData.cs" />
+    <Compile Include="Specific\WarehouseData_Aux.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

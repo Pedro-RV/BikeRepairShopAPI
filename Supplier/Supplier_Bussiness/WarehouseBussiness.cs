@@ -34,11 +34,14 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public List<WarehouseData> WarehouseDataList()
+        public List<WarehouseData> WarehouseDataList(string warehouseAddress)
         {
             WarehouseRepository warehouseRepository = new WarehouseRepository(dbContext, exceptionController);
 
-            List<WarehouseData> ret = warehouseRepository.WarehouseDataList();
+            //List<WarehouseData> ret = warehouseRepository.WarehouseDataList();
+
+            //Llamar a la de Dapper
+            List<WarehouseData> ret = warehouseRepository.WarehouseDataListWithDapper(warehouseAddress);
 
             return ret;
         }
