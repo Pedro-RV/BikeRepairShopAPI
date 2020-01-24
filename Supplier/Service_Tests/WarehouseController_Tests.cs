@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using Supplier_Service.Controllers;
 using System;
 using System.Collections.Generic;
@@ -15,18 +16,12 @@ namespace Service_Tests
         [TestFixtureSetUp]
         public void Init()
         {
-            EmployeeController employeeController = new EmployeeController();
-            employeeController.InsertEmployee(new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
-            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
-            WarehouseAdminController warehouseAdminController = new WarehouseAdminController();
-            warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeController.GetEmployee(1)));
-
             WarehouseController warehouseController = new WarehouseController();
 
-            warehouseController.InsertWarehouse(new Warehouse("Calle Ebro", 120, warehouseAdminController.GetWarehouseAdmin(1)));
-            warehouseController.InsertWarehouse(new Warehouse("Calle Guadalquivir", 200, warehouseAdminController.GetWarehouseAdmin(1)));
-            warehouseController.InsertWarehouse(new Warehouse("Calle Genil", 180, warehouseAdminController.GetWarehouseAdmin(1)));
-            warehouseController.InsertWarehouse(new Warehouse("Avenida Pajaro Carpintero", 150, warehouseAdminController.GetWarehouseAdmin(1)));
+            warehouseController.InsertWarehouse(new WarehouseSpecific("Calle Ebro", 120));
+            warehouseController.InsertWarehouse(new WarehouseSpecific("Calle Guadalquivir", 200));
+            warehouseController.InsertWarehouse(new WarehouseSpecific("Calle Genil", 180));
+            warehouseController.InsertWarehouse(new WarehouseSpecific("Avenida Pajaro Carpintero", 150));
 
         }
 
@@ -46,31 +41,12 @@ namespace Service_Tests
         public void InsertWarehouse_Test()
         {
             WarehouseController warehouseController = new WarehouseController();
-            WarehouseAdminController warehouseAdminController = new WarehouseAdminController();
 
-            String message = warehouseController.InsertWarehouse(new Warehouse("Calle Tajo", 300, warehouseAdminController.GetWarehouseAdmin(1)));
+            String message = warehouseController.InsertWarehouse(new WarehouseSpecific("Calle Tajo", 300));
 
             Warehouse warehouseGotten = warehouseController.GetWarehouse(5);
 
             Assert.AreEqual(message, "Warehouse introduced satisfactorily.");
-            Assert.AreEqual(warehouseGotten.WarehouseAddress, "Calle Tajo");
-            Assert.AreEqual(warehouseGotten.Extension, 300);
-
-        }
-
-        [Test]
-        public void InsertWarehouseAndAdmin_Test()
-        {
-            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
-
-            WarehouseController warehouseController = new WarehouseController();
-            EmployeeController employeeController = new EmployeeController();
-
-            String message = warehouseController.InsertWarehouseAndAdmin(new WarehouseAdmin(dateTime, employeeController.GetEmployee(1)), new Warehouse("Calle Tajo", 300, null));
-
-            Warehouse warehouseGotten = warehouseController.GetWarehouse(6);
-
-            Assert.AreEqual(message, "WarehouseAdmin and Warehouse introduced satisfactorily.");
             Assert.AreEqual(warehouseGotten.WarehouseAddress, "Calle Tajo");
             Assert.AreEqual(warehouseGotten.Extension, 300);
 
@@ -93,7 +69,8 @@ namespace Service_Tests
         {
             WarehouseController warehouseController = new WarehouseController();
 
-            Warehouse change = warehouseController.GetWarehouse(2);
+            WarehouseSpecific change = new WarehouseSpecific();
+            change.WarehouseId = 2;
             change.WarehouseAddress = "Calle Nilo";
             change.Extension = 1000;
 

@@ -1,4 +1,5 @@
-﻿using Supplier_Bussiness.Interfaces;
+﻿using AutoMapper;
+using Supplier_Bussiness.Interfaces;
 using Supplier_Data;
 using Supplier_Data.Context;
 using Supplier_Entities.EntityModel;
@@ -18,11 +19,20 @@ namespace Supplier_Bussiness
 
         private ExceptionController exceptionController;
 
+        private IMapper mapper;
+
         public WarehouseBussiness()
         {
             SupplierContextProvider.InitializeSupplierContext();
             dbContext = SupplierContextProvider.GetSupplierContext();
             exceptionController = new ExceptionController();
+
+
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<WarehouseSpecific, Warehouse>();
+            });
+
+            mapper = config.CreateMapper();
         }
 
         public List<Warehouse> WarehousesBiggerThanAnExtensionList(int extension)
@@ -32,27 +42,17 @@ namespace Supplier_Bussiness
             List<Warehouse> ret = warehouseRepository.WarehousesBiggerThanAnExtensionList(extension);
 
             return ret;
-        }
+        }      
 
-        public List<WarehouseData> WarehouseDataList(string warehouseAddress)
-        {
-            WarehouseRepository warehouseRepository = new WarehouseRepository(dbContext, exceptionController);
-
-            //List<WarehouseData> ret = warehouseRepository.WarehouseDataList();
-
-            //Llamar a la de Dapper
-            List<WarehouseData> ret = warehouseRepository.WarehouseDataListWithDapper(warehouseAddress);
-
-            return ret;
-        }
-
-        public bool InsertWarehouse(Warehouse warehouseAdd)
+        public bool InsertWarehouse(WarehouseSpecific warehouseSpecific)
         {
             bool ret;
 
             try
             {
                 WarehouseRepository warehouseRepository = new WarehouseRepository(dbContext, exceptionController);
+
+                Warehouse warehouseAdd = mapper.Map<WarehouseSpecific, Warehouse>(warehouseSpecific);
 
                 ret = warehouseRepository.Insert(warehouseAdd);
 
@@ -71,43 +71,7 @@ namespace Supplier_Bussiness
             }
 
             return ret;
-        }
-
-        public bool InsertWarehouseAndAdmin(WarehouseAdmin warehouseAdminAdd, Warehouse warehouseAdd)
-        {
-            bool ret;
-
-            try
-            {
-                WarehouseAdminRepository warehouseAdminRepository = new WarehouseAdminRepository(dbContext, exceptionController);
-
-                bool ret2 = warehouseAdminRepository.Insert(warehouseAdminAdd);
-
-                warehouseAdd.WarehouseAdminId = warehouseAdminAdd.WarehouseAdminId;
-                warehouseAdd.WarehouseAdmin = warehouseAdminAdd;
-
-                WarehouseRepository warehouseRepository = new WarehouseRepository(dbContext, exceptionController);
-
-                bool ret3 = warehouseRepository.Insert(warehouseAdd);
-
-                ret = (ret2 && ret3);
-
-            }
-            catch (SupplierException)
-            {
-                throw;
-            }
-            catch (MissingMethodException)
-            {
-                throw this.exceptionController.CreateMyException(ExceptionEnum.MethodNotExist);
-            }
-            catch (Exception)
-            {
-                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
-            }
-
-            return ret;
-        }
+        }       
 
         public Warehouse ReadWarehouse(int WarehouseId)
         {
@@ -136,7 +100,7 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool UpdateWarehouse(Warehouse update)
+        public bool UpdateWarehouse(WarehouseSpecific update)
         {
             bool ret;
 
@@ -147,9 +111,7 @@ namespace Supplier_Bussiness
                 Warehouse current = warehouseRepository.Read(update.WarehouseId);
 
                 current.WarehouseAddress = !String.IsNullOrEmpty(update.WarehouseAddress) ? update.WarehouseAddress : current.WarehouseAddress;
-                current.Extension = update.Extension != 0 ? update.Extension : current.Extension;
-                current.WarehouseAdmin = update.WarehouseAdmin != null ? update.WarehouseAdmin : current.WarehouseAdmin;
-                current.WarehouseAdminId = update.WarehouseAdmin != null ? update.WarehouseAdminId : current.WarehouseAdminId;
+                current.Extension = update.Extension != 0 ? update.Extension : current.Extension;            
 
                 ret = warehouseRepository.Update(current);
 

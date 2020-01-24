@@ -1,4 +1,5 @@
-﻿using Supplier_Bussiness.Interfaces;
+﻿using AutoMapper;
+using Supplier_Bussiness.Interfaces;
 using Supplier_Data;
 using Supplier_Data.Context;
 using Supplier_Entities.EntityModel;
@@ -19,11 +20,21 @@ namespace Supplier_Bussiness
 
         private ExceptionController exceptionController;
 
+        private IMapper mapper;
+
         public PurchaseBussiness()
         {
             SupplierContextProvider.InitializeSupplierContext();
             dbContext = SupplierContextProvider.GetSupplierContext();
             exceptionController = new ExceptionController();
+
+
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<PurchaseSpecific, Purchase>();
+            });
+
+            mapper = config.CreateMapper();
+
         }
 
         public List<Purchase> PurchasesBiggerThanAPrizeList(double prize)
@@ -44,51 +55,31 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool InsertPurchase(Purchase purchaseAdd)
+        public bool InsertPurchase(PurchaseSpecific purchaseSpecific)
         {
             bool ret;
 
             try
             {
                 PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
+                ProductBussiness productBussiness = new ProductBussiness();
+                SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
+
+                Purchase purchaseAdd = mapper.Map<PurchaseSpecific, Purchase>(purchaseSpecific);
+
+                if (purchaseAdd.SupplyCompanyId != 0)
+                {
+                    SupplyCompany supplyCompanyAttach = supplyCompanyBussiness.ReadSupplyCompany(purchaseAdd.SupplyCompanyId);
+                    purchaseAdd.SupplyCompany = supplyCompanyAttach;
+                }
+
+                if (purchaseAdd.ProductId != 0)
+                {
+                    Product productAttach = productBussiness.ReadProduct(purchaseAdd.ProductId);
+                    purchaseAdd.Product = productAttach;
+                }
 
                 ret = purchaseRepository.Insert(purchaseAdd);
-
-            }
-            catch (SupplierException)
-            {
-                throw;
-            }
-            catch (MissingMethodException)
-            {
-                throw this.exceptionController.CreateMyException(ExceptionEnum.MethodNotExist);
-            }
-            catch (Exception)
-            {
-                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
-            }
-
-            return ret;
-        }
-
-        public bool InsertPurchaseAndProduct(Product productAdd, Purchase purchaseAdd)
-        {
-            bool ret;
-
-            try
-            {
-                ProductRepository productRepository = new ProductRepository(dbContext, exceptionController);
-
-                bool ret2 = productRepository.Insert(productAdd);
-
-                purchaseAdd.ProductId = productAdd.ProductId;
-                purchaseAdd.Product = productAdd;
-
-                PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
-
-                bool ret3 = purchaseRepository.Insert(purchaseAdd);
-
-                ret = (ret2 && ret3);
 
             }
             catch (SupplierException)
@@ -134,23 +125,35 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool UpdatePurchase(Purchase update)
+        public bool UpdatePurchase(PurchaseSpecific update)
         {
             bool ret;
 
             try
             {
                 PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
+                ProductBussiness productBussiness = new ProductBussiness();
+                SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
 
                 Purchase current = purchaseRepository.Read(update.PurchaseId);
 
                 current.PurchaseDate = update.PurchaseDate.Year != 1 ? update.PurchaseDate : current.PurchaseDate;
                 current.Cuantity = update.Cuantity != 0 ? update.Cuantity : current.Cuantity;
                 current.Prize = update.Prize != 0 ? update.Prize : current.Prize;
-                current.Product = update.Product != null ? update.Product : current.Product;
-                current.ProductId = update.Product != null ? update.ProductId : current.ProductId;
-                current.SupplyCompany = update.SupplyCompany != null ? update.SupplyCompany : current.SupplyCompany;
-                current.SupplyCompanyId = update.SupplyCompany != null ? update.SupplyCompanyId : current.SupplyCompanyId;
+
+                if (update.SupplyCompanyId != 0)
+                {
+                    current.SupplyCompanyId = update.SupplyCompanyId;
+                    SupplyCompany supplyCompanyAttach = supplyCompanyBussiness.ReadSupplyCompany(current.SupplyCompanyId);
+                    current.SupplyCompany = supplyCompanyAttach;
+                }
+
+                if (update.ProductId != 0)
+                {
+                    current.ProductId = update.ProductId;
+                    Product productAttach = productBussiness.ReadProduct(current.ProductId);
+                    current.Product = productAttach;
+                }
 
                 ret = purchaseRepository.Update(current);
 

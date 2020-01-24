@@ -17,20 +17,20 @@ namespace Service_Tests
         public void Init()
         {
             EmployeeController employeeController = new EmployeeController();
-            employeeController.InsertEmployee(new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
-            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
-            WarehouseAdminController warehouseAdminController = new WarehouseAdminController();
-            warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeController.GetEmployee(1)));
+            employeeController.InsertEmployee(new EmployeeSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
+            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);            
             WarehouseController warehouseController = new WarehouseController();
-            warehouseController.InsertWarehouse(new Warehouse("Calle Ebro", 120, warehouseAdminController.GetWarehouseAdmin(1)));
+            warehouseController.InsertWarehouse(new WarehouseSpecific("Calle Ebro", 120));
+            WarehouseAdminController warehouseAdminController = new WarehouseAdminController();
+            warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
             ProductStateController productStateController = new ProductStateController();
-            productStateController.InsertProductState(new ProductState("No disponible"));
+            productStateController.InsertProductState(new ProductStateSpecific("No disponible"));
 
             ProductController productController = new ProductController();
 
-            productController.InsertProduct(new Product("Pelota", 20, 5, warehouseController.GetWarehouse(1), productStateController.GetProductState(1)));
-            productController.InsertProduct(new Product("Peine", 4, 10, warehouseController.GetWarehouse(1), productStateController.GetProductState(1)));
-            productController.InsertProduct(new Product("Zapatillas Adidas", 80, 15, warehouseController.GetWarehouse(1), productStateController.GetProductState(1)));
+            productController.InsertProduct(new ProductSpecific("Pelota", 20, 5, 1, 1));
+            productController.InsertProduct(new ProductSpecific("Peine", 4, 10, 1, 1));
+            productController.InsertProduct(new ProductSpecific("Zapatillas Adidas", 80, 15, 1, 1));
 
         }
 
@@ -67,10 +67,8 @@ namespace Service_Tests
         public void InsertProduct_Test()
         {
             ProductController productController = new ProductController();
-            WarehouseController warehouseController = new WarehouseController();
-            ProductStateController productStateController = new ProductStateController();
 
-            String message = productController.InsertProduct(new Product("Teclado", 60, 20, warehouseController.GetWarehouse(1), productStateController.GetProductState(1)));
+            String message = productController.InsertProduct(new ProductSpecific("Teclado", 60, 20, 1, 1));
 
             Product productGotten = productController.GetProduct(4);
 
@@ -99,7 +97,8 @@ namespace Service_Tests
         {
             ProductController productController = new ProductController();
 
-            Product change = productController.GetProduct(2);
+            ProductSpecific change = new ProductSpecific();
+            change.ProductId = 2;
             change.ProductDescription = "Secador";
             change.Prize = 50;
 

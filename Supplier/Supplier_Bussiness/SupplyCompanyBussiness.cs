@@ -1,7 +1,9 @@
-﻿using Supplier_Bussiness.Interfaces;
+﻿using AutoMapper;
+using Supplier_Bussiness.Interfaces;
 using Supplier_Data;
 using Supplier_Data.Context;
 using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using Supplier_Helper.ExceptionController;
 using System;
 using System.Collections.Generic;
@@ -18,20 +20,31 @@ namespace Supplier_Bussiness
 
         private ExceptionController exceptionController;
 
+        private IMapper mapper;
+
         public SupplyCompanyBussiness()
         {
             SupplierContextProvider.InitializeSupplierContext();
             dbContext = SupplierContextProvider.GetSupplierContext();
             exceptionController = new ExceptionController();
+
+
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<SupplyCompanySpecific, SupplyCompany>();
+            });
+
+            mapper = config.CreateMapper();
         }
 
-        public bool InsertSupplyCompany(SupplyCompany supplyCompanyAdd)
+        public bool InsertSupplyCompany(SupplyCompanySpecific supplyCompanySpecific)
         {
             bool ret;
 
             try
             {
                 SupplyCompanyRepository supplyCompanyRepository = new SupplyCompanyRepository(dbContext, exceptionController);
+
+                SupplyCompany supplyCompanyAdd = mapper.Map<SupplyCompanySpecific, SupplyCompany>(supplyCompanySpecific);
 
                 ret = supplyCompanyRepository.Insert(supplyCompanyAdd);
 
@@ -79,7 +92,7 @@ namespace Supplier_Bussiness
                 return ret;
         }
 
-        public bool UpdateSupplyCompany(SupplyCompany update)
+        public bool UpdateSupplyCompany(SupplyCompanySpecific update)
         {
             bool ret;
 

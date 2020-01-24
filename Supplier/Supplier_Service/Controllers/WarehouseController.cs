@@ -26,18 +26,6 @@ namespace Supplier_Service.Controllers
 
         // GET
         [HttpGet]
-        [Route("api/warehouse/WarehouseDataList")]
-        public List<WarehouseData> WarehouseDataList(string warehouseAddress)
-        {
-            WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
-
-            List<WarehouseData> request = warehouseBussiness.WarehouseDataList(warehouseAddress);
-
-            return request;
-        }
-
-        // GET
-        [HttpGet]
         [Route("api/warehouse/GetWarehouse/{warehouseId}")]
         public Warehouse GetWarehouse(int warehouseId)
         {
@@ -51,16 +39,11 @@ namespace Supplier_Service.Controllers
         // POST
         [HttpPost]
         [Route("api/warehouse/InsertWarehouse")]
-        public string InsertWarehouse(Warehouse warehouseAdd)
+        public string InsertWarehouse(WarehouseSpecific warehouseSpecific)
         {
             WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
-            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
 
-            WarehouseAdmin attachWarehouseAdmin = warehouseAdminBussiness.ReadWarehouseAdmin(warehouseAdd.WarehouseAdminId);
-
-            warehouseAdd.WarehouseAdmin = attachWarehouseAdmin;
-
-            bool introduced_well = warehouseBussiness.InsertWarehouse(warehouseAdd);
+            bool introduced_well = warehouseBussiness.InsertWarehouse(warehouseSpecific);
 
             if (introduced_well == true)
             {
@@ -71,37 +54,12 @@ namespace Supplier_Service.Controllers
                 return "Error !!! Warehouse could not be introduced.";
             }
 
-        }
-
-        // POST
-        [HttpPost]
-        [Route("api/warehouse/InsertWarehouseAndAdmin")]
-        public string InsertWarehouseAndAdmin(WarehouseAdmin warehouseAdminAdd, Warehouse warehouseAdd)
-        {
-            WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
-            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
-
-            Employee attachEmployee = employeeBussiness.ReadEmployee(warehouseAdminAdd.EmployeeId);
-
-            warehouseAdminAdd.Employee = attachEmployee;
-
-            bool introduced_well = warehouseBussiness.InsertWarehouseAndAdmin(warehouseAdminAdd, warehouseAdd);
-
-            if (introduced_well == true)
-            {
-                return "WarehouseAdmin and Warehouse introduced satisfactorily.";
-            }
-            else
-            {
-                return "Error !!! WarehouseAdmin and Warehouse could not be introduced.";
-            }
-
-        }
+        }        
 
         // PUT
         [HttpPut]
         [Route("api/warehouse/UpdateWarehouse")]
-        public string UpdateWarehouse(Warehouse update)
+        public string UpdateWarehouse(WarehouseSpecific update)
         {
             WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
 

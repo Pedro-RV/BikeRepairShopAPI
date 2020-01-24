@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using Supplier_Service.Controllers;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,9 @@ namespace Service_Tests
         {
             ProductStateController productStateController = new ProductStateController();
 
-            productStateController.InsertProductState(new ProductState("No disponible"));
-            productStateController.InsertProductState(new ProductState("Sin existencias"));
-            productStateController.InsertProductState(new ProductState("Con existencias"));
+            productStateController.InsertProductState(new ProductStateSpecific("No disponible"));
+            productStateController.InsertProductState(new ProductStateSpecific("Sin existencias"));
+            productStateController.InsertProductState(new ProductStateSpecific("Con existencias"));
 
         }
 
@@ -28,7 +29,7 @@ namespace Service_Tests
         {
             ProductStateController productStateController = new ProductStateController();
 
-            String message = productStateController.InsertProductState(new ProductState("Fuera de venta"));
+            String message = productStateController.InsertProductState(new ProductStateSpecific("Fuera de venta"));
 
             ProductState productStateGotten = productStateController.GetProductState(4);
 
@@ -53,7 +54,8 @@ namespace Service_Tests
         {
             ProductStateController productStateController = new ProductStateController();
 
-            ProductState change = productStateController.GetProductState(2);
+            ProductStateSpecific change = new ProductStateSpecific();
+            change.ProductStateId = 2;
             change.ProductStateDescription = "Agotado";
 
             String message = productStateController.UpdateProductState(change);

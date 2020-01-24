@@ -12,15 +12,11 @@ namespace Supplier_Bussiness.Interfaces
     {
         List<Warehouse> WarehousesBiggerThanAnExtensionList(int extension);
 
-        List<WarehouseData> WarehouseDataList(string warehouseAddress);
-
-        bool InsertWarehouse(Warehouse warehouseAdd);
-
-        bool InsertWarehouseAndAdmin(WarehouseAdmin warehouseAdminAdd, Warehouse warehouseAdd);
+        bool InsertWarehouse(WarehouseSpecific warehouseSpecific);
 
         Warehouse ReadWarehouse(int WarehouseId);
 
-        bool UpdateWarehouse(Warehouse update);
+        bool UpdateWarehouse(WarehouseSpecific update);
 
         bool DeleteWarehouse(int WarehouseId);
     }

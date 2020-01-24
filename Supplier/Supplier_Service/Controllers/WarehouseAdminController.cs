@@ -15,11 +15,11 @@ namespace Supplier_Service.Controllers
         // GET
         [HttpGet]
         [Route("api/warehouseAdmin/WarehouseAdminDataList")]
-        public List<WarehouseAdminData> WarehouseAdminDataList()
+        public List<WarehouseAdminData> WarehouseAdminDataList(string warehouseAddress)
         {
             WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
 
-            List<WarehouseAdminData> request = warehouseAdminBussiness.WarehouseAdminDataList();
+            List<WarehouseAdminData> request = warehouseAdminBussiness.WarehouseAdminDataList(warehouseAddress);
 
             return request;
         }
@@ -39,16 +39,11 @@ namespace Supplier_Service.Controllers
         // POST
         [HttpPost]
         [Route("api/warehouseAdmin/InsertWarehouseAdmin")]
-        public string InsertWarehouseAdmin(WarehouseAdmin warehouseAdminAdd)
+        public string InsertWarehouseAdmin(WarehouseAdminSpecific warehouseAdminSpecific)
         {
             WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
-            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
 
-            Employee attachEmployee = employeeBussiness.ReadEmployee(warehouseAdminAdd.EmployeeId);
-
-            warehouseAdminAdd.Employee = attachEmployee;
-
-            bool introduced_well = warehouseAdminBussiness.InsertWarehouseAdmin(warehouseAdminAdd);
+            bool introduced_well = warehouseAdminBussiness.InsertWarehouseAdmin(warehouseAdminSpecific);
 
             if (introduced_well == true)
             {
@@ -64,7 +59,7 @@ namespace Supplier_Service.Controllers
         // PUT
         [HttpPut]
         [Route("api/warehouseAdmin/UpdateWarehouseAdmin")]
-        public string UpdateWarehouseAdmin(WarehouseAdmin update)
+        public string UpdateWarehouseAdmin(WarehouseAdminSpecific update)
         {
             WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
 

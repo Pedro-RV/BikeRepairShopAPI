@@ -1,4 +1,5 @@
 ﻿using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace Supplier_Bussiness.Interfaces
 {
     public interface ISupplyCompanyBussiness
     {
-        bool InsertSupplyCompany(SupplyCompany supplyCompanyAdd);
+        bool InsertSupplyCompany(SupplyCompanySpecific supplyCompanySpecific);
 
         SupplyCompany ReadSupplyCompany(int SupplyCompanyId);
 
-        bool UpdateSupplyCompany(SupplyCompany update);
+        bool UpdateSupplyCompany(SupplyCompanySpecific update);
 
         bool DeleteSupplyCompany(int SupplyCompanyId);
     }

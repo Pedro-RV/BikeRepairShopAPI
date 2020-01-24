@@ -1,5 +1,6 @@
 ﻿using Supplier_Bussiness;
 using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,11 +27,11 @@ namespace Supplier_Service.Controllers
         // POST
         [HttpPost]
         [Route("api/supplyCompany/InsertSupplyCompany")]
-        public string InsertSupplyCompany(SupplyCompany supplyCompanyAdd)
+        public string InsertSupplyCompany(SupplyCompanySpecific supplyCompanySpecific)
         {
             SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
 
-            bool introduced_well = supplyCompanyBussiness.InsertSupplyCompany(supplyCompanyAdd);
+            bool introduced_well = supplyCompanyBussiness.InsertSupplyCompany(supplyCompanySpecific);
 
             if (introduced_well == true)
             {
@@ -46,7 +47,7 @@ namespace Supplier_Service.Controllers
         // PUT
         [HttpPut]
         [Route("api/supplyCompany/UpdateSupplyCompany")]
-        public string UpdateSupplyCompany(SupplyCompany update)
+        public string UpdateSupplyCompany(SupplyCompanySpecific update)
         {
             SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
 

@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Supplier_Bussiness;
 using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,26 +17,26 @@ namespace Bussiness_Tests
         public void Init()
         {
             EmployeeBussiness employeeBussiness = new EmployeeBussiness();
-            employeeBussiness.InsertEmployee(new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
-            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
-            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
-            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeBussiness.ReadEmployee(1)));
+            employeeBussiness.InsertEmployee(new EmployeeSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
+            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);            
             WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
-            warehouseBussiness.InsertWarehouse(new Warehouse("Calle Ebro", 120, warehouseAdminBussiness.ReadWarehouseAdmin(1)));
+            warehouseBussiness.InsertWarehouse(new WarehouseSpecific("Calle Ebro", 120));
+            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
+            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();
-            productStateBussiness.InsertProductState(new ProductState("No disponible"));
+            productStateBussiness.InsertProductState(new ProductStateSpecific("No disponible"));
             ProductBussiness productBussiness = new ProductBussiness();
-            productBussiness.InsertProduct(new Product("Pelota", 20, 5, warehouseBussiness.ReadWarehouse(1), productStateBussiness.ReadProductState(1)));
+            productBussiness.InsertProduct(new ProductSpecific("Pelota", 20, 5, 1, 1));
             SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
-            supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompany("Ruedas Hermanos Carrasco", "123"));
+            supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompanySpecific("Ruedas Hermanos Carrasco", "123"));
             DateTime dateTime2 = new DateTime(2019, 05, 17, 13, 05, 00);
 
             PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
 
-            purchaseBussiness.InsertPurchase(new Purchase(dateTime2, 2, 30, productBussiness.ReadProduct(1), supplyCompanyBussiness.ReadSupplyCompany(1)));
-            purchaseBussiness.InsertPurchase(new Purchase(dateTime2, 1, 10, productBussiness.ReadProduct(1), supplyCompanyBussiness.ReadSupplyCompany(1)));
-            purchaseBussiness.InsertPurchase(new Purchase(dateTime2, 5, 120, productBussiness.ReadProduct(1), supplyCompanyBussiness.ReadSupplyCompany(1)));
-            purchaseBussiness.InsertPurchase(new Purchase(dateTime2, 3, 80, productBussiness.ReadProduct(1), supplyCompanyBussiness.ReadSupplyCompany(1)));
+            purchaseBussiness.InsertPurchase(new PurchaseSpecific(dateTime2, 2, 30, 1, 1));
+            purchaseBussiness.InsertPurchase(new PurchaseSpecific(dateTime2, 1, 10, 1, 1));
+            purchaseBussiness.InsertPurchase(new PurchaseSpecific(dateTime2, 5, 120, 1, 1));
+            purchaseBussiness.InsertPurchase(new PurchaseSpecific(dateTime2, 3, 80, 1, 1));
 
         }
 
@@ -60,7 +61,7 @@ namespace Bussiness_Tests
             ProductBussiness productBussiness = new ProductBussiness();
             SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
 
-            correct = purchaseBussiness.InsertPurchase(new Purchase(dateTime, 10, 500, productBussiness.ReadProduct(1), supplyCompanyBussiness.ReadSupplyCompany(1)));
+            correct = purchaseBussiness.InsertPurchase(new PurchaseSpecific(dateTime, 10, 500, 1, 1));
 
             Purchase purchaseGotten = purchaseBussiness.ReadPurchase(5);
 
@@ -68,28 +69,6 @@ namespace Bussiness_Tests
             Assert.AreEqual(purchaseGotten.PurchaseDate, dateTime);
             Assert.AreEqual(purchaseGotten.Cuantity, 10);
             Assert.AreEqual(purchaseGotten.Prize, 500);
-
-        }
-
-        [Test]
-        public void InsertPurchaseAndProduct_Test()
-        {
-            bool correct;
-            DateTime dateTime = new DateTime(2019, 05, 17, 13, 05, 00);
-
-            PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
-            WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
-            ProductStateBussiness productStateBussiness = new ProductStateBussiness();
-            SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
-
-            correct = purchaseBussiness.InsertPurchaseAndProduct(new Product("Luz led", 0.7, 50, warehouseBussiness.ReadWarehouse(1), productStateBussiness.ReadProductState(1)), new Purchase(dateTime, 100, 50, null, supplyCompanyBussiness.ReadSupplyCompany(1)));
-
-            Purchase purchaseGotten = purchaseBussiness.ReadPurchase(6);
-
-            Assert.AreEqual(true, correct);
-            Assert.AreEqual(purchaseGotten.PurchaseDate, dateTime);
-            Assert.AreEqual(purchaseGotten.Cuantity, 100);
-            Assert.AreEqual(purchaseGotten.Prize, 50);
 
         }
 
@@ -114,7 +93,8 @@ namespace Bussiness_Tests
             bool correct;
             PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
 
-            Purchase change = purchaseBussiness.ReadPurchase(2);
+            PurchaseSpecific change = new PurchaseSpecific();
+            change.PurchaseId = 2;
             change.Cuantity = 9;
             change.Prize = 85;
 

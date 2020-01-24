@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using Supplier_Service.Controllers;
 using System;
 using System.Collections.Generic;
@@ -16,26 +17,26 @@ namespace Service_Tests
         public void Init()
         {
             EmployeeController employeeController = new EmployeeController();
-            employeeController.InsertEmployee(new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
+            employeeController.InsertEmployee(new EmployeeSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
             DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
-            WarehouseAdminController warehouseAdminController = new WarehouseAdminController();
-            warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeController.GetEmployee(1)));
             WarehouseController warehouseController = new WarehouseController();
-            warehouseController.InsertWarehouse(new Warehouse("Calle Ebro", 120, warehouseAdminController.GetWarehouseAdmin(1)));
+            warehouseController.InsertWarehouse(new WarehouseSpecific("Calle Ebro", 120));
+            WarehouseAdminController warehouseAdminController = new WarehouseAdminController();
+            warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
             ProductStateController productStateController = new ProductStateController();
-            productStateController.InsertProductState(new ProductState("No disponible"));
+            productStateController.InsertProductState(new ProductStateSpecific("No disponible"));
             ProductController productController = new ProductController();
-            productController.InsertProduct(new Product("Pelota", 20, 5, warehouseController.GetWarehouse(1), productStateController.GetProductState(1)));
+            productController.InsertProduct(new ProductSpecific("Pelota", 20, 5, 1, 1));
             SupplyCompanyController supplyCompanyController = new SupplyCompanyController();
-            supplyCompanyController.InsertSupplyCompany(new SupplyCompany("Ruedas Hermanos Carrasco", "123"));
+            supplyCompanyController.InsertSupplyCompany(new SupplyCompanySpecific("Ruedas Hermanos Carrasco", "123"));
             DateTime dateTime2 = new DateTime(2019, 05, 17, 13, 05, 00);
 
             PurchaseController purchaseController = new PurchaseController();
 
-            purchaseController.InsertPurchase(new Purchase(dateTime2, 2, 30, productController.GetProduct(1), supplyCompanyController.GetSupplyCompany(1)));
-            purchaseController.InsertPurchase(new Purchase(dateTime2, 1, 10, productController.GetProduct(1), supplyCompanyController.GetSupplyCompany(1)));
-            purchaseController.InsertPurchase(new Purchase(dateTime2, 5, 120, productController.GetProduct(1), supplyCompanyController.GetSupplyCompany(1)));
-            purchaseController.InsertPurchase(new Purchase(dateTime2, 3, 80, productController.GetProduct(1), supplyCompanyController.GetSupplyCompany(1)));
+            purchaseController.InsertPurchase(new PurchaseSpecific(dateTime2, 2, 30, 1, 1));
+            purchaseController.InsertPurchase(new PurchaseSpecific(dateTime2, 1, 10, 1, 1));
+            purchaseController.InsertPurchase(new PurchaseSpecific(dateTime2, 5, 120, 1, 1));
+            purchaseController.InsertPurchase(new PurchaseSpecific(dateTime2, 3, 80, 1, 1));
 
         }
 
@@ -56,10 +57,8 @@ namespace Service_Tests
             DateTime dateTime = new DateTime(2019, 05, 17, 13, 05, 00);
 
             PurchaseController purchaseController = new PurchaseController();
-            ProductController productController = new ProductController();
-            SupplyCompanyController supplyCompanyController = new SupplyCompanyController();
 
-            String message = purchaseController.InsertPurchase(new Purchase(dateTime, 10, 500, productController.GetProduct(1), supplyCompanyController.GetSupplyCompany(1)));
+            String message = purchaseController.InsertPurchase(new PurchaseSpecific(dateTime, 10, 500, 1, 1));
 
             Purchase purchaseGotten = purchaseController.GetPurchase(5);
 
@@ -67,27 +66,6 @@ namespace Service_Tests
             Assert.AreEqual(purchaseGotten.PurchaseDate, dateTime);
             Assert.AreEqual(purchaseGotten.Cuantity, 10);
             Assert.AreEqual(purchaseGotten.Prize, 500);
-
-        }
-
-        [Test]
-        public void InsertPurchaseAndProduct_Test()
-        {
-            DateTime dateTime = new DateTime(2019, 05, 17, 13, 05, 00);
-
-            PurchaseController purchaseController = new PurchaseController();
-            WarehouseController warehouseController = new WarehouseController();
-            ProductStateController productStateController = new ProductStateController();
-            SupplyCompanyController supplyCompanyController = new SupplyCompanyController();
-
-            String message = purchaseController.InsertPurchaseAndProduct(new Product("Luz led", 0.7, 50, warehouseController.GetWarehouse(1), productStateController.GetProductState(1)), new Purchase(dateTime, 100, 50, null, supplyCompanyController.GetSupplyCompany(1)));
-
-            Purchase purchaseGotten = purchaseController.GetPurchase(6);
-
-            Assert.AreEqual(message, "Product and Purchase introduced satisfactorily.");
-            Assert.AreEqual(purchaseGotten.PurchaseDate, dateTime);
-            Assert.AreEqual(purchaseGotten.Cuantity, 100);
-            Assert.AreEqual(purchaseGotten.Prize, 50);
 
         }
 
@@ -111,7 +89,8 @@ namespace Service_Tests
         {
             PurchaseController purchaseController = new PurchaseController();
 
-            Purchase change = purchaseController.GetPurchase(2);
+            PurchaseSpecific change = new PurchaseSpecific();
+            change.PurchaseId = 2;
             change.Cuantity = 9;
             change.Prize = 85;
 

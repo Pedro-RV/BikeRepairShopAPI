@@ -17,20 +17,20 @@ namespace Bussiness_Tests
         public void Init()
         {
             EmployeeBussiness employeeBussiness = new EmployeeBussiness();
-            employeeBussiness.InsertEmployee(new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
-            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
-            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
-            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeBussiness.ReadEmployee(1)));
+            employeeBussiness.InsertEmployee(new EmployeeSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
+            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);          
             WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
-            warehouseBussiness.InsertWarehouse(new Warehouse("Calle Ebro", 120, warehouseAdminBussiness.ReadWarehouseAdmin(1)));
+            warehouseBussiness.InsertWarehouse(new WarehouseSpecific("Calle Ebro", 120));
+            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
+            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();
-            productStateBussiness.InsertProductState(new ProductState("No disponible"));
+            productStateBussiness.InsertProductState(new ProductStateSpecific("No disponible"));
 
             ProductBussiness productBussiness = new ProductBussiness();
 
-            productBussiness.InsertProduct(new Product("Pelota", 20, 5, warehouseBussiness.ReadWarehouse(1), productStateBussiness.ReadProductState(1)));
-            productBussiness.InsertProduct(new Product("Peine", 4, 10, warehouseBussiness.ReadWarehouse(1), productStateBussiness.ReadProductState(1)));
-            productBussiness.InsertProduct(new Product("Zapatillas Adidas", 80, 15, warehouseBussiness.ReadWarehouse(1), productStateBussiness.ReadProductState(1)));
+            productBussiness.InsertProduct(new ProductSpecific("Pelota", 20, 5, 1, 1));
+            productBussiness.InsertProduct(new ProductSpecific("Peine", 4, 10, 1, 1));
+            productBussiness.InsertProduct(new ProductSpecific("Zapatillas Adidas", 80, 15, 1, 1));
 
         }
 
@@ -68,10 +68,8 @@ namespace Bussiness_Tests
         {
             bool correct;
             ProductBussiness productBussiness = new ProductBussiness();
-            WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
-            ProductStateBussiness productStateBussiness = new ProductStateBussiness();
 
-            correct = productBussiness.InsertProduct(new Product("Teclado", 60, 20, warehouseBussiness.ReadWarehouse(1), productStateBussiness.ReadProductState(1)));
+            correct = productBussiness.InsertProduct(new ProductSpecific("Teclado", 60, 20, 1, 1));
 
             Product productGotten = productBussiness.ReadProduct(4);
 
@@ -101,7 +99,8 @@ namespace Bussiness_Tests
             bool correct;
             ProductBussiness productBussiness = new ProductBussiness();
 
-            Product change = productBussiness.ReadProduct(2);
+            ProductSpecific change = new ProductSpecific();
+            change.ProductId = 2;
             change.ProductDescription = "Secador";
             change.Prize = 50;
 

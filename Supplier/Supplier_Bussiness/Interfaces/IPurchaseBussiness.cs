@@ -14,13 +14,11 @@ namespace Supplier_Bussiness.Interfaces
 
         List<PurchaseData> PurchaseDataList();
 
-        bool InsertPurchase(Purchase purchaseAdd);
-
-        bool InsertPurchaseAndProduct(Product productAdd, Purchase purchaseAdd);
+        bool InsertPurchase(PurchaseSpecific purchaseSpecific);
 
         Purchase ReadPurchase(int PurchaseId);
 
-        bool UpdatePurchase(Purchase update);
+        bool UpdatePurchase(PurchaseSpecific update);
 
         bool DeletePurchase(int PurchaseId);
 

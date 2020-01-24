@@ -1,4 +1,5 @@
 ﻿using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace Supplier_Bussiness.Interfaces
 {
     public interface IProductStateBussiness
     {
-        bool InsertProductState(ProductState productStateAdd);
+        bool InsertProductState(ProductStateSpecific productStateSpecific);
 
         ProductState ReadProductState(int ProductId);
 
-        bool UpdateProductState(ProductState update);
+        bool UpdateProductState(ProductStateSpecific update);
 
         bool DeleteProductState(int ProductStateId);
     }

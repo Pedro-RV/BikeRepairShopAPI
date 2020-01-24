@@ -76,6 +76,10 @@
     <Compile Include="Migrations\202001210917383_Segunda.designer.cs">
       <DependentUpon>202001210917383_Segunda.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001221238104_Tercera.cs" />
+    <Compile Include="Migrations\202001221238104_Tercera.designer.cs">
+      <DependentUpon>202001221238104_Tercera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProductRepository.cs" />
     <Compile Include="ProductStateRepository.cs" />
@@ -108,6 +112,9 @@
     <EmbeddedResource Include="Migrations\202001210917383_Segunda.resx">
       <DependentUpon>202001210917383_Segunda.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001221238104_Tercera.resx">
+      <DependentUpon>202001221238104_Tercera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

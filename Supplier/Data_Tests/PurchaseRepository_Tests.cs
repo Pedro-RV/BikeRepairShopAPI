@@ -28,8 +28,8 @@ namespace Data_Tests
         {
             Employee employee = new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
             DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
-            WarehouseAdmin warehouseAdmin = new WarehouseAdmin(dateTime, employee);
-            Warehouse warehouse = new Warehouse("Calle Ebro", 120, warehouseAdmin);
+            Warehouse warehouse = new Warehouse("Calle Ebro", 120);
+            WarehouseAdmin warehouseAdmin = new WarehouseAdmin(dateTime, employee, warehouse);
             ProductState productState = new ProductState("No disponible");
             Product product = new Product("Pelota", 20, 15, warehouse, productState);
             SupplyCompany supplyCompany = new SupplyCompany("Ruedas Hermanos Carrasco", "123");
@@ -52,9 +52,9 @@ namespace Data_Tests
         public void Insert_Test()
         {
             Employee employee = new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
-            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
-            WarehouseAdmin warehouseAdmin = new WarehouseAdmin(dateTime, employee);
-            Warehouse warehouse = new Warehouse("Calle Ebro", 120, warehouseAdmin);
+            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);           
+            Warehouse warehouse = new Warehouse("Calle Ebro", 120);
+            WarehouseAdmin warehouseAdmin = new WarehouseAdmin(dateTime, employee, warehouse);
             ProductState productState = new ProductState("No disponible");
             Product product = new Product("Pelota", 20, 15, warehouse, productState);
             SupplyCompany supplyCompany = new SupplyCompany("Ruedas Hermanos Carrasco", "123");

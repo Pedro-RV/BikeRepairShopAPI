@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using Supplier_Service.Controllers;
 using System;
 using System.Collections.Generic;
@@ -16,14 +17,16 @@ namespace Service_Tests
         public void Init()
         {
             EmployeeController employeeController = new EmployeeController();
-            employeeController.InsertEmployee(new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
+            employeeController.InsertEmployee(new EmployeeSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
             DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
+            WarehouseController warehouseController = new WarehouseController();
+            warehouseController.InsertWarehouse(new WarehouseSpecific("Calle Ebro", 120));
 
             WarehouseAdminController warehouseAdminController = new WarehouseAdminController();
 
-            warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeController.GetEmployee(1)));
-            warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeController.GetEmployee(1)));
-            warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeController.GetEmployee(1)));
+            warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
+            warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
+            warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
 
         }
 
@@ -33,9 +36,8 @@ namespace Service_Tests
             DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
 
             WarehouseAdminController warehouseAdminController = new WarehouseAdminController();
-            EmployeeController employeeController = new EmployeeController();
 
-            String message = warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeController.GetEmployee(1)));
+            String message = warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
 
             WarehouseAdmin warehouseAdminGotten = warehouseAdminController.GetWarehouseAdmin(4);
 
@@ -63,7 +65,8 @@ namespace Service_Tests
             WarehouseAdminController warehouseAdminController = new WarehouseAdminController();
             DateTime modify = new DateTime(2019, 10, 03, 10, 51, 00);
 
-            WarehouseAdmin change = warehouseAdminController.GetWarehouseAdmin(2);
+            WarehouseAdminSpecific change = new WarehouseAdminSpecific();
+            change.WarehouseAdminId = 2;
             change.StartDate = modify;
 
             String message = warehouseAdminController.UpdateWarehouseAdmin(change);

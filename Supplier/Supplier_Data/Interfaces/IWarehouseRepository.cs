@@ -12,10 +12,6 @@ namespace Supplier_Data.Interfaces
     {
         List<Warehouse> WarehousesBiggerThanAnExtensionList(int extension);
 
-        List<WarehouseData> WarehouseDataList();
-
-        List<WarehouseData> WarehouseDataListWithDapper(string warehouseAddress);
-
         bool Insert(Warehouse add);
 
         Warehouse Read(int WarehouseId);

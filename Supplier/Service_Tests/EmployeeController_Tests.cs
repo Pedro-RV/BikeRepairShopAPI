@@ -6,22 +6,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 
 namespace Service_Tests
 {
     [TestFixture]
     class EmployeeController_Tests
     {
-        [TestFixtureSetUp]
-        public void Init()
-        {
-            EmployeeController employeeController = new EmployeeController();
+        //[TestFixtureSetUp]
+        //public void Init()
+        //{
+        //    EmployeeController employeeController = new EmployeeController();
 
-            employeeController.InsertEmployee(new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
-            employeeController.InsertEmployee(new Employee("Rodolfo", "Suarez", "88", "rodolf@correo", "Avnd Institucion", "123", "321"));
-            employeeController.InsertEmployee(new Employee("Marco", "Polo", "99", "marco@correo", "Avnd Marco Polo", "000", "000"));
+        //    employeeController.InsertEmployee(new EmployeeSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
+        //    employeeController.InsertEmployee(new EmployeeSpecific("Rodolfo", "Suarez", "88", "rodolf@correo", "Avnd Institucion", "123", "321"));
+        //    employeeController.InsertEmployee(new EmployeeSpecific("Marco", "Polo", "99", "marco@correo", "Avnd Marco Polo", "000", "000"));
            
-        }
+        //}
 
         [Test]
         public void AAEmployeesList_Test()
@@ -41,9 +42,9 @@ namespace Service_Tests
         {
             EmployeeController employeeController = new EmployeeController();
 
-            String message = employeeController.InsertEmployee(new Employee("antonio", "carrasco", "22", "carrasco@correo", "calle malagon", "56", "87"));
+            String message = employeeController.InsertEmployee(new EmployeeSpecific("antonio", "carrasco", "22", "carrasco@correo", "calle malagon", "56", "87"));
 
-            Employee employeeGotten = employeeController.GetEmployee(4);
+            Employee employeeGotten = employeeController.GetEmployee(1);
 
             Assert.AreEqual(message, "Employee introduced satisfactorily.");
             Assert.AreEqual(employeeGotten.EmployeeName, "antonio");
@@ -85,7 +86,8 @@ namespace Service_Tests
         {
             EmployeeController employeeController = new EmployeeController();
 
-            Employee change = employeeController.GetEmployee(2);
+            EmployeeSpecific change = new EmployeeSpecific();
+            change.EmployeeId = 2;
             change.EmployeeName = "Domingo";
             change.MobileNum = "621";
 

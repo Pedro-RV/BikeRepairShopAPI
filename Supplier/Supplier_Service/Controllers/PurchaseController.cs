@@ -51,21 +51,11 @@ namespace Supplier_Service.Controllers
         // POST
         [HttpPost]
         [Route("api/purchase/InsertPurchase")]
-        public string InsertPurchase(Purchase purchaseAdd)
+        public string InsertPurchase(PurchaseSpecific purchaseSpecific)
         {
             PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
-            ProductBussiness productBussiness = new ProductBussiness();
-            SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
 
-            Product attachProduct = productBussiness.ReadProduct(purchaseAdd.ProductId);
-
-            purchaseAdd.Product = attachProduct;
-
-            SupplyCompany attachSupplyCompany = supplyCompanyBussiness.ReadSupplyCompany(purchaseAdd.SupplyCompanyId);
-
-            purchaseAdd.SupplyCompany = attachSupplyCompany;
-
-            bool introduced_well = purchaseBussiness.InsertPurchase(purchaseAdd);
+            bool introduced_well = purchaseBussiness.InsertPurchase(purchaseSpecific);
 
             if (introduced_well == true)
             {
@@ -78,49 +68,14 @@ namespace Supplier_Service.Controllers
 
         }
 
-        // POST
-        [HttpPost]
-        [Route("api/purchase/InsertPurchaseAndProduct")]
-        public string InsertPurchaseAndProduct(Product productAdd, Purchase purchaseAdd)
-        {
-            PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
-            SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
-            WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
-            ProductStateBussiness productStateBussiness = new ProductStateBussiness();
-
-            Warehouse attachWarehouse = warehouseBussiness.ReadWarehouse(productAdd.WarehouseId);
-
-            productAdd.Warehouse = attachWarehouse;
-
-            ProductState attachProductState = productStateBussiness.ReadProductState(productAdd.ProductStateId);
-
-            productAdd.ProductState = attachProductState;
-
-            SupplyCompany attachSupplyCompany = supplyCompanyBussiness.ReadSupplyCompany(purchaseAdd.SupplyCompanyId);
-
-            purchaseAdd.SupplyCompany = attachSupplyCompany;
-
-            bool introduced_well = purchaseBussiness.InsertPurchaseAndProduct(productAdd, purchaseAdd);
-
-            if (introduced_well == true)
-            {
-                return "Product and Purchase introduced satisfactorily.";
-            }
-            else
-            {
-                return "Error !!! Product and Purchase could not be introduced.";
-            }
-
-        }
-
         // PUT
         [HttpPut]
         [Route("api/purchase/UpdatePurchase")]
-        public string UpdatePurchase(Purchase update)
+        public string UpdatePurchase(PurchaseSpecific purchaseSpecific)
         {
             PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
 
-            bool updated_well = purchaseBussiness.UpdatePurchase(update);
+            bool updated_well = purchaseBussiness.UpdatePurchase(purchaseSpecific);
 
             if (updated_well == true)
             {

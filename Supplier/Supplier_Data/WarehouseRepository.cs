@@ -31,58 +31,7 @@ namespace Supplier_Data
             List<Warehouse> ret = dbContext.Warehouse.Where(x => x.Extension > extension).ToList();
 
             return ret;
-        }
-
-        public List<WarehouseData> WarehouseDataList()
-        {
-            List<WarehouseData> ret = dbContext.Warehouse
-                .Join(dbContext.WarehouseAdmin,
-                    warehouse => warehouse.WarehouseAdminId,
-                    warehouseAdmin => warehouseAdmin.WarehouseAdminId,
-                    (warehouse, warehouseAdmin) => new
-                    {
-                        Warehouse = warehouse,
-                        WarehouseAdmin = warehouseAdmin
-                    })
-                .Join(
-                    dbContext.Employee,
-                    combined => combined.WarehouseAdmin.EmployeeId,
-                    employee => employee.EmployeeId,
-                    (combined, employee) => new WarehouseData()
-                    {
-                        WarehouseId = combined.Warehouse.WarehouseId,
-                        WarehouseAddress = combined.Warehouse.WarehouseAddress,
-                        EmployeeWarehouseData = new EmployeeWarehouseData(employee.DNI, employee.Email)
-                    }).ToList();
-
-            return ret;
-        }
-
-        public List<WarehouseData> WarehouseDataListWithDapper(string warehouseAddress)
-        {
-            List<WarehouseData> ret = new List<WarehouseData>();
-
-            List<WarehouseData_Aux> ret_aux = new List<WarehouseData_Aux>();
-
-            SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["SupplierContext"].ConnectionString);
-
-            if (connection.State == ConnectionState.Closed)
-                connection.Open();
-
-            string query = "SELECT A.WarehouseId, A.WarehouseAddress, C.DNI, C.Email FROM Warehouse A " +
-                "JOIN WarehouseAdmin B ON A.WarehouseAdminId = B.WarehouseAdminId " +
-                "JOIN Employee C ON B.EmployeeId = C.EmployeeId " +
-                "WHERE A.WarehouseAddress = @WarehouseAddress";
-
-            ret_aux = connection.Query<WarehouseData_Aux>(query, new { WarehouseAddress = warehouseAddress }).ToList();
-
-            for(int i = 0; i < ret_aux.Count(); i++)
-            {
-                ret.Add(new WarehouseData(ret_aux[i].WarehouseId, ret_aux[i].WarehouseAddress, new EmployeeWarehouseData(ret_aux[i].DNI, ret_aux[i].Email)));
-            }
-            
-            return ret;
-        }
+        }       
 
         public bool Insert(Warehouse add)
         {

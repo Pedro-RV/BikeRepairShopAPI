@@ -30,9 +30,10 @@ namespace Data_Tests
         {
             Employee employee = new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
             DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
-            WarehouseAdmin warehouseAdminOne = new WarehouseAdmin(dateTime, employee);
-            WarehouseAdmin warehouseAdminTwo = new WarehouseAdmin(dateTime, employee);
-            WarehouseAdmin warehouseAdminThree = new WarehouseAdmin(dateTime, employee);
+            Warehouse warehouse = new Warehouse("Calle Ebro", 120);
+            WarehouseAdmin warehouseAdminOne = new WarehouseAdmin(dateTime, employee, warehouse);
+            WarehouseAdmin warehouseAdminTwo = new WarehouseAdmin(dateTime, employee, warehouse);
+            WarehouseAdmin warehouseAdminThree = new WarehouseAdmin(dateTime, employee, warehouse);
 
             WarehouseAdminRepository warehouseAdminRepository = new WarehouseAdminRepository(dbContext, exceptionController);
 
@@ -46,7 +47,8 @@ namespace Data_Tests
         {
             Employee employee = new Employee("AA", "RR", "00", "aa@correo", "Calle AA", "00", "00");
             DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
-            WarehouseAdmin warehouseAdminAdd = new WarehouseAdmin(dateTime, employee);
+            Warehouse warehouse = new Warehouse("Calle Ebro", 120);
+            WarehouseAdmin warehouseAdminAdd = new WarehouseAdmin(dateTime, employee, warehouse);
             bool correct;
             WarehouseAdminRepository warehouseAdminRepository = new WarehouseAdminRepository(dbContext, exceptionController);
 
@@ -57,7 +59,6 @@ namespace Data_Tests
             Assert.AreEqual(true, correct);
             Assert.AreEqual(warehouseAdminGotten.StartDate, warehouseAdminAdd.StartDate);
             Assert.AreEqual(warehouseAdminGotten.Employee, warehouseAdminAdd.Employee);
-
         }
 
         [Test]
@@ -68,6 +69,7 @@ namespace Data_Tests
             WarehouseAdmin warehouseAdminGotten = warehouseAdminRepository.Read(3);
 
             Assert.AreEqual(warehouseAdminGotten.Employee.EmployeeName, "Jacinto");
+            //Assert.AreEqual(warehouseAdminGotten.Warehouse.WarehouseAddress, "Calle Ebro");
 
         }
 

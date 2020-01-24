@@ -51,13 +51,13 @@ namespace Supplier_Service.Controllers
         // POST
         [HttpPost]
         [Route("api/employee/InsertEmployee")]
-        public string InsertEmployee(Employee employeeAdd)
+        public string InsertEmployee(EmployeeSpecific employeeSpecific)
         {
             EmployeeBussiness employeeBussiness = new EmployeeBussiness();
 
-            bool introduced_well = employeeBussiness.InsertEmployee(employeeAdd);
+            bool introduced_well = employeeBussiness.InsertEmployee(employeeSpecific);
 
-            if(introduced_well == true)
+            if (introduced_well == true)
             {
                 return "Employee introduced satisfactorily.";
             }
@@ -71,7 +71,7 @@ namespace Supplier_Service.Controllers
         // PUT
         [HttpPut]
         [Route("api/employee/UpdateEmployee")]
-        public string UpdateEmployee(Employee update)
+        public string UpdateEmployee(EmployeeSpecific update)
         {
             EmployeeBussiness employeeBussiness = new EmployeeBussiness();
 

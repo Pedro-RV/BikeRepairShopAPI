@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Supplier_Bussiness;
 using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,9 @@ namespace Bussiness_Tests
         {
             SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
 
-            supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompany("Ruedas Hermanos Carrasco", "123"));
-            supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompany("Tecnologia ComputerMax", "001"));
-            supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompany("Ropa Osuna", "002"));
+            supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompanySpecific("Ruedas Hermanos Carrasco", "123"));
+            supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompanySpecific("Tecnologia ComputerMax", "001"));
+            supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompanySpecific("Ropa Osuna", "002"));
 
         }
 
@@ -29,7 +30,7 @@ namespace Bussiness_Tests
             bool correct;
             SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
 
-            correct = supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompany("Pesas Cañada", "003"));
+            correct = supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompanySpecific("Pesas Cañada", "003"));
 
             SupplyCompany supplyCompanyGotten = supplyCompanyBussiness.ReadSupplyCompany(4);
 
@@ -57,7 +58,8 @@ namespace Bussiness_Tests
             bool correct;
             SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
 
-            SupplyCompany change = supplyCompanyBussiness.ReadSupplyCompany(2);
+            SupplyCompanySpecific change = new SupplyCompanySpecific();
+            change.SupplyCompanyId = 2;
             change.SupplyCompanyName = "Tecnologia RapidMax";
             change.TelephoneNum = "555";
 

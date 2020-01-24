@@ -14,7 +14,7 @@ namespace Data_Tests
             //SupplierContextProvider.GetSupplierContext().Database.Delete();
             //SupplierContextProvider.GetSupplierContext().Database.Create();
 
-            string path = Path.GetFullPath("../../../../../../");
+            string path = Path.GetFullPath("/Users/pjrodriguez/");
             string sourceFile = path + "New_Supplier_Database/Supplier_Data.Context.SupplierContext.mdf";
             string destFile = path + "Supplier_Data.Context.SupplierContext.mdf";
             string del = path + "Supplier_Data.Context.SupplierContext_log.ldf";

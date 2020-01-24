@@ -39,3 +39,4 @@ C:\REPO\becaPedro\Supplier\Supplier_Data\obj\Debug\Supplier_Data.pdb
 C:\REPO\becaPedro\Supplier\Supplier_Data\obj\Debug\Supplier_Data.Context.Migrations.Segunda.resources
 C:\REPO\becaPedro\Supplier\Supplier_Data\bin\Debug\Dapper.dll
 C:\REPO\becaPedro\Supplier\Supplier_Data\bin\Debug\Dapper.xml
+C:\REPO\becaPedro\Supplier\Supplier_Data\obj\Debug\Supplier_Data.Context.Migrations.Tercera.resources

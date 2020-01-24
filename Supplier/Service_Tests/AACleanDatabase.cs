@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using Supplier_Data.Context;
 using System.IO;
 
 namespace Service_Tests
@@ -10,10 +9,6 @@ namespace Service_Tests
         [Test]
         public void Clean()
         {
-            //SupplierContextProvider.InitializeSupplierContext();
-            //SupplierContextProvider.GetSupplierContext().Database.Delete();
-            //SupplierContextProvider.GetSupplierContext().Database.Create();
-
             string path = Path.GetFullPath("/Users/pjrodriguez/");
             string sourceFile = path + "New_Supplier_Database/Supplier_Data.Context.SupplierContext.mdf";
             string destFile = path + "Supplier_Data.Context.SupplierContext.mdf";

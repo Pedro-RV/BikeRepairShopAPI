@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Supplier_Bussiness;
 using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,9 @@ namespace Bussiness_Tests
         {
             EmployeeBussiness employeeBussiness = new EmployeeBussiness();           
 
-            employeeBussiness.InsertEmployee(new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
-            employeeBussiness.InsertEmployee(new Employee("Rodolfo", "Suarez", "88", "rodolf@correo", "Avnd Institucion", "123", "321"));
-            employeeBussiness.InsertEmployee(new Employee("Marco", "Polo", "99", "marco@correo", "Avnd Marco Polo", "000", "000"));
+            employeeBussiness.InsertEmployee(new EmployeeSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
+            employeeBussiness.InsertEmployee(new EmployeeSpecific("Rodolfo", "Suarez", "88", "rodolf@correo", "Avnd Institucion", "123", "321"));
+            employeeBussiness.InsertEmployee(new EmployeeSpecific("Marco", "Polo", "99", "marco@correo", "Avnd Marco Polo", "000", "000"));
 
         }
 
@@ -42,7 +43,7 @@ namespace Bussiness_Tests
             bool correct;
             EmployeeBussiness employeeBussiness = new EmployeeBussiness();
 
-            correct = employeeBussiness.InsertEmployee(new Employee("antonio", "carrasco", "22", "carrasco@correo", "calle malagon", "56", "87"));
+            correct = employeeBussiness.InsertEmployee(new EmployeeSpecific("antonio", "carrasco", "22", "carrasco@correo", "calle malagon", "56", "87"));
 
             Employee employeeGotten = employeeBussiness.ReadEmployee(4);
 
@@ -87,7 +88,8 @@ namespace Bussiness_Tests
             EmployeeBussiness employeeBussiness = new EmployeeBussiness();
             bool correct;
 
-            Employee change = employeeBussiness.ReadEmployee(2);
+            EmployeeSpecific change = new EmployeeSpecific();
+            change.EmployeeId = 2;
             change.EmployeeName = "Domingo";
             change.MobileNum = "621";
 

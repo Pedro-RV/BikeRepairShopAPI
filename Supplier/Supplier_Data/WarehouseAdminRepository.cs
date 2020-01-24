@@ -7,6 +7,10 @@ using System;
 using Supplier_Helper.ExceptionController;
 using Supplier_Entities.Specific;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Configuration;
+using System.Data;
+using Dapper;
 
 namespace Supplier_Data
 {
@@ -24,18 +28,49 @@ namespace Supplier_Data
 
         public List<WarehouseAdminData> WarehouseAdminDataList()
         {
-            var ret = dbContext.WarehouseAdmin
-                .Join(dbContext.Employee,
-                    warehouseAdmin => warehouseAdmin.EmployeeId,
-                    employee => employee.EmployeeId,
-                    (warehouseAdmin, employee) => new WarehouseAdminData()
+            List<WarehouseAdminData> ret = dbContext.WarehouseAdmin
+                .Join(dbContext.Warehouse,
+                    warehouseAdmin => warehouseAdmin.WarehouseId,
+                    warehouse => warehouse.WarehouseId,
+                    (warehouseAdmin, warehouse) => new
                     {
-                        WarehouseAdminId = warehouseAdmin.WarehouseAdminId,
-                        StartDate = warehouseAdmin.StartDate,
-                        EmployeeId = employee.EmployeeId,                  
+                        WarehouseAdmin = warehouseAdmin,
+                        Warehouse = warehouse
+                    })
+                .Join(
+                    dbContext.Employee,
+                    combined => combined.WarehouseAdmin.EmployeeId,
+                    employee => employee.EmployeeId,
+                    (combined, employee) => new WarehouseAdminData()
+                    {
+                        WarehouseAdminId = combined.WarehouseAdmin.WarehouseAdminId,
+                        StartDate = combined.WarehouseAdmin.StartDate,
+                        EmployeeId = employee.EmployeeId,
                         EmployeeName = employee.EmployeeName,
-                        DNI = employee.DNI
+                        DNI = employee.DNI,
+                        WarehouseId = combined.Warehouse.WarehouseId,
+                        WarehouseAddress = combined.Warehouse.WarehouseAddress
                     }).ToList();
+
+            return ret;
+        }
+
+        public List<WarehouseAdminData> WarehouseAdminDataListWithDapper(string warehouseAddress)
+        {
+            List<WarehouseAdminData> ret = new List<WarehouseAdminData>();
+
+            //SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["SupplierContext"].ConnectionString);
+
+            //if (connection.State == ConnectionState.Closed)
+            //    connection.Open();
+
+            //string query = "SELECT A.WarehouseAdminId, A.StartDate, C.EmployeeId, C.EmployeeName, C.DNI, B.WarehouseId, " +
+            //    "B.WarehouseAddress FROM WarehouseAdmin A " +
+            //    "JOIN Warehouse B ON A.WarehouseId = B.WarehouseId " +
+            //    "JOIN Employee C ON A.EmployeeId = C.EmployeeId " +
+            //    "WHERE B.WarehouseAddress = @WarehouseAddress";
+
+            //ret = connection.Query<WarehouseAdminData>(query, new { WarehouseAddress = warehouseAddress }).ToList();
 
             return ret;
         }

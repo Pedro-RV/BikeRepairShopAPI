@@ -14,11 +14,11 @@ namespace Supplier_Bussiness.Interfaces
 
         List<ProductData> ProductDataList();
 
-        bool InsertProduct(Product productAdd);
+        bool InsertProduct(ProductSpecific productSpecific);
 
         Product ReadProduct(int ProductId);
 
-        bool UpdateProduct(Product update);
+        bool UpdateProduct(ProductSpecific update);
 
         bool DeleteProduct(int ProductId);
     }

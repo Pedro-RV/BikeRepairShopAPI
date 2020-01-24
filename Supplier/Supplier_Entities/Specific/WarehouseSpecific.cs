@@ -1,35 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using System.Runtime.Serialization;
 
 namespace Supplier_Entities.Specific
 {
     [DataContract]
-    public partial class WarehouseData
+    public class WarehouseSpecific
     {
-        public WarehouseData()
+        public WarehouseSpecific()
         {
 
         }
 
-        public WarehouseData(int WarehouseId, string WarehouseAddress, EmployeeWarehouseData EmployeeWarehouseData)
+        public WarehouseSpecific(string WarehouseAddress, int Extension)
         {
-            this.WarehouseId = WarehouseId;
             this.WarehouseAddress = WarehouseAddress;
-            this.EmployeeWarehouseData = EmployeeWarehouseData;
+            this.Extension = Extension;
         }
 
         [DataMember(Name = "warehouseId")]
         public int WarehouseId { get; set; }
 
         [DataMember(Name = "warehouseAddress")]
+        [MaxLength(100)]
         public string WarehouseAddress { get; set; }
 
-        [DataMember(Name = "employeeWarehouseData")]
-        public EmployeeWarehouseData EmployeeWarehouseData;
+        [DataMember(Name = "extension")]
+        public int Extension { get; set; }
 
     }
 }

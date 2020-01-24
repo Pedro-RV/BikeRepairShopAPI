@@ -53,3 +53,6 @@ C:\REPO\becaPedro\Supplier\Service_Tests\obj\Debug\Service_Tests.csprojAssemblyR
 C:\REPO\becaPedro\Supplier\Service_Tests\obj\Debug\Service_Tests.csproj.CopyComplete
 C:\REPO\becaPedro\Supplier\Service_Tests\obj\Debug\Service_Tests.exe
 C:\REPO\becaPedro\Supplier\Service_Tests\obj\Debug\Service_Tests.pdb
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\AutoMapper.dll
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\AutoMapper.pdb
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\AutoMapper.xml

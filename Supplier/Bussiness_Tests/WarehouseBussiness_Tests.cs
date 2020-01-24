@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Supplier_Bussiness;
 using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,18 +16,12 @@ namespace Bussiness_Tests
         [TestFixtureSetUp]
         public void Init()
         {
-            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
-            employeeBussiness.InsertEmployee(new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
-            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
-            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
-            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeBussiness.ReadEmployee(1)));
-
             WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
 
-            warehouseBussiness.InsertWarehouse(new Warehouse("Calle Ebro", 120, warehouseAdminBussiness.ReadWarehouseAdmin(1)));
-            warehouseBussiness.InsertWarehouse(new Warehouse("Calle Guadalquivir", 200, warehouseAdminBussiness.ReadWarehouseAdmin(1)));
-            warehouseBussiness.InsertWarehouse(new Warehouse("Calle Genil", 180, warehouseAdminBussiness.ReadWarehouseAdmin(1)));
-            warehouseBussiness.InsertWarehouse(new Warehouse("Avenida Pajaro Carpintero", 150, warehouseAdminBussiness.ReadWarehouseAdmin(1)));
+            warehouseBussiness.InsertWarehouse(new WarehouseSpecific("Calle Ebro", 120));
+            warehouseBussiness.InsertWarehouse(new WarehouseSpecific("Calle Guadalquivir", 200));
+            warehouseBussiness.InsertWarehouse(new WarehouseSpecific("Calle Genil", 180));
+            warehouseBussiness.InsertWarehouse(new WarehouseSpecific("Avenida Pajaro Carpintero", 150));
 
         }
 
@@ -47,31 +42,11 @@ namespace Bussiness_Tests
         {
             bool correct;
 
-            WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
-            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
+            WarehouseBussiness warehouseBussiness = new WarehouseBussiness();            
 
-            correct = warehouseBussiness.InsertWarehouse(new Warehouse("Calle Tajo", 300, warehouseAdminBussiness.ReadWarehouseAdmin(1)));
+            correct = warehouseBussiness.InsertWarehouse(new WarehouseSpecific("Calle Tajo", 300));
 
             Warehouse warehouseGotten = warehouseBussiness.ReadWarehouse(5);
-
-            Assert.AreEqual(true, correct);
-            Assert.AreEqual(warehouseGotten.WarehouseAddress, "Calle Tajo");
-            Assert.AreEqual(warehouseGotten.Extension, 300);
-
-        }
-
-        [Test]
-        public void InsertWarehouseAndAdmin_Test()
-        {
-            bool correct;
-            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
-
-            WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
-            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
-
-            correct = warehouseBussiness.InsertWarehouseAndAdmin(new WarehouseAdmin(dateTime, employeeBussiness.ReadEmployee(1)), new Warehouse("Calle Tajo", 300, null));
-
-            Warehouse warehouseGotten = warehouseBussiness.ReadWarehouse(6);
 
             Assert.AreEqual(true, correct);
             Assert.AreEqual(warehouseGotten.WarehouseAddress, "Calle Tajo");
@@ -97,7 +72,8 @@ namespace Bussiness_Tests
             bool correct;
             WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
 
-            Warehouse change = warehouseBussiness.ReadWarehouse(2);
+            WarehouseSpecific change = new WarehouseSpecific();
+            change.WarehouseId = 2;
             change.WarehouseAddress = "Calle Nilo";
             change.Extension = 1000;
 

@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Supplier_Bussiness;
 using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,9 @@ namespace Bussiness_Tests
         {
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();
 
-            productStateBussiness.InsertProductState(new ProductState("No disponible"));
-            productStateBussiness.InsertProductState(new ProductState("Sin existencias"));
-            productStateBussiness.InsertProductState(new ProductState("Con existencias"));
+            productStateBussiness.InsertProductState(new ProductStateSpecific("No disponible"));
+            productStateBussiness.InsertProductState(new ProductStateSpecific("Sin existencias"));
+            productStateBussiness.InsertProductState(new ProductStateSpecific("Con existencias"));
 
         }
 
@@ -29,7 +30,7 @@ namespace Bussiness_Tests
             bool correct;
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();
 
-            correct = productStateBussiness.InsertProductState(new ProductState("Fuera de venta"));
+            correct = productStateBussiness.InsertProductState(new ProductStateSpecific("Fuera de venta"));
 
             ProductState productStateGotten = productStateBussiness.ReadProductState(4);
 
@@ -55,7 +56,8 @@ namespace Bussiness_Tests
             bool correct;
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();
 
-            ProductState change = productStateBussiness.ReadProductState(2);
+            ProductStateSpecific change = new ProductStateSpecific();
+            change.ProductStateId = 2;
             change.ProductStateDescription = "Agotado";
 
             correct = productStateBussiness.UpdateProductState(change);

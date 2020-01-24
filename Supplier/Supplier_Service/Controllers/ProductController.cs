@@ -51,21 +51,11 @@ namespace Supplier_Service.Controllers
         // POST
         [HttpPost]
         [Route("api/product/InsertProduct")]
-        public string InsertProduct(Product productAdd)
+        public string InsertProduct(ProductSpecific productSpecific)
         {
             ProductBussiness productBussiness = new ProductBussiness();
-            WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
-            ProductStateBussiness productStateBussiness = new ProductStateBussiness();
 
-            Warehouse attachWarehouse = warehouseBussiness.ReadWarehouse(productAdd.WarehouseId);
-
-            productAdd.Warehouse = attachWarehouse;
-
-            ProductState attachProductState = productStateBussiness.ReadProductState(productAdd.ProductStateId);
-
-            productAdd.ProductState = attachProductState;
-
-            bool introduced_well = productBussiness.InsertProduct(productAdd);
+            bool introduced_well = productBussiness.InsertProduct(productSpecific);
 
             if (introduced_well == true)
             {
@@ -81,7 +71,7 @@ namespace Supplier_Service.Controllers
         // PUT
         [HttpPut]
         [Route("api/product/UpdateProduct")]
-        public string UpdateProduct(Product update)
+        public string UpdateProduct(ProductSpecific update)
         {
             ProductBussiness productBussiness = new ProductBussiness();
 

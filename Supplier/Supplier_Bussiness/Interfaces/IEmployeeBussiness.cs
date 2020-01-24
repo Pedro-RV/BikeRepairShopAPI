@@ -1,4 +1,5 @@
 ﻿using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,13 @@ namespace Supplier_Bussiness.Interfaces
     {
         List<Employee> EmployeesList();
 
-        bool InsertEmployee(Employee employeeAdd);
+        bool InsertEmployee(EmployeeSpecific employeeSpecific);
 
         Employee ReadEmployee(int EmployeeId);
 
         Employee ReadEmployeeDNI(string DNI);
 
-        bool UpdateEmployee(Employee update);
+        bool UpdateEmployee(EmployeeSpecific update);
 
         bool DeleteEmployee(int EmployeeId);
 

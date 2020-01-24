@@ -1,10 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.Serialization;
 
 namespace Supplier_Entities.EntityModel
 {
-    [DataContract]
     [Table("WarehouseAdmin")]
     public class WarehouseAdmin
     {
@@ -14,12 +12,12 @@ namespace Supplier_Entities.EntityModel
 
         }
 
-        public WarehouseAdmin(DateTime StartDate, Employee Employee)
+        public WarehouseAdmin(DateTime StartDate, Employee Employee, Warehouse Warehouse)
         {
             this.StartDate = StartDate;
             this.Employee = Employee;
 
-            if(Employee != null)
+            if (Employee != null)
             {
                 this.EmployeeId = Employee.EmployeeId;
             }
@@ -28,26 +26,36 @@ namespace Supplier_Entities.EntityModel
                 this.EmployeeId = 0;
             }
 
+            this.Warehouse = Warehouse;
+
+            if (Warehouse != null)
+            {
+                this.WarehouseId = Warehouse.WarehouseId;
+            }
+            else
+            {
+                this.WarehouseId = 0;
+            }
         }
 
         #region Properties
 
-        [DataMember(Name = "warehouseAdminId")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int WarehouseAdminId { get; set; }
 
-        [DataMember(Name = "employeeId")]
         public int EmployeeId { get; set; }
 
-        [DataMember(Name = "startDate")]
+        public int WarehouseId { get; set; }
+
         public DateTime StartDate { get; set; }
 
         #endregion
 
         #region Foreing keys
 
-        [DataMember(Name = "employee")]
         public Employee Employee { get; set; }
+
+        public Warehouse Warehouse { get; set; }
 
         #endregion
     }

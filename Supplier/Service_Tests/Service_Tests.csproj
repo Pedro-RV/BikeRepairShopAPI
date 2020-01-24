@@ -98,10 +98,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Supplier_Data\Supplier_Data.csproj">
-      <Project>{52028365-c15b-4bd4-a854-b6dae2f7a142}</Project>
-      <Name>Supplier_Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Supplier_Entities\Supplier_Entities.csproj">
       <Project>{e3ca51c6-e8b5-40a8-8018-5a25050bf825}</Project>
       <Name>Supplier_Entities</Name>

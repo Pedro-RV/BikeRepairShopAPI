@@ -38,5 +38,6 @@ C:\REPO\becaPedro\Supplier\Supplier_Bussiness\obj\Debug\Supplier_Bussiness.cspro
 C:\REPO\becaPedro\Supplier\Supplier_Bussiness\obj\Debug\Supplier_Bussiness.csproj.CopyComplete
 C:\REPO\becaPedro\Supplier\Supplier_Bussiness\obj\Debug\Supplier_Bussiness.exe
 C:\REPO\becaPedro\Supplier\Supplier_Bussiness\obj\Debug\Supplier_Bussiness.pdb
-C:\REPO\becaPedro\Supplier\Supplier_Bussiness\bin\Debug\Dapper.dll
-C:\REPO\becaPedro\Supplier\Supplier_Bussiness\bin\Debug\Dapper.xml
+C:\REPO\becaPedro\Supplier\Supplier_Bussiness\bin\Debug\AutoMapper.dll
+C:\REPO\becaPedro\Supplier\Supplier_Bussiness\bin\Debug\AutoMapper.pdb
+C:\REPO\becaPedro\Supplier\Supplier_Bussiness\bin\Debug\AutoMapper.xml

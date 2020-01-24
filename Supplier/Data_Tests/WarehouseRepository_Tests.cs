@@ -26,13 +26,9 @@ namespace Data_Tests
         [TestFixtureSetUp]
         public void Init()
         {
-            Employee employee = new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
-            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
-            WarehouseAdmin warehouseAdmin = new WarehouseAdmin(dateTime, employee);
-
-            Warehouse warehouseOne = new Warehouse("Calle Ebro", 120, warehouseAdmin);
-            Warehouse warehouseTwo = new Warehouse("Calle Guadalquivir", 200, warehouseAdmin);
-            Warehouse warehouseThree = new Warehouse("Calle Genil", 180, warehouseAdmin);
+            Warehouse warehouseOne = new Warehouse("Calle Ebro", 120);
+            Warehouse warehouseTwo = new Warehouse("Calle Guadalquivir", 200);
+            Warehouse warehouseThree = new Warehouse("Calle Genil", 180);
 
 
             WarehouseRepository warehouseRepository = new WarehouseRepository(dbContext, exceptionController);
@@ -45,10 +41,7 @@ namespace Data_Tests
         [Test]
         public void Insert_Test()
         {
-            Employee employee = new Employee("AA", "RR", "00", "aa@correo", "Calle AA", "00", "00");
-            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
-            WarehouseAdmin warehouseAdmin = new WarehouseAdmin(dateTime, employee);
-            Warehouse warehouseAdd = new Warehouse("Calle Tajo", 300, warehouseAdmin);
+            Warehouse warehouseAdd = new Warehouse("Calle Tajo", 300);
 
             bool correct;
             WarehouseRepository warehouseRepository = new WarehouseRepository(dbContext, exceptionController);
@@ -60,8 +53,6 @@ namespace Data_Tests
             Assert.AreEqual(true, correct);
             Assert.AreEqual(warehouseGotten.WarehouseAddress, warehouseAdd.WarehouseAddress);
             Assert.AreEqual(warehouseGotten.Extension, warehouseAdd.Extension);
-            Assert.AreEqual(warehouseGotten.WarehouseAdmin, warehouseAdd.WarehouseAdmin);
-
         }
 
         [Test]
@@ -73,8 +64,6 @@ namespace Data_Tests
 
             Assert.AreEqual(warehouseGotten.WarehouseAddress, "Calle Genil");
             Assert.AreEqual(warehouseGotten.Extension, 180);
-            Assert.AreEqual(warehouseGotten.WarehouseAdmin.Employee.EmployeeName, "Jacinto");
-
         }
 
         [Test]

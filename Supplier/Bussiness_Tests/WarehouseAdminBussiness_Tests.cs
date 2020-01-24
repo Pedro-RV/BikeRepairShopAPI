@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Supplier_Bussiness;
 using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +17,16 @@ namespace Bussiness_Tests
         public void Init()
         {
             EmployeeBussiness employeeBussiness = new EmployeeBussiness();
-            employeeBussiness.InsertEmployee(new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
+            employeeBussiness.InsertEmployee(new EmployeeSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
             DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
+            WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
+            warehouseBussiness.InsertWarehouse(new WarehouseSpecific("Calle Ebro", 120));
 
             WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
 
-            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeBussiness.ReadEmployee(1)));
-            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeBussiness.ReadEmployee(1)));
-            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeBussiness.ReadEmployee(1)));
+            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
+            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
+            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
 
         }
 
@@ -34,9 +37,8 @@ namespace Bussiness_Tests
             DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
 
             WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
-            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
 
-            correct = warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdmin(dateTime, employeeBussiness.ReadEmployee(1)));
+            correct = warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
 
             WarehouseAdmin warehouseAdminGotten = warehouseAdminBussiness.ReadWarehouseAdmin(4);
 
@@ -44,6 +46,7 @@ namespace Bussiness_Tests
             Assert.AreEqual(warehouseAdminGotten.StartDate, dateTime);
 
         }
+
 
         [Test]
         public void ReadWarehouseAdmin_Test()
@@ -65,7 +68,8 @@ namespace Bussiness_Tests
             WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
             DateTime modify = new DateTime(2019, 10, 03, 10, 51, 00);
 
-            WarehouseAdmin change = warehouseAdminBussiness.ReadWarehouseAdmin(2);
+            WarehouseAdminSpecific change = new WarehouseAdminSpecific();
+            change.WarehouseAdminId = 2;
             change.StartDate = modify;
 
             correct = warehouseAdminBussiness.UpdateWarehouseAdmin(change);

@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using Supplier_Service.Controllers;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,9 @@ namespace Service_Tests
         {
             SupplyCompanyController supplyCompanyController = new SupplyCompanyController();
 
-            supplyCompanyController.InsertSupplyCompany(new SupplyCompany("Ruedas Hermanos Carrasco", "123"));
-            supplyCompanyController.InsertSupplyCompany(new SupplyCompany("Tecnologia ComputerMax", "001"));
-            supplyCompanyController.InsertSupplyCompany(new SupplyCompany("Ropa Osuna", "002"));
+            supplyCompanyController.InsertSupplyCompany(new SupplyCompanySpecific("Ruedas Hermanos Carrasco", "123"));
+            supplyCompanyController.InsertSupplyCompany(new SupplyCompanySpecific("Tecnologia ComputerMax", "001"));
+            supplyCompanyController.InsertSupplyCompany(new SupplyCompanySpecific("Ropa Osuna", "002"));
 
         }
 
@@ -28,7 +29,7 @@ namespace Service_Tests
         {
             SupplyCompanyController supplyCompanyController = new SupplyCompanyController();
 
-            String message = supplyCompanyController.InsertSupplyCompany(new SupplyCompany("Pesas Cañada", "003"));
+            String message = supplyCompanyController.InsertSupplyCompany(new SupplyCompanySpecific("Pesas Cañada", "003"));
 
             SupplyCompany supplyCompanyGotten = supplyCompanyController.GetSupplyCompany(4);
 
@@ -55,7 +56,8 @@ namespace Service_Tests
         {
             SupplyCompanyController supplyCompanyController = new SupplyCompanyController();
 
-            SupplyCompany change = supplyCompanyController.GetSupplyCompany(2);
+            SupplyCompanySpecific change = new SupplyCompanySpecific();
+            change.SupplyCompanyId = 2;
             change.SupplyCompanyName = "Tecnologia RapidMax";
             change.TelephoneNum = "555";
 

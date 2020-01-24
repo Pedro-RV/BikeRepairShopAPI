@@ -1,7 +1,9 @@
-﻿using Supplier_Bussiness.Interfaces;
+﻿using AutoMapper;
+using Supplier_Bussiness.Interfaces;
 using Supplier_Data;
 using Supplier_Data.Context;
 using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
 using Supplier_Helper.ExceptionController;
 using System;
 using System.Collections.Generic;
@@ -17,11 +19,20 @@ namespace Supplier_Bussiness
 
         private ExceptionController exceptionController;
 
+        private IMapper mapper;
+
         public EmployeeBussiness()
         {
             SupplierContextProvider.InitializeSupplierContext();
             dbContext = SupplierContextProvider.GetSupplierContext();
-            exceptionController = new ExceptionController();            
+            exceptionController = new ExceptionController();
+
+
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<EmployeeSpecific, Employee>();
+            });
+
+            mapper = config.CreateMapper();
         }
 
         public List<Employee> EmployeesList()
@@ -33,29 +44,31 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool InsertEmployee(Employee employeeAdd)
+        public bool InsertEmployee(EmployeeSpecific employeeSpecific)
         {
             bool ret;
 
-            try
-            {
+            //try
+            //{
                 EmployeeRepository employeeRepository = new EmployeeRepository(dbContext, exceptionController);
+                
+                Employee employeeAdd = mapper.Map<EmployeeSpecific, Employee>(employeeSpecific);
 
                 ret = employeeRepository.Insert(employeeAdd);
-            }
-            catch (SupplierException)
-            {
-                throw;
-            }
-            catch (MissingMethodException)
-            {
-                throw this.exceptionController.CreateMyException(ExceptionEnum.MethodNotExist);
-            }
-            catch (Exception)
-            {
-                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+            //}
+            //catch (SupplierException)
+            //{
+            //    throw;
+            //}
+            //catch (MissingMethodException)
+            //{
+            //    throw this.exceptionController.CreateMyException(ExceptionEnum.MethodNotExist);
+            //}
+            //catch (Exception)
+            //{
+            //    throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
 
-            }
+            //}
 
             return ret;
         }
@@ -114,7 +127,7 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public bool UpdateEmployee(Employee update)
+        public bool UpdateEmployee(EmployeeSpecific update)
         {
             bool ret;
 

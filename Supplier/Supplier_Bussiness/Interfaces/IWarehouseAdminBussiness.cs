@@ -10,13 +10,13 @@ namespace Supplier_Bussiness.Interfaces
 {
     public interface IWarehouseAdminBussiness
     {
-        List<WarehouseAdminData> WarehouseAdminDataList();
+        List<WarehouseAdminData> WarehouseAdminDataList(string warehouseAddress);
 
-        bool InsertWarehouseAdmin(WarehouseAdmin warehouseAdminAdd);
+        bool InsertWarehouseAdmin(WarehouseAdminSpecific warehouseAdminSpecific);
 
         WarehouseAdmin ReadWarehouseAdmin(int WarehouseAdminId);
 
-        bool UpdateWarehouseAdmin(WarehouseAdmin update);
+        bool UpdateWarehouseAdmin(WarehouseAdminSpecific update);
 
         bool DeleteWarehouseAdmin(int WarehouseAdminId);
     }

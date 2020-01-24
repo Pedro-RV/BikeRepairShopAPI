@@ -7,6 +7,6 @@ C:\Users\pjrodriguez\source\repos\Supplier\Supplier_Helper\obj\Debug\Supplier_He
 C:\REPO\becaPedro\Supplier\Supplier_Helper\bin\Debug\Supplier_Helper.exe.config
 C:\REPO\becaPedro\Supplier\Supplier_Helper\bin\Debug\Supplier_Helper.exe
 C:\REPO\becaPedro\Supplier\Supplier_Helper\bin\Debug\Supplier_Helper.pdb
-C:\REPO\becaPedro\Supplier\Supplier_Helper\obj\Debug\Supplier_Helper.csprojAssemblyReference.cache
 C:\REPO\becaPedro\Supplier\Supplier_Helper\obj\Debug\Supplier_Helper.exe
 C:\REPO\becaPedro\Supplier\Supplier_Helper\obj\Debug\Supplier_Helper.pdb
+C:\REPO\becaPedro\Supplier\Supplier_Helper\obj\Debug\Supplier_Helper.csprojAssemblyReference.cache
