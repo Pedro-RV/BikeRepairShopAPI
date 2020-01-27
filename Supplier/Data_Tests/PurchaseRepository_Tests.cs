@@ -31,7 +31,7 @@ namespace Data_Tests
             Warehouse warehouse = new Warehouse("Calle Ebro", 120);
             WarehouseAdmin warehouseAdmin = new WarehouseAdmin(dateTime, employee, warehouse);
             ProductState productState = new ProductState("No disponible");
-            Product product = new Product("Pelota", 20, 15, warehouse, productState);
+            Product product = new Product("Pelota", 20, 15, true);
             SupplyCompany supplyCompany = new SupplyCompany("Ruedas Hermanos Carrasco", "123");
 
             DateTime dateTime2 = new DateTime(2019, 12, 03, 9, 38, 00);
@@ -56,7 +56,7 @@ namespace Data_Tests
             Warehouse warehouse = new Warehouse("Calle Ebro", 120);
             WarehouseAdmin warehouseAdmin = new WarehouseAdmin(dateTime, employee, warehouse);
             ProductState productState = new ProductState("No disponible");
-            Product product = new Product("Pelota", 20, 15, warehouse, productState);
+            Product product = new Product("Pelota", 20, 15, true);
             SupplyCompany supplyCompany = new SupplyCompany("Ruedas Hermanos Carrasco", "123");
             DateTime dateTime2 = new DateTime(2019, 12, 03, 9, 38, 00);
             Purchase purchaseAdd = new Purchase(dateTime2, 10, 500, product, supplyCompany);

@@ -29,23 +29,6 @@ namespace Supplier_Data
             return ret;
         }
 
-        public List<ProductData> ProductDataList()
-        {
-
-            var ret = dbContext.Product
-                .Join(dbContext.ProductState,
-                    product => product.ProductStateId,
-                    productState => productState.ProductStateId,
-                    (product, productState) => new ProductData()
-                    {
-                        ProductId = product.ProductId,
-                        ProductName = product.ProductDescription,
-                        ProductStateName = productState.ProductStateDescription
-                    }).ToList();
-
-            return ret;
-        }
-
         public bool Insert(Product add)
         {
             bool ret = false;

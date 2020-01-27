@@ -59,12 +59,14 @@
     <Compile Include="EmployeeBussiness.cs" />
     <Compile Include="Interfaces\IEmployeeBussiness.cs" />
     <Compile Include="Interfaces\IProductBussiness.cs" />
+    <Compile Include="Interfaces\IProductInfoBussiness.cs" />
     <Compile Include="Interfaces\IProductStateBussiness.cs" />
     <Compile Include="Interfaces\IPurchaseBussiness.cs" />
     <Compile Include="Interfaces\ISupplyCompanyBussiness.cs" />
     <Compile Include="Interfaces\IWarehouseAdminBussiness.cs" />
     <Compile Include="Interfaces\IWarehouseBussiness.cs" />
     <Compile Include="ProductBussiness.cs" />
+    <Compile Include="ProductInfoBussiness.cs" />
     <Compile Include="ProductStateBussiness.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

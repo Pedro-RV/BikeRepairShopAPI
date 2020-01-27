@@ -26,7 +26,7 @@ namespace Service_Tests
             ProductStateController productStateController = new ProductStateController();
             productStateController.InsertProductState(new ProductStateSpecific("No disponible"));
             ProductController productController = new ProductController();
-            productController.InsertProduct(new ProductSpecific("Pelota", 20, 5, 1, 1));
+            productController.InsertProduct(new ProductSpecific("Pelota", 20, 5, true));
             SupplyCompanyController supplyCompanyController = new SupplyCompanyController();
             supplyCompanyController.InsertSupplyCompany(new SupplyCompanySpecific("Ruedas Hermanos Carrasco", "123"));
             DateTime dateTime2 = new DateTime(2019, 05, 17, 13, 05, 00);

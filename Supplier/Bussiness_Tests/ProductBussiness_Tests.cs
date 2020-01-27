@@ -16,21 +16,11 @@ namespace Bussiness_Tests
         [TestFixtureSetUp]
         public void Init()
         {
-            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
-            employeeBussiness.InsertEmployee(new EmployeeSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
-            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);          
-            WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
-            warehouseBussiness.InsertWarehouse(new WarehouseSpecific("Calle Ebro", 120));
-            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
-            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
-            ProductStateBussiness productStateBussiness = new ProductStateBussiness();
-            productStateBussiness.InsertProductState(new ProductStateSpecific("No disponible"));
-
             ProductBussiness productBussiness = new ProductBussiness();
 
-            productBussiness.InsertProduct(new ProductSpecific("Pelota", 20, 5, 1, 1));
-            productBussiness.InsertProduct(new ProductSpecific("Peine", 4, 10, 1, 1));
-            productBussiness.InsertProduct(new ProductSpecific("Zapatillas Adidas", 80, 15, 1, 1));
+            productBussiness.InsertProduct(new ProductSpecific("Pelota", 20, 5, true));
+            productBussiness.InsertProduct(new ProductSpecific("Peine", 4, 10, true));
+            productBussiness.InsertProduct(new ProductSpecific("Zapatillas Adidas", 80, 15, true));
 
         }
 
@@ -48,28 +38,12 @@ namespace Bussiness_Tests
         }
 
         [Test]
-        public void AAProductDataList_Test()
-        {
-            ProductBussiness productBussiness = new ProductBussiness();
-
-            List<ProductData> currentProductData = productBussiness.ProductDataList();
-
-            Assert.AreEqual(currentProductData[0].ProductName, "Pelota");
-            Assert.AreEqual(currentProductData[0].ProductStateName, "No disponible");
-            Assert.AreEqual(currentProductData[1].ProductName, "Peine");
-            Assert.AreEqual(currentProductData[1].ProductStateName, "No disponible");
-            Assert.AreEqual(currentProductData[2].ProductName, "Zapatillas Adidas");
-            Assert.AreEqual(currentProductData[2].ProductStateName, "No disponible");
-
-        }
-
-        [Test]
         public void InsertProduct_Test()
         {
             bool correct;
             ProductBussiness productBussiness = new ProductBussiness();
 
-            correct = productBussiness.InsertProduct(new ProductSpecific("Teclado", 60, 20, 1, 1));
+            correct = productBussiness.InsertProduct(new ProductSpecific("Teclado", 60, 20, true));
 
             Product productGotten = productBussiness.ReadProduct(4);
 

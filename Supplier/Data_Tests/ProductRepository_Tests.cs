@@ -26,15 +26,9 @@ namespace Data_Tests
         [TestFixtureSetUp]
         public void Init()
         {
-            Employee employee = new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
-            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);           
-            Warehouse warehouse = new Warehouse("Calle Ebro", 120);
-            WarehouseAdmin warehouseAdmin = new WarehouseAdmin(dateTime, employee, warehouse);
-            ProductState productState = new ProductState("No disponible");
-
-            Product productOne = new Product("Pelota", 20, 5, warehouse, productState);
-            Product productTwo = new Product("Peine", 4, 10, warehouse, productState);
-            Product productThree = new Product("Zapatillas Adidas", 80, 15, warehouse, productState);
+            Product productOne = new Product("Pelota", 20, 5, true);
+            Product productTwo = new Product("Peine", 4, 10, true);
+            Product productThree = new Product("Zapatillas Adidas", 80, 15, true);
 
 
             ProductRepository productRepository = new ProductRepository(dbContext, exceptionController);
@@ -47,12 +41,7 @@ namespace Data_Tests
         [Test]
         public void Insert_Test()
         {
-            Employee employee = new Employee("AA", "RR", "00", "aa@correo", "Calle AA", "00", "00");
-            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
-            Warehouse warehouse = new Warehouse("Calle Tajo", 300);
-            WarehouseAdmin warehouseAdmin = new WarehouseAdmin(dateTime, employee, warehouse);
-            ProductState productState = new ProductState("No disponible");
-            Product productAdd = new Product("Teclado", 60, 20, warehouse, productState);
+            Product productAdd = new Product("Teclado", 60, 20, true);
 
             bool correct;
             ProductRepository productRepository = new ProductRepository(dbContext, exceptionController);
@@ -65,8 +54,6 @@ namespace Data_Tests
             Assert.AreEqual(productGotten.ProductDescription, productAdd.ProductDescription);
             Assert.AreEqual(productGotten.Prize, productAdd.Prize);
             Assert.AreEqual(productGotten.Cuantity, productAdd.Cuantity);
-            Assert.AreEqual(productGotten.Warehouse, productAdd.Warehouse);
-            Assert.AreEqual(productGotten.ProductState, productAdd.ProductState);
 
         }
 
@@ -79,7 +66,6 @@ namespace Data_Tests
 
             Assert.AreEqual(productGotten.ProductDescription, "Zapatillas Adidas");
             Assert.AreEqual(productGotten.Prize, 80);
-            Assert.AreEqual(productGotten.Warehouse.WarehouseAddress, "Calle Ebro");
 
         }
 

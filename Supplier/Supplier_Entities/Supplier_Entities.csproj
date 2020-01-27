@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="EntityModel\Employee.cs" />
     <Compile Include="EntityModel\Product.cs" />
+    <Compile Include="EntityModel\ProductInfo.cs" />
     <Compile Include="EntityModel\ProductState.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,7 +66,7 @@
     <Compile Include="EntityModel\Warehouse.cs" />
     <Compile Include="EntityModel\WarehouseAdmin.cs" />
     <Compile Include="Specific\EmployeeSpecific.cs" />
-    <Compile Include="Specific\ProductData.cs" />
+    <Compile Include="Specific\ProductInfoSpecific.cs" />
     <Compile Include="Specific\ProductSpecific.cs" />
     <Compile Include="Specific\ProductStateSpecific.cs" />
     <Compile Include="Specific\PurchaseData.cs" />

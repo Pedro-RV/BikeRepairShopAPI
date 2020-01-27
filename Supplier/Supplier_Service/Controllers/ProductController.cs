@@ -26,18 +26,6 @@ namespace Supplier_Service.Controllers
 
         // GET
         [HttpGet]
-        [Route("api/product/ProductDataList")]
-        public List<ProductData> ProductDataList()
-        {
-            ProductBussiness productBussiness = new ProductBussiness();
-
-            List<ProductData> request = productBussiness.ProductDataList();
-
-            return request;
-        }
-
-        // GET
-        [HttpGet]
         [Route("api/product/GetProduct/{productId}")]
         public Product GetProduct(int productId)
         {

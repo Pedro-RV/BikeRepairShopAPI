@@ -45,15 +45,6 @@ namespace Supplier_Bussiness
             return ret;
         }
 
-        public List<ProductData> ProductDataList()
-        {
-            ProductRepository productRepository = new ProductRepository(dbContext, exceptionController);
-
-            List<ProductData> ret = productRepository.ProductDataList();
-
-            return ret;
-        }
-
         public bool InsertProduct(ProductSpecific productSpecific)
         {
             bool ret;
@@ -61,22 +52,8 @@ namespace Supplier_Bussiness
             try
             {
                 ProductRepository productRepository = new ProductRepository(dbContext, exceptionController);
-                ProductStateBussiness productStateBussiness = new ProductStateBussiness();
-                WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
 
                 Product productAdd = mapper.Map<ProductSpecific, Product>(productSpecific);
-
-                if (productAdd.ProductStateId != 0)
-                {
-                    ProductState productStateAttach = productStateBussiness.ReadProductState(productAdd.ProductStateId);
-                    productAdd.ProductState = productStateAttach;
-                }
-
-                if (productAdd.WarehouseId != 0)
-                {
-                    Warehouse warehouseAttach = warehouseBussiness.ReadWarehouse(productAdd.WarehouseId);
-                    productAdd.Warehouse = warehouseAttach;
-                }
 
                 ret = productRepository.Insert(productAdd);
 
@@ -131,28 +108,13 @@ namespace Supplier_Bussiness
             try
             {
                 ProductRepository productRepository = new ProductRepository(dbContext, exceptionController);
-                ProductStateBussiness productStateBussiness = new ProductStateBussiness();
-                WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
 
                 Product current = productRepository.Read(update.ProductId);
 
                 current.ProductDescription = !String.IsNullOrEmpty(update.ProductDescription) ? update.ProductDescription : current.ProductDescription;
                 current.Prize = update.Prize != 0 ? update.Prize : current.Prize;
                 current.Cuantity = update.Cuantity != 0 ? update.Cuantity : current.Cuantity;
-
-                if(update.ProductStateId != 0)
-                {
-                    current.ProductStateId = update.ProductStateId;
-                    ProductState productStateAttach = productStateBussiness.ReadProductState(current.ProductStateId);
-                    current.ProductState = productStateAttach;
-                }
-
-                if (update.WarehouseId != 0)
-                {
-                    current.WarehouseId = update.WarehouseId;
-                    Warehouse warehouseAttach = warehouseBussiness.ReadWarehouse(current.WarehouseId);
-                    current.Warehouse = warehouseAttach;
-                }
+                current.ActiveFlag = update.ActiveFlag == true ? update.ActiveFlag : current.ActiveFlag;
 
                 ret = productRepository.Update(current);
 

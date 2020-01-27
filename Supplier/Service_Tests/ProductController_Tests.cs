@@ -16,21 +16,11 @@ namespace Service_Tests
         [TestFixtureSetUp]
         public void Init()
         {
-            EmployeeController employeeController = new EmployeeController();
-            employeeController.InsertEmployee(new EmployeeSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
-            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);            
-            WarehouseController warehouseController = new WarehouseController();
-            warehouseController.InsertWarehouse(new WarehouseSpecific("Calle Ebro", 120));
-            WarehouseAdminController warehouseAdminController = new WarehouseAdminController();
-            warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
-            ProductStateController productStateController = new ProductStateController();
-            productStateController.InsertProductState(new ProductStateSpecific("No disponible"));
-
             ProductController productController = new ProductController();
 
-            productController.InsertProduct(new ProductSpecific("Pelota", 20, 5, 1, 1));
-            productController.InsertProduct(new ProductSpecific("Peine", 4, 10, 1, 1));
-            productController.InsertProduct(new ProductSpecific("Zapatillas Adidas", 80, 15, 1, 1));
+            productController.InsertProduct(new ProductSpecific("Pelota", 20, 5, true));
+            productController.InsertProduct(new ProductSpecific("Peine", 4, 10, true));
+            productController.InsertProduct(new ProductSpecific("Zapatillas Adidas", 80, 15, true));
 
         }
 
@@ -48,27 +38,11 @@ namespace Service_Tests
         }
 
         [Test]
-        public void AAProductDataList_Test()
-        {
-            ProductController productController = new ProductController();
-
-            List<ProductData> currentProductData = productController.ProductDataList();
-
-            Assert.AreEqual(currentProductData[0].ProductName, "Pelota");
-            Assert.AreEqual(currentProductData[0].ProductStateName, "No disponible");
-            Assert.AreEqual(currentProductData[1].ProductName, "Peine");
-            Assert.AreEqual(currentProductData[1].ProductStateName, "No disponible");
-            Assert.AreEqual(currentProductData[2].ProductName, "Zapatillas Adidas");
-            Assert.AreEqual(currentProductData[2].ProductStateName, "No disponible");
-
-        }
-
-        [Test]
         public void InsertProduct_Test()
         {
             ProductController productController = new ProductController();
 
-            String message = productController.InsertProduct(new ProductSpecific("Teclado", 60, 20, 1, 1));
+            String message = productController.InsertProduct(new ProductSpecific("Teclado", 60, 20, true));
 
             Product productGotten = productController.GetProduct(4);
 

@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IEmployeeRepository.cs" />
+    <Compile Include="Interfaces\IProductInfoRepository.cs" />
     <Compile Include="Interfaces\IProductRepository.cs" />
     <Compile Include="Context\SupplierContextProvider.cs" />
     <Compile Include="Interfaces\IProductStateRepository.cs" />
@@ -80,7 +81,12 @@
     <Compile Include="Migrations\202001241214044_Tercera.designer.cs">
       <DependentUpon>202001241214044_Tercera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001271025186_Cuarta.cs" />
+    <Compile Include="Migrations\202001271025186_Cuarta.designer.cs">
+      <DependentUpon>202001271025186_Cuarta.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="ProductInfoRepository.cs" />
     <Compile Include="ProductRepository.cs" />
     <Compile Include="ProductStateRepository.cs" />
     <Compile Include="Program.cs" />
@@ -115,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001241214044_Tercera.resx">
       <DependentUpon>202001241214044_Tercera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001271025186_Cuarta.resx">
+      <DependentUpon>202001271025186_Cuarta.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

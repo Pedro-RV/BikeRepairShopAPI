@@ -12,33 +12,13 @@ namespace Supplier_Entities.EntityModel
 
         }
 
-        public Product(String ProductDescription, double Prize, int Cuantity, Warehouse Warehouse, ProductState ProductState)
+        public Product(String ProductDescription, double Prize, int Cuantity, bool ActiveFlag)
         {
             this.ProductDescription = ProductDescription;
             this.Prize = Prize;
             this.Cuantity = Cuantity;
-            this.Warehouse = Warehouse;
+            this.ActiveFlag = ActiveFlag;
 
-            if(Warehouse != null)
-            {
-                this.WarehouseId = Warehouse.WarehouseId;
-            }
-            else
-            {
-                this.WarehouseId = 0;
-            }
-
-            this.ProductState = ProductState;
-
-            if(ProductState != null)
-            {
-                this.ProductStateId = ProductState.ProductStateId;
-            }
-            else
-            {
-                this.ProductStateId = 0;
-            }
-            
         }
 
         #region Properties
@@ -50,21 +30,16 @@ namespace Supplier_Entities.EntityModel
 
         public int ProductStateId { get; set; }
 
-        [MaxLength(100)]
+        [MaxLength(500)]
         public string ProductDescription { get; set; }
 
         public double Prize { get; set; }
 
         public int Cuantity { get; set; }
 
-        #endregion
-
-        #region Foreing keys
-
-        public Warehouse Warehouse { get; set; }
-
-        public ProductState ProductState { get; set; }
+        public bool ActiveFlag { get; set; }
 
         #endregion
+
     }
 }

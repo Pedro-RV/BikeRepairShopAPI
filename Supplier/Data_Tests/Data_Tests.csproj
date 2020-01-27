@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="AACleanDatabase.cs" />
     <Compile Include="EmployeeRepository_Tests.cs" />
+    <Compile Include="ProductInfoRepository_Tests.cs" />
     <Compile Include="ProductRepository_Tests.cs" />
     <Compile Include="ProductStateRepository_Tests.cs" />
     <Compile Include="PurchaseRepository_Tests.cs" />

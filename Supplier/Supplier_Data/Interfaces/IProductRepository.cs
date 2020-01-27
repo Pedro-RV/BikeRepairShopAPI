@@ -12,8 +12,6 @@ namespace Supplier_Data.Interfaces
     {
         List<Product> ProductsList();
 
-        List<ProductData> ProductDataList();
-
         bool Insert(Product add);
 
         Product Read(int ProductId);

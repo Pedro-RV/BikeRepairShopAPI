@@ -16,27 +16,20 @@ namespace Supplier_Entities.Specific
 
         }
 
-        public ProductSpecific(String ProductDescription, double Prize, int Cuantity, int WarehouseId, int ProductStateId)
+        public ProductSpecific(String ProductDescription, double Prize, int Cuantity, bool ActiveFlag)
         {
             this.ProductDescription = ProductDescription;
             this.Prize = Prize;
             this.Cuantity = Cuantity;
-            this.WarehouseId = WarehouseId;
-            this.ProductStateId = ProductStateId;
+            this.ActiveFlag = ActiveFlag;
 
         }
 
         [DataMember(Name = "productId")]
         public int ProductId { get; set; }
 
-        [DataMember(Name = "warehouseId")]
-        public int WarehouseId { get; set; }
-
-        [DataMember(Name = "productStateId")]
-        public int ProductStateId { get; set; }
-
         [DataMember(Name = "productDescription")]
-        [MaxLength(100)]
+        [MaxLength(500)]
         public string ProductDescription { get; set; }
 
         [DataMember(Name = "prize")]
@@ -45,5 +38,7 @@ namespace Supplier_Entities.Specific
         [DataMember(Name = "cuantity")]
         public int Cuantity { get; set; }
 
+        [DataMember(Name = "activeFlag")]
+        public bool ActiveFlag { get; set; }
     }
 }

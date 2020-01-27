@@ -26,7 +26,7 @@ namespace Bussiness_Tests
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();
             productStateBussiness.InsertProductState(new ProductStateSpecific("No disponible"));
             ProductBussiness productBussiness = new ProductBussiness();
-            productBussiness.InsertProduct(new ProductSpecific("Pelota", 20, 5, 1, 1));
+            productBussiness.InsertProduct(new ProductSpecific("Pelota", 20, 5, true));
             SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
             supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompanySpecific("Ruedas Hermanos Carrasco", "123"));
             DateTime dateTime2 = new DateTime(2019, 05, 17, 13, 05, 00);

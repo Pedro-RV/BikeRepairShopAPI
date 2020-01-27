@@ -76,6 +76,7 @@
     <Compile Include="AACleanDatabase.cs" />
     <Compile Include="EmployeeBussiness_Tests.cs" />
     <Compile Include="ProductBussiness_Tests.cs" />
+    <Compile Include="ProductInfoBussiness_Tests.cs" />
     <Compile Include="ProductStateBussiness_Tests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

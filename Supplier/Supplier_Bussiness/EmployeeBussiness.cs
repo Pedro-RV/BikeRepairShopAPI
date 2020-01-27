@@ -48,27 +48,27 @@ namespace Supplier_Bussiness
         {
             bool ret;
 
-            //try
-            //{
+            try
+            {
                 EmployeeRepository employeeRepository = new EmployeeRepository(dbContext, exceptionController);
                 
                 Employee employeeAdd = mapper.Map<EmployeeSpecific, Employee>(employeeSpecific);
 
                 ret = employeeRepository.Insert(employeeAdd);
-            //}
-            //catch (SupplierException)
-            //{
-            //    throw;
-            //}
-            //catch (MissingMethodException)
-            //{
-            //    throw this.exceptionController.CreateMyException(ExceptionEnum.MethodNotExist);
-            //}
-            //catch (Exception)
-            //{
-            //    throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+            }
+            catch (SupplierException)
+            {
+                throw;
+            }
+            catch (MissingMethodException)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.MethodNotExist);
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
 
-            //}
+            }
 
             return ret;
         }
