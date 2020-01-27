@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Supplier_Bussiness.Interfaces
 {
-    public interface IProductInfoBussiness
+    public interface IWarehouseProductBussiness
     {
-        bool InsertProductInfo(ProductInfoSpecific productInfoSpecific);
+        bool InsertWarehouseProduct(WarehouseProductSpecific warehouseProductSpecific);
 
-        ProductInfo ReadProductInfo(int ProductInfoId);
+        WarehouseProduct ReadWarehouseProduct(int WarehouseProductId);
 
-        bool UpdateProductInfo(ProductInfoSpecific update);
+        bool UpdateWarehouseProduct(WarehouseProductSpecific update);
 
-        bool DeleteProductInfo(int ProductInfoId);
+        bool DeleteWarehouseProduct(int WarehouseProductId);
     }
 }

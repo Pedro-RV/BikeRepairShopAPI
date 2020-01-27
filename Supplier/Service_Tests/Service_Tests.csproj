@@ -85,7 +85,7 @@
     <Compile Include="AACleanDatabase.cs" />
     <Compile Include="EmployeeController_Tests.cs" />
     <Compile Include="ProductController_Tests.cs" />
-    <Compile Include="ProductInfoController_Tests.cs" />
+    <Compile Include="WarehouseProductController_Tests.cs" />
     <Compile Include="ProductStateController_Tests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

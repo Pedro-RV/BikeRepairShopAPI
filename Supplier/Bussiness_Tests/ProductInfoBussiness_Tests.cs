@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Bussiness_Tests
 {
     [TestFixture]
-    class ProductInfoBussiness_Tests
+    class WarehouseProductBussiness_Tests
     {
         [TestFixtureSetUp]
         public void Init()
@@ -26,72 +26,72 @@ namespace Bussiness_Tests
             ProductBussiness productBussiness = new ProductBussiness();
             productBussiness.InsertProduct(new ProductSpecific("Pelota", 20, 5, true));
 
-            ProductInfoBussiness productInfoBussiness = new ProductInfoBussiness();
+            WarehouseProductBussiness WarehouseProductBussiness = new WarehouseProductBussiness();
 
-            productInfoBussiness.InsertProductInfo(new ProductInfoSpecific(1, 1, 1));
-            productInfoBussiness.InsertProductInfo(new ProductInfoSpecific(1, 1, 2));
-            productInfoBussiness.InsertProductInfo(new ProductInfoSpecific(1, 1, 3));
+            WarehouseProductBussiness.InsertWarehouseProduct(new WarehouseProductSpecific(1, 1, 1));
+            WarehouseProductBussiness.InsertWarehouseProduct(new WarehouseProductSpecific(1, 1, 2));
+            WarehouseProductBussiness.InsertWarehouseProduct(new WarehouseProductSpecific(1, 1, 3));
 
         }
 
         [Test]
-        public void InsertProductInfo_Test()
+        public void InsertWarehouseProduct_Test()
         {
             bool correct;
-            ProductInfoBussiness productInfoBussiness = new ProductInfoBussiness();
+            WarehouseProductBussiness WarehouseProductBussiness = new WarehouseProductBussiness();
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();
 
-            correct = productInfoBussiness.InsertProductInfo(new ProductInfoSpecific(1, 1, 4));
+            correct = WarehouseProductBussiness.InsertWarehouseProduct(new WarehouseProductSpecific(1, 1, 4));
 
-            ProductInfo productInfoGotten = productInfoBussiness.ReadProductInfo(4);
+            WarehouseProduct WarehouseProductGotten = WarehouseProductBussiness.ReadWarehouseProduct(4);
             ProductState checkProductState = productStateBussiness.ReadProductState(4);
 
             Assert.AreEqual(true, correct);
-            Assert.AreEqual(productInfoGotten.ProductState, checkProductState);
+            Assert.AreEqual(WarehouseProductGotten.ProductState, checkProductState);
 
         }
 
         [Test]
-        public void ReadProductInfo_Test()
+        public void ReadWarehouseProduct_Test()
         {
-            ProductInfoBussiness productInfoBussiness = new ProductInfoBussiness();
+            WarehouseProductBussiness WarehouseProductBussiness = new WarehouseProductBussiness();
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();
 
-            ProductInfo productInfoGotten = productInfoBussiness.ReadProductInfo(1);
+            WarehouseProduct WarehouseProductGotten = WarehouseProductBussiness.ReadWarehouseProduct(1);
             ProductState checkProductState = productStateBussiness.ReadProductState(1);
 
-            Assert.AreEqual(productInfoGotten.ProductState, checkProductState);
+            Assert.AreEqual(WarehouseProductGotten.ProductState, checkProductState);
 
         }
 
         [Test]
-        public void UpdateProductInfo_Test()
+        public void UpdateWarehouseProduct_Test()
         {
             bool correct;
-            ProductInfoBussiness productInfoBussiness = new ProductInfoBussiness();
+            WarehouseProductBussiness WarehouseProductBussiness = new WarehouseProductBussiness();
             ProductStateBussiness productStateBussiness = new ProductStateBussiness();
 
-            ProductInfoSpecific change = new ProductInfoSpecific();
-            change.ProductInfoId = 2;
+            WarehouseProductSpecific change = new WarehouseProductSpecific();
+            change.WarehouseProductId = 2;
             change.ProductStateId = 1;
 
-            correct = productInfoBussiness.UpdateProductInfo(change);
+            correct = WarehouseProductBussiness.UpdateWarehouseProduct(change);
 
-            ProductInfo productInfoGotten = productInfoBussiness.ReadProductInfo(2);
+            WarehouseProduct WarehouseProductGotten = WarehouseProductBussiness.ReadWarehouseProduct(2);
             ProductState checkProductState = productStateBussiness.ReadProductState(1);
 
             Assert.AreEqual(true, correct);
-            Assert.AreEqual(productInfoGotten.ProductState, checkProductState);
+            Assert.AreEqual(WarehouseProductGotten.ProductState, checkProductState);
 
         }
 
         [Test]
-        public void DeleteProductInfo_Test()
+        public void DeleteWarehouseProduct_Test()
         {
             bool correct;
-            ProductInfoBussiness productInfoBussiness = new ProductInfoBussiness();
+            WarehouseProductBussiness WarehouseProductBussiness = new WarehouseProductBussiness();
 
-            correct = productInfoBussiness.DeleteProductInfo(3);
+            correct = WarehouseProductBussiness.DeleteWarehouseProduct(3);
 
             Assert.AreEqual(true, correct);
 

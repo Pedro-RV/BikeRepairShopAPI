@@ -85,8 +85,12 @@
     <Compile Include="Migrations\202001271025186_Cuarta.designer.cs">
       <DependentUpon>202001271025186_Cuarta.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001271257240_Quinta.cs" />
+    <Compile Include="Migrations\202001271257240_Quinta.designer.cs">
+      <DependentUpon>202001271257240_Quinta.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="ProductInfoRepository.cs" />
+    <Compile Include="WarehouseProductRepository.cs" />
     <Compile Include="ProductRepository.cs" />
     <Compile Include="ProductStateRepository.cs" />
     <Compile Include="Program.cs" />
@@ -124,6 +128,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001271025186_Cuarta.resx">
       <DependentUpon>202001271025186_Cuarta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001271257240_Quinta.resx">
+      <DependentUpon>202001271257240_Quinta.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

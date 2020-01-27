@@ -134,7 +134,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
-    <Compile Include="Controllers\ProductInfoController.cs" />
+    <Compile Include="Controllers\WarehouseProductController.cs" />
     <Compile Include="Controllers\ProductStateController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\SupplyCompanyController.cs" />

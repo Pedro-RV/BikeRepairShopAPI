@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Supplier_Data.Interfaces
 {
-    public interface IProductInfoRepository
+    public interface IWarehouseProductRepository
     {
-        bool Insert(ProductInfo add);
+        bool Insert(WarehouseProduct add);
 
-        ProductInfo Read(int ProductInfoId);
+        WarehouseProduct Read(int WarehouseProductId);
 
-        bool Update(ProductInfo update);
+        bool Update(WarehouseProduct update);
 
-        bool Delete(ProductInfo del);
+        bool Delete(WarehouseProduct del);
     }
 }
