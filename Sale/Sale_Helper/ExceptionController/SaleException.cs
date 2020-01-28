@@ -23,12 +23,5 @@ namespace Sale_Helper.ExceptionController
         {
         }
 
-        public Exception MyException(Exception ex, string message)
-        {
-            Exception create = new Exception(message, ex);
-
-            return create;
-        }
-
     }
 }

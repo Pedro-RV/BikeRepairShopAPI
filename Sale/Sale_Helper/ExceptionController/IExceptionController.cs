@@ -8,8 +8,7 @@ namespace Sale_Helper.ExceptionController
 {
     public interface IExceptionController
     {
-        Exception CreateGeneralException(Exception ex);
-        Exception CreateOwnException(int exNum, Exception ex);
+        SaleException CreateMyException(ExceptionEnum exNum);
 
     }
 }

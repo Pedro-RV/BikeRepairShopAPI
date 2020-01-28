@@ -16,6 +16,7 @@ namespace Sale_Helper.ExceptionController
         MistakenCuantity = 6,
         NullPaymentMethodDescription = 7,
         NullProductTypeDescription = 8,
-        NullTelephoneNum = 9
+        NullTelephoneNum = 9,
+        MethodNotExist = 10
     }
 }

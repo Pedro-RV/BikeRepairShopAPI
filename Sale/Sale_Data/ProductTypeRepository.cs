@@ -14,11 +14,10 @@ namespace Sale_Data
 
         private ExceptionController exceptionController;
 
-        public ProductTypeRepository()
+        public ProductTypeRepository(SaleContext dbContext, ExceptionController exceptionController)
         {
-            SaleContextProvider.InitializeSaleContext();
-            dbContext = SaleContextProvider.GetSaleContext();
-            exceptionController = new ExceptionController();
+            this.dbContext = dbContext;
+            this.exceptionController = exceptionController;
 
         }
 
@@ -30,14 +29,12 @@ namespace Sale_Data
             {
                 if (add.ProductTypeDescription == null)
                 {
-                    ArgumentNullException type = new ArgumentNullException();
-                    throw this.exceptionController.CreateOwnException(8, type);
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.NullProductTypeDescription);
                 }
 
                 if (add == null)
                 {
-                    ArgumentNullException type = new ArgumentNullException();
-                    throw this.exceptionController.CreateOwnException(2, type);
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.NullObject);
                 }
 
 
@@ -50,9 +47,9 @@ namespace Sale_Data
             {
                 throw;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw this.exceptionController.CreateGeneralException(ex);
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
             return ret;
@@ -68,8 +65,7 @@ namespace Sale_Data
 
                 if (ret == null)
                 {
-                    ArgumentException type = new ArgumentException();
-                    throw this.exceptionController.CreateOwnException(3, type);
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
             }
@@ -77,39 +73,28 @@ namespace Sale_Data
             {
                 throw;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw this.exceptionController.CreateGeneralException(ex);
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
             return ret;
         }
 
 
-        public bool Update(ProductType original, ProductType upda)
+        public bool Update(ProductType update)
         {
             bool ret = false;
-            bool exist = Lookfor(original);
-
-            original = upda;
+            bool exist = Lookfor(update);
 
             try
             {
-                if (upda == null)
-                {
-                    ArgumentNullException type = new ArgumentNullException();
-                    throw this.exceptionController.CreateOwnException(2, type);
-                }
-
-                original = upda;
-
                 if (!exist)
                 {
-                    ArgumentException type = new ArgumentException();
-                    throw this.exceptionController.CreateOwnException(3, type);
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
-                dbContext.Entry(original).State = EntityState.Modified;
+                dbContext.Entry(update).State = EntityState.Modified;
                 dbContext.SaveChanges();
                 ret = true;
 
@@ -118,9 +103,9 @@ namespace Sale_Data
             {
                 throw;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw this.exceptionController.CreateGeneralException(ex);
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
             return ret;
@@ -135,8 +120,7 @@ namespace Sale_Data
             {
                 if (!exist)
                 {
-                    ArgumentException type = new ArgumentException();
-                    throw this.exceptionController.CreateOwnException(3, type);
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
                 dbContext.Entry(del).State = EntityState.Deleted;
@@ -148,9 +132,9 @@ namespace Sale_Data
             {
                 throw;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw this.exceptionController.CreateGeneralException(ex);
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
             return ret;

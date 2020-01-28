@@ -18,9 +18,10 @@ namespace Sale_Entities.EntityModel
 
         #region Properties
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PaymentMethodId { get; set; }
 
-        [MaxLength(20)]
+        [MaxLength(70)]
         public string PaymentMethodDescription { get; set; }
 
         #endregion

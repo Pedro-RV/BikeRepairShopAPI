@@ -16,13 +16,32 @@ namespace Sale_Entities.EntityModel
             this.DepartureDate = DepartureDate;
             this.PackingTime = PackingTime;
             this.Sale = Sale;
-            this.SaleId = Sale.SaleId;
+
+            if(Sale != null)
+            {
+                this.SaleId = Sale.SaleId;
+            }
+            else
+            {
+                this.SaleId = 0;
+            }
+            
             this.TransportCompany = TransportCompany;
-            this.TransportCompanyId = TransportCompany.TransportCompanyId;
+
+            if (TransportCompany != null)
+            {
+                this.TransportCompanyId = TransportCompany.TransportCompanyId;
+            }
+            else
+            {
+                this.TransportCompanyId = 0;
+            }
+            
         }
 
         #region Properties
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ShippingId { get; set; }
 
         public int SaleId { get; set; }

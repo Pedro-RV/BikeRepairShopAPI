@@ -10,13 +10,14 @@ namespace Sale_Helper.ExceptionController
     {
         private const string InvalidRequest = "Invalid request.";
         private const string NullObject = "The object introduced has not data (null).";
-        private const string ObjectNotFound = "The object introduced does not exist.";
+        private const string ObjectNotFound = "The object does not exist.";
         private const string NullDNI = "The client must have a DNI.";
         private const string MistakenPrize = "The product's prize can not be 0 or lower.";
         private const string MistakenCuantity = "The cuantity can not be lower than 0.";
         private const string NullPaymentMethodDescription = "The payment method must have a description.";
         private const string NullProductTypeDescription = "The product type must have a description.";
         private const string NullTelephoneNum = "The transport company must have a telephone number.";
+        private const string MethodNotExist = "The method invoked does not exist.";
 
 
         public string ObtainText(int exNum)
@@ -66,6 +67,11 @@ namespace Sale_Helper.ExceptionController
             if (exNum == 9)
             {
                 ret = NullTelephoneNum;
+            }
+
+            if (exNum == 10)
+            {
+                ret = MethodNotExist;
             }
 
             return ret;

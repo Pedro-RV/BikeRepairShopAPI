@@ -53,9 +53,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BillRepository.cs" />
     <Compile Include="ClientRepository.cs" />
     <Compile Include="Context\SaleContext.cs" />
     <Compile Include="Context\SaleContextProvider.cs" />
+    <Compile Include="Interfaces\IBillRepository.cs" />
     <Compile Include="Interfaces\IClientRepository.cs" />
     <Compile Include="Interfaces\IPaymentMethodRepository.cs" />
     <Compile Include="Interfaces\IProductRepository.cs" />

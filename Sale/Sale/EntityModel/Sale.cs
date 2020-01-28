@@ -11,29 +11,54 @@ namespace Sale_Entities.EntityModel
 
         }
 
-        public Sale(DateTime SaleDate, int Cuantity, Client Client, Product Product, PaymentMethod PaymentMethod)
+        public Sale(int Cuantity, Client Client, Product Product, Bill Bill)
         {
-            this.SaleDate = SaleDate;
             this.Cuantity = Cuantity;
             this.Client = Client;
-            this.ClientId = Client.ClientId;
+
+            if(Client != null)
+            {
+                this.ClientId = Client.ClientId;
+            }
+            else
+            {
+                this.ClientId = 0;
+            }
+            
             this.Product = Product;
-            this.ProductId = Product.ProductId;
-            this.PaymentMethod = PaymentMethod;
-            this.PaymentMethodId = PaymentMethod.PaymentMethodId;
+
+            if (Product != null)
+            {
+                this.ProductId = Product.ProductId;
+            }
+            else
+            {
+                this.ProductId = 0;
+            }
+            
+            this.Bill = Bill;
+
+            if (Bill != null)
+            {
+                this.BillId = Bill.BillId;
+            }
+            else
+            {
+                this.BillId = 0;
+            }
+            
         }
 
         #region Properties
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SaleId { get; set; }
 
         public int ClientId { get; set; }
 
         public int ProductId { get; set; }
 
-        public int PaymentMethodId { get; set; }
-
-        public DateTime SaleDate { get; set; }
+        public int BillId { get; set; }
 
         public int Cuantity { get; set; }
 
@@ -45,7 +70,7 @@ namespace Sale_Entities.EntityModel
 
         public Product Product { get; set; }
         
-        public PaymentMethod PaymentMethod { get; set; }
+        public Bill Bill { get; set; }
 
         #endregion
     }

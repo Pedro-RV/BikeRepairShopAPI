@@ -11,9 +11,9 @@ namespace Sale_Data.Interfaces
     {
         bool Insert(TransportCompany add);
 
-        TransportCompany Read(int EmployeeId);
+        TransportCompany Read(int TransportCompanyId);
 
-        bool Update(TransportCompany original, TransportCompany upda);
+        bool Update(TransportCompany update);
 
         bool Delete(TransportCompany del);
     }

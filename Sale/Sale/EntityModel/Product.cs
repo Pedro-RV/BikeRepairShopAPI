@@ -17,11 +17,21 @@ namespace Sale_Entities.EntityModel
             this.Prize = Prize;
             this.Cuantity = Cuantity;
             this.ProductType = ProductType;
-            this.ProductTypeId = ProductType.ProductTypeId;
+
+            if(ProductType != null)
+            {
+                this.ProductTypeId = ProductType.ProductTypeId;
+            }
+            else
+            {
+                this.ProductTypeId = 0;
+            }
+            
         }
 
         #region Properties
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProductId { get; set; }
 
         public int ProductTypeId { get; set; }

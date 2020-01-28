@@ -11,9 +11,9 @@ namespace Sale_Data.Interfaces
     {
         bool Insert(PaymentMethod add);
 
-        PaymentMethod Read(int EmployeeId);
+        PaymentMethod Read(int PaymentMethodId);
 
-        bool Update(PaymentMethod original, PaymentMethod upda);
+        bool Update(PaymentMethod update);
 
         bool Delete(PaymentMethod del);
     }

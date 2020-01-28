@@ -11,9 +11,9 @@ namespace Sale_Data.Interfaces
     {
         bool Insert(Client add);
 
-        Client Read(int EmployeeId);
+        Client Read(int ClientId);
 
-        bool Update(Client original, Client upda);
+        bool Update(Client update);
 
         bool Delete(Client del);
     }

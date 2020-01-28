@@ -45,6 +45,12 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Primitives, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.Serialization.Primitives.4.3.0\lib\net46\System.Runtime.Serialization.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityModel\Bill.cs" />
     <Compile Include="EntityModel\Client.cs" />
     <Compile Include="EntityModel\PaymentMethod.cs" />
     <Compile Include="EntityModel\Product.cs" />
@@ -62,14 +69,20 @@
     <Compile Include="EntityModel\Sale.cs" />
     <Compile Include="EntityModel\Shipping.cs" />
     <Compile Include="EntityModel\TransportCompany.cs" />
+    <Compile Include="Specific\BillSpecific.cs" />
+    <Compile Include="Specific\ClientSpecific.cs" />
+    <Compile Include="Specific\PaymentMethodSpecific.cs" />
+    <Compile Include="Specific\ProductSpecific.cs" />
+    <Compile Include="Specific\ProductTypeSpecific.cs" />
+    <Compile Include="Specific\SaleSpecific.cs" />
+    <Compile Include="Specific\ShippingSpecific.cs" />
+    <Compile Include="Specific\TransportCompanySpecific.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Specific\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

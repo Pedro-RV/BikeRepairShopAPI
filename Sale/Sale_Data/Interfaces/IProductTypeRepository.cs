@@ -11,9 +11,9 @@ namespace Sale_Data.Interfaces
     {
         bool Insert(ProductType add);
 
-        ProductType Read(int EmployeeId);
+        ProductType Read(int ProductTypeId);
 
-        bool Update(ProductType original, ProductType upda);
+        bool Update(ProductType update);
 
         bool Delete(ProductType del);
     }

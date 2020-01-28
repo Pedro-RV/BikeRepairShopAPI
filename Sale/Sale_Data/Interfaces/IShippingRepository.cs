@@ -11,9 +11,9 @@ namespace Sale_Data.Interfaces
     {
         bool Insert(Shipping add);
 
-        Shipping Read(int EmployeeId);
+        Shipping Read(int ShippingId);
 
-        bool Update(Shipping original, Shipping upda);
+        bool Update(Shipping update);
 
         bool Delete(Shipping del);
     }

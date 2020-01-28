@@ -19,6 +19,7 @@ namespace Sale_Entities.EntityModel
 
         #region Properties
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TransportCompanyId { get; set; }
 
         [MaxLength(100)]

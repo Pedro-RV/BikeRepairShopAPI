@@ -18,9 +18,10 @@ namespace Sale_Entities.EntityModel
 
         #region Properties
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProductTypeId { get; set; }
 
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string ProductTypeDescription { get; set; }
 
         #endregion
