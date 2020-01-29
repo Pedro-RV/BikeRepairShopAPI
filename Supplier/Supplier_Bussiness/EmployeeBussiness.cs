@@ -141,7 +141,7 @@ namespace Supplier_Bussiness
                 current.Surname = !String.IsNullOrEmpty(update.Surname) ? update.Surname : current.Surname;
                 current.Email = !String.IsNullOrEmpty(update.Email) ? update.Email : current.Email;
                 current.DNI = !String.IsNullOrEmpty(update.DNI) ? update.DNI : current.DNI;
-                current.Email = !String.IsNullOrEmpty(update.Email) ? update.Email : current.Email;
+                current.EmployeeAddress = !String.IsNullOrEmpty(update.EmployeeAddress) ? update.EmployeeAddress : current.EmployeeAddress;
                 current.CP = !String.IsNullOrEmpty(update.CP) ? update.CP : current.CP;
                 current.MobileNum = !String.IsNullOrEmpty(update.MobileNum) ? update.MobileNum : current.MobileNum;
 

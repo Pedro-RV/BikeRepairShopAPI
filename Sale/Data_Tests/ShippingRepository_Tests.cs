@@ -33,12 +33,12 @@ namespace Data_Tests
             PaymentMethod paymentMethod = new PaymentMethod("Contrarrembolso");
             DateTime dateTime = new DateTime(2019, 12, 03, 15, 12, 00);
             Bill bill = new Bill(dateTime, paymentMethod);
-            Sale saleOne = new Sale(5, client, product, bill);
+            Sale sale = new Sale(5, client, product, bill);
             TransportCompany transportCompany = new TransportCompany("Envi", "911");
             DateTime dateTimeDeparture = new DateTime(2019, 12, 04, 9, 38, 00);
             DateTime dateTimePacking = new DateTime(2019, 12, 04, 9, 00, 00);
 
-            Shipping shipping = new Shipping(dateTimeDeparture, dateTimePacking, saleOne, transportCompany);
+            Shipping shipping = new Shipping(dateTimeDeparture, dateTimePacking, sale, transportCompany);
             ShippingRepository shippingRepository = new ShippingRepository(dbContext, exceptionController);
 
             shippingRepository.Insert(shipping);
@@ -55,12 +55,12 @@ namespace Data_Tests
             PaymentMethod paymentMethod = new PaymentMethod("Contrarrembolso");
             DateTime dateTime = new DateTime(2019, 12, 03, 15, 12, 00);
             Bill bill = new Bill(dateTime, paymentMethod);
-            Sale saleOne = new Sale(5, client, product, bill);
+            Sale sale = new Sale(5, client, product, bill);
             TransportCompany transportCompany = new TransportCompany("Envi", "911");
             DateTime dateTimeDeparture = new DateTime(2019, 12, 04, 9, 38, 00);
             DateTime dateTimePacking = new DateTime(2019, 12, 04, 9, 00, 00);
 
-            Shipping shippingAdd = new Shipping(dateTimeDeparture, dateTimePacking, saleOne, transportCompany);
+            Shipping shippingAdd = new Shipping(dateTimeDeparture, dateTimePacking, sale, transportCompany);
             bool correct;
             ShippingRepository shippingRepository = new ShippingRepository(dbContext, exceptionController);
 
