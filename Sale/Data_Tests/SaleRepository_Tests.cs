@@ -1,6 +1,8 @@
 ﻿using NUnit.Framework;
 using Sale_Data;
+using Sale_Data.Context;
 using Sale_Entities.EntityModel;
+using Sale_Helper.ExceptionController;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,92 +14,99 @@ namespace Data_Tests
     [TestFixture]
     class SaleRepository_Tests
     {
+        private SaleContext dbContext;
+        private ExceptionController exceptionController;
+
+        public SaleRepository_Tests()
+        {
+            SaleContextProvider.InitializeSaleContext();
+            dbContext = SaleContextProvider.GetSaleContext();
+            exceptionController = new ExceptionController();
+        }
+
         [TestFixtureSetUp]
         public void Init()
         {
-            Client aux = new Client("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
-            ProductType aux2 = new ProductType("Ruedas");
-            Product aux3 = new Product("Ruedas Michelin", 50, 50, aux2);
-            PaymentMethod aux4 = new PaymentMethod("Contrarrembolso");
+            Client client = new Client("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
+            ProductType productType = new ProductType("Ruedas");
+            Product product = new Product("Ruedas Michelin", 50, 50, productType);
+            PaymentMethod paymentMethod = new PaymentMethod("Contrarrembolso");
+            DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
+            Bill bill = new Bill(dateTime, paymentMethod);
 
-            DateTime aux5 = new DateTime(2019, 12, 03, 9, 38, 00);
+            Sale saleOne = new Sale(5, client, product, bill);
+            Sale saleTwo = new Sale(15, client, product, bill);
+            Sale saleThree = new Sale(20, client, product, bill);
+            SaleRepository saleRepository = new SaleRepository(dbContext, exceptionController);
 
-            Sale one = new Sale(aux5, 5, aux, aux3, aux4);
-            Sale two = new Sale(aux5, 15, aux, aux3, aux4);
-            Sale three = new Sale(aux5, 20, aux, aux3, aux4);
-            SaleRepository start = new SaleRepository();
-
-            start.Insert(one);
-            start.Insert(two);
-            start.Insert(three);
+            saleRepository.Insert(saleOne);
+            saleRepository.Insert(saleTwo);
+            saleRepository.Insert(saleThree);
         }
 
         [Test]
         public void Insert_Test()
         {
-            Client aux = new Client("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
-            ProductType aux2 = new ProductType("Ruedas");
-            Product aux3 = new Product("Ruedas Michelin", 50, 50, aux2);
-            PaymentMethod aux4 = new PaymentMethod("Contrarrembolso");
-            DateTime aux5 = new DateTime(2019, 12, 03, 9, 38, 00);
+            Client client = new Client("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
+            ProductType productType = new ProductType("Ruedas");
+            Product product = new Product("Ruedas Michelin", 50, 50, productType);
+            PaymentMethod paymentMethod = new PaymentMethod("Contrarrembolso");
+            DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
+            Bill bill = new Bill(dateTime, paymentMethod);
 
-            Sale add = new Sale(aux5, 50, aux, aux3, aux4);
+            Sale saleAdd = new Sale(50, client, product, bill);
             bool correct;
-            SaleRepository test = new SaleRepository();
+            SaleRepository saleRepository = new SaleRepository(dbContext, exceptionController);
 
-            correct = test.Insert(add);
+            correct = saleRepository.Insert(saleAdd);
 
-            Sale gotten = test.Read(4);
+            Sale saleGotten = saleRepository.Read(4);
 
             Assert.AreEqual(true, correct);
-            Assert.AreEqual(gotten.SaleDate, add.SaleDate);
-            Assert.AreEqual(gotten.Cuantity, add.Cuantity);
-            Assert.AreEqual(gotten.Client, add.Client);
-            Assert.AreEqual(gotten.Product, add.Product);
-            Assert.AreEqual(gotten.PaymentMethod, add.PaymentMethod);
+            Assert.AreEqual(saleGotten.Cuantity, saleAdd.Cuantity);
+            Assert.AreEqual(saleGotten.Client, saleAdd.Client);
+            Assert.AreEqual(saleGotten.Product, saleAdd.Product);
+            Assert.AreEqual(saleGotten.Bill, saleAdd.Bill);
 
         }
 
         [Test]
         public void Read_Test()
         {
-            SaleRepository test = new SaleRepository();
+            SaleRepository saleRepository = new SaleRepository(dbContext, exceptionController);
 
-            Sale gotten = test.Read(3);
+            Sale saleGotten = saleRepository.Read(3);
 
-            DateTime see = new DateTime(2019, 12, 03, 9, 38, 00);
-
-            Assert.AreEqual(gotten.SaleDate, see);
-            Assert.AreEqual(gotten.Cuantity, 20);
+            Assert.AreEqual(saleGotten.Cuantity, 20);
 
         }
 
         [Test]
         public void Update_Test()
         {
-            SaleRepository test = new SaleRepository();
+            SaleRepository saleRepository = new SaleRepository(dbContext, exceptionController);
             bool correct;
-            Sale gotten = test.Read(2);
+            Sale saleGotten = saleRepository.Read(2);
 
-            gotten.Cuantity = 22;
+            saleGotten.Cuantity = 22;
 
-            correct = test.Update(test.Read(2), gotten);
+            correct = saleRepository.Update(saleGotten);
 
-            Sale compare = test.Read(2);
+            Sale saleCompare = saleRepository.Read(2);
 
             Assert.AreEqual(true, correct);
-            Assert.AreEqual(compare.Cuantity, gotten.Cuantity);
+            Assert.AreEqual(saleCompare.Cuantity, saleGotten.Cuantity);
 
         }
 
         [Test]
         public void Delete_Test()
         {
-            SaleRepository test = new SaleRepository();
+            SaleRepository saleRepository = new SaleRepository(dbContext, exceptionController);
             bool correct;
-            Sale gotten = test.Read(1);
+            Sale saleGotten = saleRepository.Read(1);
 
-            correct = test.Delete(gotten);
+            correct = saleRepository.Delete(saleGotten);
 
             Assert.AreEqual(true, correct);
 

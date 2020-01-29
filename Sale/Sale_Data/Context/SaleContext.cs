@@ -1,4 +1,5 @@
-﻿using Sale_Entities.EntityModel;
+﻿using Sale_Data.Interfaces;
+using Sale_Entities.EntityModel;
 using System.Data.Entity;
 
 namespace Sale_Data.Context

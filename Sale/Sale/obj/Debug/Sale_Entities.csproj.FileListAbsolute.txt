@@ -9,3 +9,14 @@ C:\Users\pjrodriguez\source\repos\Sale\Sale\obj\Debug\Sale_Entities.csproj.CopyC
 C:\Users\pjrodriguez\source\repos\Sale\Sale\obj\Debug\Sale_Entities.exe
 C:\Users\pjrodriguez\source\repos\Sale\Sale\obj\Debug\Sale_Entities.pdb
 C:\Users\pjrodriguez\source\repos\Sale\Sale\obj\Debug\Sale_Entities.csprojAssemblyReference.cache
+C:\REPO\becaPedro\Sale\Sale\bin\Debug\Sale_Entities.exe.config
+C:\REPO\becaPedro\Sale\Sale\bin\Debug\Sale_Entities.exe
+C:\REPO\becaPedro\Sale\Sale\bin\Debug\Sale_Entities.pdb
+C:\REPO\becaPedro\Sale\Sale\bin\Debug\EntityFramework.dll
+C:\REPO\becaPedro\Sale\Sale\bin\Debug\EntityFramework.SqlServer.dll
+C:\REPO\becaPedro\Sale\Sale\bin\Debug\EntityFramework.xml
+C:\REPO\becaPedro\Sale\Sale\bin\Debug\EntityFramework.SqlServer.xml
+C:\REPO\becaPedro\Sale\Sale\obj\Debug\Sale_Entities.csprojAssemblyReference.cache
+C:\REPO\becaPedro\Sale\Sale\obj\Debug\Sale_Entities.csproj.CopyComplete
+C:\REPO\becaPedro\Sale\Sale\obj\Debug\Sale_Entities.exe
+C:\REPO\becaPedro\Sale\Sale\obj\Debug\Sale_Entities.pdb

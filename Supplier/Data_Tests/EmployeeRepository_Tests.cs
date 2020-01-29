@@ -33,11 +33,11 @@ namespace Data_Tests
             Employee employeeOne = new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
             Employee employeeOneTwo = new Employee("Rodolfo", "Suarez", "88", "rodolf@correo", "Avnd Institucion", "123", "321");
             Employee employeeOneThree = new Employee("Marco", "Polo", "99", "marco@correo", "Avnd Marco Polo", "000", "000");
-            EmployeeRepository start = new EmployeeRepository(dbContext, exceptionController);
+            EmployeeRepository employeeRepository = new EmployeeRepository(dbContext, exceptionController);
 
-            start.Insert(employeeOne);
-            start.Insert(employeeOneTwo);
-            start.Insert(employeeOneThree);
+            employeeRepository.Insert(employeeOne);
+            employeeRepository.Insert(employeeOneTwo);
+            employeeRepository.Insert(employeeOneThree);
         }
 
         [Test]

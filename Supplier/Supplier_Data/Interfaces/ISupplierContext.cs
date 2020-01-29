@@ -12,6 +12,7 @@ namespace Supplier_Data.Interfaces
     {
         DbSet<Employee> Employee { get; set; }
         DbSet<Product> Product { get; set; }
+        DbSet<WarehouseProduct> WarehouseProduct { get; set; }
         DbSet<ProductState> ProductState { get; set; }
         DbSet<Purchase> Purchase { get; set; }
         DbSet<SupplyCompany> SupplyCompany { get; set; }

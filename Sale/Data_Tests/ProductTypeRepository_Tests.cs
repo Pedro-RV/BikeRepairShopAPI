@@ -1,6 +1,8 @@
 ﻿using NUnit.Framework;
 using Sale_Data;
+using Sale_Data.Context;
 using Sale_Entities.EntityModel;
+using Sale_Helper.ExceptionController;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,72 +14,82 @@ namespace Data_Tests
     [TestFixture]
     class ProductTypeRepository_Tests
     {
+        private SaleContext dbContext;
+        private ExceptionController exceptionController;
+
+        public ProductTypeRepository_Tests()
+        {
+            SaleContextProvider.InitializeSaleContext();
+            dbContext = SaleContextProvider.GetSaleContext();
+            exceptionController = new ExceptionController();
+        }
+
         [TestFixtureSetUp]
         public void Init()
         {
-            ProductType one = new ProductType("Ruedas");
-            ProductType two = new ProductType("Ventiladores");
-            ProductType three = new ProductType("Frenos");
-            ProductTypeRepository start = new ProductTypeRepository();
+            ProductType productTypeOne = new ProductType("Ruedas");
+            ProductType productTypeTwo = new ProductType("Ventiladores");
+            ProductType productTypeThree = new ProductType("Frenos");
+            ProductTypeRepository productTypeRepository = new ProductTypeRepository(dbContext, exceptionController);
 
-            start.Insert(one);
-            start.Insert(two);
-            start.Insert(three);
+            productTypeRepository.Insert(productTypeOne);
+            productTypeRepository.Insert(productTypeTwo);
+            productTypeRepository.Insert(productTypeThree);
         }
 
         [Test]
         public void Insert_Test()
         {
-            ProductType add = new ProductType("Llantas");
+            ProductType productTypeAdd = new ProductType("Llantas");
             bool correct;
-            ProductTypeRepository test = new ProductTypeRepository();
+            ProductTypeRepository productTypeRepository = new ProductTypeRepository(dbContext, exceptionController);
 
-            correct = test.Insert(add);
+            correct = productTypeRepository.Insert(productTypeAdd);
 
-            ProductType gotten = test.Read(4);
+            ProductType productTypeGotten = productTypeRepository.Read(4);
 
             Assert.AreEqual(true, correct);
-            Assert.AreEqual(gotten.ProductTypeDescription, add.ProductTypeDescription);
+            Assert.AreEqual(productTypeGotten.ProductTypeDescription, productTypeAdd.ProductTypeDescription);
 
         }
 
         [Test]
         public void Read_Test()
         {
-            ProductTypeRepository test = new ProductTypeRepository();
+            ProductTypeRepository productTypeRepository = new ProductTypeRepository(dbContext, exceptionController);
 
-            ProductType gotten = test.Read(3);
+            ProductType productTypeGotten = productTypeRepository.Read(3);
 
-            Assert.AreEqual(gotten.ProductTypeDescription, "Frenos");
+            Assert.AreEqual(productTypeGotten.ProductTypeDescription, "Frenos");
 
         }
 
         [Test]
         public void Update_Test()
         {
-            ProductTypeRepository test = new ProductTypeRepository();
+            ProductTypeRepository productTypeRepository = new ProductTypeRepository(dbContext, exceptionController);
             bool correct;
-            ProductType gotten = test.Read(2);
+            ProductType productTypeGotten = productTypeRepository.Read(2);
 
-            gotten.ProductTypeDescription = "Herramientas";
+            productTypeGotten.ProductTypeDescription = "Herramientas";
 
-            correct = test.Update(test.Read(2), gotten);
+            correct = productTypeRepository.Update(productTypeGotten);
 
-            ProductType compare = test.Read(2);
+            ProductType productTypeCompare = productTypeRepository.Read(2);
 
             Assert.AreEqual(true, correct);
-            Assert.AreEqual(compare.ProductTypeDescription, gotten.ProductTypeDescription);
+            Assert.AreEqual(productTypeCompare.ProductTypeDescription, productTypeGotten.ProductTypeDescription);
 
         }
 
         [Test]
         public void Delete_Test()
         {
-            ProductTypeRepository test = new ProductTypeRepository();
+            ProductTypeRepository productTypeRepository = new ProductTypeRepository(dbContext, exceptionController);
             bool correct;
-            ProductType gotten = test.Read(1);
+            ProductType productTypeGotten = productTypeRepository.Read(1);
 
-            correct = test.Delete(gotten);
+            correct = productTypeRepository.Delete(productTypeGotten);
 
             Assert.AreEqual(true, correct);
 

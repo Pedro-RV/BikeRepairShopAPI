@@ -19,11 +19,13 @@ namespace Data_Tests
             //SaleContextProvider.GetSaleContext().Database.Delete();
             //SaleContextProvider.GetSaleContext().Database.Create();
 
-            string sourceFile = @"C:\Users\pjrodriguez\New_Sale_Database\Sale_Data.Context.SaleContext.mdf";
-            string destFile = @"C:\Users\pjrodriguez\Sale_Data.Context.SaleContext.mdf";
-            string del = @"C:\Users\pjrodriguez\Sale_Data.Context.SaleContext_log.ldf";
+            string path = Path.GetFullPath("/Users/pjrodriguez/");
+            string sourceFile = path + "New_Sale_Database/Sale_Data.Context.SaleContext.mdf";
+            string destFile = path + "Sale_Data.Context.SaleContext.mdf";
+            string del = path + "Sale_Data.Context.SaleContext_log.ldf";
             File.Delete(del);
             File.Copy(sourceFile, destFile, true);
+
         }
     }
 }

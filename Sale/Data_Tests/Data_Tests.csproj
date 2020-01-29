@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AACleanDatabase.cs" />
+    <Compile Include="BillRepository_Tests.cs" />
     <Compile Include="ClientRepository_Tests.cs" />
     <Compile Include="PaymentMethodRepository_Tests.cs" />
     <Compile Include="ProductRepository_Tests.cs" />
@@ -97,6 +98,10 @@
     <ProjectReference Include="..\Sale_Data\Sale_Data.csproj">
       <Project>{cb8f251e-39a0-42d0-93e8-cd1f57b0115e}</Project>
       <Name>Sale_Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sale_Helper\Sale_Helper.csproj">
+      <Project>{ef4f277f-ec4f-419f-8873-eef5bc2ae8a0}</Project>
+      <Name>Sale_Helper</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,6 +1,8 @@
 ﻿using NUnit.Framework;
 using Sale_Data;
+using Sale_Data.Context;
 using Sale_Entities.EntityModel;
+using Sale_Helper.ExceptionController;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,72 +13,82 @@ namespace Data_Tests
 {
     class PaymentMethodRepository_Tests
     {
+        private SaleContext dbContext;
+        private ExceptionController exceptionController;
+
+        public PaymentMethodRepository_Tests()
+        {
+            SaleContextProvider.InitializeSaleContext();
+            dbContext = SaleContextProvider.GetSaleContext();
+            exceptionController = new ExceptionController();
+        }
+
         [TestFixtureSetUp]
         public void Init()
         {
-            PaymentMethod one = new PaymentMethod("Contrarrembolso");
-            PaymentMethod two = new PaymentMethod("Paypal");
-            PaymentMethod three = new PaymentMethod("VISA");
-            PaymentMethodRepository start = new PaymentMethodRepository();
+            PaymentMethod paymentMethodOne = new PaymentMethod("Contrarrembolso");
+            PaymentMethod paymentMethodTwo = new PaymentMethod("Paypal");
+            PaymentMethod paymentMethodThree = new PaymentMethod("VISA");
+            PaymentMethodRepository paymentMethodRepository = new PaymentMethodRepository(dbContext, exceptionController);
 
-            start.Insert(one);
-            start.Insert(two);
-            start.Insert(three);
+            paymentMethodRepository.Insert(paymentMethodOne);
+            paymentMethodRepository.Insert(paymentMethodTwo);
+            paymentMethodRepository.Insert(paymentMethodThree);
         }
 
         [Test]
         public void Insert_Test()
         {
-            PaymentMethod add = new PaymentMethod("Cheque");
+            PaymentMethod paymentMethodAdd = new PaymentMethod("Cheque");
             bool correct;
-            PaymentMethodRepository test = new PaymentMethodRepository();
+            PaymentMethodRepository paymentMethodRepository = new PaymentMethodRepository(dbContext, exceptionController);
 
-            correct = test.Insert(add);
+            correct = paymentMethodRepository.Insert(paymentMethodAdd);
 
-            PaymentMethod gotten = test.Read(4);
+            PaymentMethod paymentMethodGotten = paymentMethodRepository.Read(4);
 
             Assert.AreEqual(true, correct);
-            Assert.AreEqual(gotten.PaymentMethodDescription, add.PaymentMethodDescription);
+            Assert.AreEqual(paymentMethodGotten.PaymentMethodDescription, paymentMethodAdd.PaymentMethodDescription);
 
         }
 
         [Test]
         public void Read_Test()
         {
-            PaymentMethodRepository test = new PaymentMethodRepository();
+            PaymentMethodRepository paymentMethodRepository = new PaymentMethodRepository(dbContext, exceptionController);
 
-            PaymentMethod gotten = test.Read(3);
+            PaymentMethod paymentMethodGotten = paymentMethodRepository.Read(3);
 
-            Assert.AreEqual(gotten.PaymentMethodDescription, "VISA");
+            Assert.AreEqual(paymentMethodGotten.PaymentMethodDescription, "VISA");
 
         }
 
         [Test]
         public void Update_Test()
         {
-            PaymentMethodRepository test = new PaymentMethodRepository();
+            PaymentMethodRepository paymentMethodRepository = new PaymentMethodRepository(dbContext, exceptionController);
             bool correct;
-            PaymentMethod gotten = test.Read(2);
+            PaymentMethod paymentMethodGotten = paymentMethodRepository.Read(2);
 
-            gotten.PaymentMethodDescription = "Cupon";
+            paymentMethodGotten.PaymentMethodDescription = "Cupon";
 
-            correct = test.Update(test.Read(2), gotten);
+            correct = paymentMethodRepository.Update(paymentMethodGotten);
 
-            PaymentMethod compare = test.Read(2);
+            PaymentMethod paymentMethodCompare = paymentMethodRepository.Read(2);
 
             Assert.AreEqual(true, correct);
-            Assert.AreEqual(compare.PaymentMethodDescription, gotten.PaymentMethodDescription);
+            Assert.AreEqual(paymentMethodCompare.PaymentMethodDescription, paymentMethodGotten.PaymentMethodDescription);
 
         }
 
         [Test]
         public void Delete_Test()
         {
-            PaymentMethodRepository test = new PaymentMethodRepository();
+            PaymentMethodRepository paymentMethodRepository = new PaymentMethodRepository(dbContext, exceptionController);
             bool correct;
-            PaymentMethod gotten = test.Read(1);
+            PaymentMethod paymentMethodGotten = paymentMethodRepository.Read(1);
 
-            correct = test.Delete(gotten);
+            correct = paymentMethodRepository.Delete(paymentMethodGotten);
 
             Assert.AreEqual(true, correct);
 

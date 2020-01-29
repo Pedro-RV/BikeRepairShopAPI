@@ -62,6 +62,7 @@
     <Compile Include="Interfaces\IPaymentMethodRepository.cs" />
     <Compile Include="Interfaces\IProductRepository.cs" />
     <Compile Include="Interfaces\IProductTypeRepository.cs" />
+    <Compile Include="Interfaces\ISaleContext.cs" />
     <Compile Include="Interfaces\ISaleRepository.cs" />
     <Compile Include="Interfaces\IShippingRepository.cs" />
     <Compile Include="Interfaces\ITransportCompanyRepository.cs" />
@@ -72,6 +73,10 @@
     <Compile Include="Migrations\201912100933316_Segunda.cs" />
     <Compile Include="Migrations\201912100933316_Segunda.designer.cs">
       <DependentUpon>201912100933316_Segunda.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001290805002_Tercera.cs" />
+    <Compile Include="Migrations\202001290805002_Tercera.designer.cs">
+      <DependentUpon>202001290805002_Tercera.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PaymentMethodRepository.cs" />
@@ -103,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912100933316_Segunda.resx">
       <DependentUpon>201912100933316_Segunda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001290805002_Tercera.resx">
+      <DependentUpon>202001290805002_Tercera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

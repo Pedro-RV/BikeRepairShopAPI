@@ -1,6 +1,8 @@
 ﻿using NUnit.Framework;
 using Sale_Data;
+using Sale_Data.Context;
 using Sale_Entities.EntityModel;
+using Sale_Helper.ExceptionController;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,80 +14,91 @@ namespace Data_Tests
     [TestFixture]
     class ClientRepository_Tests
     {
+        private SaleContext dbContext;
+        private ExceptionController exceptionController;
+
+        public ClientRepository_Tests()
+        {
+            SaleContextProvider.InitializeSaleContext();
+            dbContext = SaleContextProvider.GetSaleContext();
+            exceptionController = new ExceptionController();
+        }
+
         [TestFixtureSetUp]
         public void Init()
         {
-            Client one = new Client("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
-            Client two = new Client("Rodolfo", "Suarez", "88", "rodolf@correo", "Avnd Institucion", "123", "321");
-            Client three = new Client("Marco", "Polo", "99", "marco@correo", "Avnd Marco Polo", "000", "000");
-            ClientRepository start = new ClientRepository();
+            Client clientOne = new Client("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
+            Client clientTwo = new Client("Rodolfo", "Suarez", "88", "rodolf@correo", "Avnd Institucion", "123", "321");
+            Client clientThree = new Client("Marco", "Polo", "99", "marco@correo", "Avnd Marco Polo", "000", "000");
+            ClientRepository clientRepository = new ClientRepository(dbContext, exceptionController);
 
-            start.Insert(one);
-            start.Insert(two);
-            start.Insert(three);
+            clientRepository.Insert(clientOne);
+            clientRepository.Insert(clientTwo);
+            clientRepository.Insert(clientThree);
         }
 
         [Test]
         public void Insert_Test()
         {
-            Client add = new Client("antonio", "carrasco", "22", "carrasco@correo", "calle malagon", "56", "87");
+            Client clientAdd = new Client("antonio", "carrasco", "22", "carrasco@correo", "calle malagon", "56", "87");
             bool correct;
-            ClientRepository test = new ClientRepository();
+            ClientRepository clientRepository = new ClientRepository(dbContext, exceptionController);
 
-            correct = test.Insert(add);
+            correct = clientRepository.Insert(clientAdd);
 
-            Client gotten = test.Read(4);
+            Client clientGotten = clientRepository.Read(4);
 
             Assert.AreEqual(true, correct);
-            Assert.AreEqual(gotten.ClientName, add.ClientName);
-            Assert.AreEqual(gotten.Surname, add.Surname);
-            Assert.AreEqual(gotten.Email, add.Email);
-            Assert.AreEqual(gotten.ClientAddress, add.ClientAddress);
-            Assert.AreEqual(gotten.CP, add.CP);
-            Assert.AreEqual(gotten.MobileNum, add.MobileNum);
+            Assert.AreEqual(clientGotten.ClientName, clientAdd.ClientName);
+            Assert.AreEqual(clientGotten.Surname, clientAdd.Surname);
+            Assert.AreEqual(clientGotten.DNI, clientAdd.DNI);
+            Assert.AreEqual(clientGotten.Email, clientAdd.Email);
+            Assert.AreEqual(clientGotten.ClientAddress, clientAdd.ClientAddress);
+            Assert.AreEqual(clientGotten.CP, clientAdd.CP);
+            Assert.AreEqual(clientGotten.MobileNum, clientAdd.MobileNum);
 
         }
 
         [Test]
         public void Read_Test()
         {
-            ClientRepository test = new ClientRepository();
+            ClientRepository clientRepository = new ClientRepository(dbContext, exceptionController);
 
-            Client gotten = test.Read(3);
+            Client clientGotten = clientRepository.Read(3);
 
-            Assert.AreEqual(gotten.ClientName, "Marco");
-            Assert.AreEqual(gotten.Email, "marco@correo");
+            Assert.AreEqual(clientGotten.ClientName, "Marco");
+            Assert.AreEqual(clientGotten.Email, "marco@correo");
 
         }
 
         [Test]
         public void Update_Test()
         {
-            ClientRepository test = new ClientRepository();
+            ClientRepository clientRepository = new ClientRepository(dbContext, exceptionController);
             bool correct;
-            Client gotten = test.Read(2);
+            Client clientGotten = clientRepository.Read(2);
 
-            gotten.ClientName = "Domingo";
-            gotten.MobileNum = "621";
+            clientGotten.ClientName = "Domingo";
+            clientGotten.MobileNum = "621";
 
-            correct = test.Update(test.Read(2), gotten);
+            correct = clientRepository.Update(clientGotten);
 
-            Client compare = test.Read(2);
+            Client clientCompare = clientRepository.Read(2);
 
             Assert.AreEqual(true, correct);
-            Assert.AreEqual(compare.ClientName, gotten.ClientName);
-            Assert.AreEqual(compare.MobileNum, gotten.MobileNum);
+            Assert.AreEqual(clientCompare.ClientName, clientGotten.ClientName);
+            Assert.AreEqual(clientCompare.MobileNum, clientGotten.MobileNum);
 
         }
 
         [Test]
         public void Delete_Test()
         {
-            ClientRepository test = new ClientRepository();
+            ClientRepository clientRepository = new ClientRepository(dbContext, exceptionController);
             bool correct;
-            Client gotten = test.Read(1);
+            Client clientGotten = clientRepository.Read(1);
 
-            correct = test.Delete(gotten);
+            correct = clientRepository.Delete(clientGotten);
 
             Assert.AreEqual(true, correct);
 
