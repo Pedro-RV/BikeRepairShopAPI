@@ -40,7 +40,7 @@ namespace Bussiness_Tests
         }
 
         [Test]
-        public void ReadClient_Test()
+        public void ReadProductType_Test()
         {
             ProductTypeBussiness productTypeBussiness = new ProductTypeBussiness();
 
@@ -51,7 +51,7 @@ namespace Bussiness_Tests
         }
 
         [Test]
-        public void UpdateClient_Test()
+        public void UpdateProductType_Test()
         {
             ProductTypeBussiness productTypeBussiness = new ProductTypeBussiness();
             bool correct;
@@ -70,7 +70,7 @@ namespace Bussiness_Tests
         }
 
         [Test]
-        public void DeleteClient_Test()
+        public void DeleteProductType_Test()
         {
             ProductTypeBussiness productTypeBussiness = new ProductTypeBussiness();
             bool correct;

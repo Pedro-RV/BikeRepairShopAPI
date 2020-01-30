@@ -25,7 +25,7 @@ namespace Bussiness_Tests
         }
 
         [Test]
-        public void InsertClient_Test()
+        public void InsertTransportCompany_Test()
         {
             bool correct;
             TransportCompanyBussiness transportCompanyBussiness = new TransportCompanyBussiness();
@@ -41,7 +41,7 @@ namespace Bussiness_Tests
         }
 
         [Test]
-        public void ReadClient_Test()
+        public void ReadTransportCompany_Test()
         {
             TransportCompanyBussiness transportCompanyBussiness = new TransportCompanyBussiness();
 
@@ -53,7 +53,7 @@ namespace Bussiness_Tests
         }
 
         [Test]
-        public void UpdateClient_Test()
+        public void UpdateTransportCompany_Test()
         {
             TransportCompanyBussiness transportCompanyBussiness = new TransportCompanyBussiness();
             bool correct;
@@ -74,7 +74,7 @@ namespace Bussiness_Tests
         }
 
         [Test]
-        public void DeleteClient_Test()
+        public void DeleteTransportCompany_Test()
         {
             TransportCompanyBussiness transportCompanyBussiness = new TransportCompanyBussiness();
             bool correct;
