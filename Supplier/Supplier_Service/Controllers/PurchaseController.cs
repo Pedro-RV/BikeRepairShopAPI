@@ -1,4 +1,5 @@
 ﻿using Supplier_Bussiness;
+using Supplier_Bussiness.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
 using System;
@@ -12,14 +13,20 @@ namespace Supplier_Service.Controllers
 {
     public class PurchaseController : ApiController
     {
+        private IPurchaseBussiness purchaseBussiness;
+
+        public PurchaseController(IPurchaseBussiness purchaseBussiness)
+        {
+            this.purchaseBussiness = purchaseBussiness;
+
+        }
+
         // GET
         [HttpGet]
         [Route("api/purchase/PurchasesBiggerThanAPrizeList/{prize}")]
         public List<Purchase> PurchasesBiggerThanAPrizeList(double prize)
         {
-            PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
-
-            List<Purchase> request = purchaseBussiness.PurchasesBiggerThanAPrizeList(prize);
+            List<Purchase> request = this.purchaseBussiness.PurchasesBiggerThanAPrizeList(prize);
 
             return request;
         }
@@ -29,9 +36,7 @@ namespace Supplier_Service.Controllers
         [Route("api/purchase/PurchaseDataList")]
         public List<PurchaseData> PurchaseDataList()
         {
-            PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
-
-            List<PurchaseData> request = purchaseBussiness.PurchaseDataList();
+            List<PurchaseData> request = this.purchaseBussiness.PurchaseDataList();
 
             return request;
         }
@@ -41,9 +46,7 @@ namespace Supplier_Service.Controllers
         [Route("api/purchase/GetPurchase/{purchaseId}")]
         public Purchase GetPurchase(int purchaseId)
         {
-            PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
-
-            Purchase request = purchaseBussiness.ReadPurchase(purchaseId);
+            Purchase request = this.purchaseBussiness.ReadPurchase(purchaseId);
 
             return request;
         }
@@ -53,9 +56,7 @@ namespace Supplier_Service.Controllers
         [Route("api/purchase/InsertPurchase")]
         public string InsertPurchase(PurchaseSpecific purchaseSpecific)
         {
-            PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
-
-            bool introduced_well = purchaseBussiness.InsertPurchase(purchaseSpecific);
+            bool introduced_well = this.purchaseBussiness.InsertPurchase(purchaseSpecific);
 
             if (introduced_well == true)
             {
@@ -73,9 +74,7 @@ namespace Supplier_Service.Controllers
         [Route("api/purchase/UpdatePurchase")]
         public string UpdatePurchase(PurchaseSpecific purchaseSpecific)
         {
-            PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
-
-            bool updated_well = purchaseBussiness.UpdatePurchase(purchaseSpecific);
+            bool updated_well = this.purchaseBussiness.UpdatePurchase(purchaseSpecific);
 
             if (updated_well == true)
             {
@@ -93,9 +92,7 @@ namespace Supplier_Service.Controllers
         [Route("api/purchase/DeletePurchase/{purchaseId}")]
         public string DeletePurchase(int purchaseId)
         {
-            PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
-
-            bool deleted_well = purchaseBussiness.DeletePurchase(purchaseId);
+            bool deleted_well = this.purchaseBussiness.DeletePurchase(purchaseId);
 
             if (deleted_well == true)
             {
@@ -110,12 +107,10 @@ namespace Supplier_Service.Controllers
 
         // DELETE
         [HttpDelete]
-        [Route("api/purchase/DeletePurchase/{purchaseId}")]
+        [Route("api/purchase/DeletePurchaseAndChangeProduct/{purchaseId}")]
         public string DeletePurchaseAndChangeProduct(int purchaseId)
         {
-            PurchaseBussiness purchaseBussiness = new PurchaseBussiness();
-
-            bool deleted_well = purchaseBussiness.DeletePurchaseAndChangeProduct(purchaseId);
+            bool deleted_well = this.purchaseBussiness.DeletePurchaseAndChangeProduct(purchaseId);
 
             if (deleted_well == true)
             {

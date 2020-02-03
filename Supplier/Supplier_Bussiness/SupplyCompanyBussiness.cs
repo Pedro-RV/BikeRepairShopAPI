@@ -2,6 +2,7 @@
 using Supplier_Bussiness.Interfaces;
 using Supplier_Data;
 using Supplier_Data.Context;
+using Supplier_Data.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
 using Supplier_Helper.ExceptionController;
@@ -15,18 +16,17 @@ namespace Supplier_Bussiness
 {
     public class SupplyCompanyBussiness : ISupplyCompanyBussiness
     {
+        private IExceptionController exceptionController;
 
-        private SupplierContext dbContext;
-
-        private ExceptionController exceptionController;
+        private ISupplyCompanyRepository supplyCompanyRepository;
 
         private IMapper mapper;
 
-        public SupplyCompanyBussiness()
+        public SupplyCompanyBussiness(IExceptionController exceptionController,
+            ISupplyCompanyRepository supplyCompanyRepository)
         {
-            SupplierContextProvider.InitializeSupplierContext();
-            dbContext = SupplierContextProvider.GetSupplierContext();
-            exceptionController = new ExceptionController();
+            this.exceptionController = exceptionController;
+            this.supplyCompanyRepository = supplyCompanyRepository;
 
 
             var config = new MapperConfiguration(cfg => {
@@ -42,11 +42,9 @@ namespace Supplier_Bussiness
 
             try
             {
-                SupplyCompanyRepository supplyCompanyRepository = new SupplyCompanyRepository(dbContext, exceptionController);
-
                 SupplyCompany supplyCompanyAdd = mapper.Map<SupplyCompanySpecific, SupplyCompany>(supplyCompanySpecific);
 
-                ret = supplyCompanyRepository.Insert(supplyCompanyAdd);
+                ret = this.supplyCompanyRepository.Insert(supplyCompanyAdd);
 
             }
             catch (SupplierException)
@@ -71,9 +69,7 @@ namespace Supplier_Bussiness
 
             try
             {
-                SupplyCompanyRepository supplyCompanyRepository = new SupplyCompanyRepository(dbContext, exceptionController);
-
-                ret = supplyCompanyRepository.Read(SupplyCompanyId);
+                ret = this.supplyCompanyRepository.Read(SupplyCompanyId);
 
             }
                 catch (SupplierException)
@@ -98,14 +94,12 @@ namespace Supplier_Bussiness
 
             try
             {
-                SupplyCompanyRepository supplyCompanyRepository = new SupplyCompanyRepository(dbContext, exceptionController);
-
-                SupplyCompany current = supplyCompanyRepository.Read(update.SupplyCompanyId);
+                SupplyCompany current = this.supplyCompanyRepository.Read(update.SupplyCompanyId);
 
                 current.SupplyCompanyName = !String.IsNullOrEmpty(update.SupplyCompanyName) ? update.SupplyCompanyName : current.SupplyCompanyName;
                 current.TelephoneNum = !String.IsNullOrEmpty(update.TelephoneNum) ? update.TelephoneNum : current.TelephoneNum;
 
-                ret = supplyCompanyRepository.Update(current);
+                ret = this.supplyCompanyRepository.Update(current);
 
             }
             catch (SupplierException)
@@ -130,11 +124,9 @@ namespace Supplier_Bussiness
 
             try
             {
-                SupplyCompanyRepository supplyCompanyRepository = new SupplyCompanyRepository(dbContext, exceptionController);
+                SupplyCompany del = this.supplyCompanyRepository.Read(SupplyCompanyId);
 
-                SupplyCompany del = supplyCompanyRepository.Read(SupplyCompanyId);
-
-                ret = supplyCompanyRepository.Delete(del);
+                ret = this.supplyCompanyRepository.Delete(del);
 
             }
             catch (SupplierException)

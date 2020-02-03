@@ -63,7 +63,7 @@
     <Compile Include="Context\SupplierContextProvider.cs" />
     <Compile Include="Interfaces\IProductStateRepository.cs" />
     <Compile Include="Interfaces\IPurchaseRepository.cs" />
-    <Compile Include="Interfaces\ISupplierContext.cs" />
+    <Compile Include="Interfaces\ISupplierContextProvider.cs" />
     <Compile Include="Interfaces\ISupplyCompanyRepository.cs" />
     <Compile Include="Interfaces\IWarehouseAdminRepository.cs" />
     <Compile Include="Interfaces\IWarehouseRepository.cs" />

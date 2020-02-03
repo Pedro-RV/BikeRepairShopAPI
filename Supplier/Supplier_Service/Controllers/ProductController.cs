@@ -1,4 +1,5 @@
 ﻿using Supplier_Bussiness;
+using Supplier_Bussiness.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
 using System;
@@ -12,14 +13,20 @@ namespace Supplier_Service.Controllers
 {
     public class ProductController : ApiController
     {
+        private IProductBussiness productBussiness;
+
+        public ProductController(IProductBussiness productBussiness)
+        {
+            this.productBussiness = productBussiness;
+
+        }
+
         // GET
         [HttpGet]
         [Route("api/product/ProductsList")]
         public List<Product> ProductsList()
         {
-            ProductBussiness productBussiness = new ProductBussiness();
-
-            List<Product> request = productBussiness.ProductsList();
+            List<Product> request = this.productBussiness.ProductsList();
 
             return request;
         }
@@ -29,9 +36,7 @@ namespace Supplier_Service.Controllers
         [Route("api/product/GetProduct/{productId}")]
         public Product GetProduct(int productId)
         {
-            ProductBussiness productBussiness = new ProductBussiness();
-
-            Product request = productBussiness.ReadProduct(productId);
+            Product request = this.productBussiness.ReadProduct(productId);
 
             return request;
         }
@@ -41,9 +46,7 @@ namespace Supplier_Service.Controllers
         [Route("api/product/InsertProduct")]
         public string InsertProduct(ProductSpecific productSpecific)
         {
-            ProductBussiness productBussiness = new ProductBussiness();
-
-            bool introduced_well = productBussiness.InsertProduct(productSpecific);
+            bool introduced_well = this.productBussiness.InsertProduct(productSpecific);
 
             if (introduced_well == true)
             {
@@ -54,16 +57,14 @@ namespace Supplier_Service.Controllers
                 return "Error !!! Product could not be introduced.";
             }
 
-        }      
+        }
 
         // PUT
         [HttpPut]
         [Route("api/product/UpdateProduct")]
         public string UpdateProduct(ProductSpecific update)
         {
-            ProductBussiness productBussiness = new ProductBussiness();
-
-            bool updated_well = productBussiness.UpdateProduct(update);
+            bool updated_well = this.productBussiness.UpdateProduct(update);
 
             if (updated_well == true)
             {
@@ -81,9 +82,7 @@ namespace Supplier_Service.Controllers
         [Route("api/product/DeleteProduct/{productId}")]
         public string DeleteProduct(int productId)
         {
-            ProductBussiness productBussiness = new ProductBussiness();
-
-            bool deleted_well = productBussiness.DeleteProduct(productId);
+            bool deleted_well = this.productBussiness.DeleteProduct(productId);
 
             if (deleted_well == true)
             {

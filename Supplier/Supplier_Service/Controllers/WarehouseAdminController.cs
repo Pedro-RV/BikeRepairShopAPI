@@ -1,4 +1,5 @@
 ﻿using Supplier_Bussiness;
+using Supplier_Bussiness.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
 using System;
@@ -12,14 +13,20 @@ namespace Supplier_Service.Controllers
 {
     public class WarehouseAdminController : ApiController
     {
+        private IWarehouseAdminBussiness warehouseAdminBussiness;
+
+        public WarehouseAdminController(IWarehouseAdminBussiness warehouseAdminBussiness)
+        {
+            this.warehouseAdminBussiness = warehouseAdminBussiness;
+
+        }
+
         // GET
         [HttpGet]
         [Route("api/warehouseAdmin/WarehouseAdminDataList")]
         public List<WarehouseAdminData> WarehouseAdminDataList(string warehouseAddress)
         {
-            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
-
-            List<WarehouseAdminData> request = warehouseAdminBussiness.WarehouseAdminDataList(warehouseAddress);
+            List<WarehouseAdminData> request = this.warehouseAdminBussiness.WarehouseAdminDataList(warehouseAddress);
 
             return request;
         }
@@ -29,9 +36,7 @@ namespace Supplier_Service.Controllers
         [Route("api/warehouseAdmin/GetWarehouseAdmin/{warehouseAdminId}")]
         public WarehouseAdmin GetWarehouseAdmin(int warehouseAdminId)
         {
-            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
-
-            WarehouseAdmin request = warehouseAdminBussiness.ReadWarehouseAdmin(warehouseAdminId);
+            WarehouseAdmin request = this.warehouseAdminBussiness.ReadWarehouseAdmin(warehouseAdminId);
 
             return request;
         }
@@ -41,9 +46,7 @@ namespace Supplier_Service.Controllers
         [Route("api/warehouseAdmin/InsertWarehouseAdmin")]
         public string InsertWarehouseAdmin(WarehouseAdminSpecific warehouseAdminSpecific)
         {
-            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
-
-            bool introduced_well = warehouseAdminBussiness.InsertWarehouseAdmin(warehouseAdminSpecific);
+            bool introduced_well = this.warehouseAdminBussiness.InsertWarehouseAdmin(warehouseAdminSpecific);
 
             if (introduced_well == true)
             {
@@ -61,9 +64,7 @@ namespace Supplier_Service.Controllers
         [Route("api/warehouseAdmin/UpdateWarehouseAdmin")]
         public string UpdateWarehouseAdmin(WarehouseAdminSpecific update)
         {
-            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
-
-            bool updated_well = warehouseAdminBussiness.UpdateWarehouseAdmin(update);
+            bool updated_well = this.warehouseAdminBussiness.UpdateWarehouseAdmin(update);
 
             if (updated_well == true)
             {
@@ -81,9 +82,7 @@ namespace Supplier_Service.Controllers
         [Route("api/warehouseAdmin/DeleteWarehouseAdmin/{warehouseAdminId}")]
         public string DeleteWarehouseAdmin(int warehouseAdminId)
         {
-            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
-
-            bool deleted_well = warehouseAdminBussiness.DeleteWarehouseAdmin(warehouseAdminId);
+            bool deleted_well = this.warehouseAdminBussiness.DeleteWarehouseAdmin(warehouseAdminId);
 
             if (deleted_well == true)
             {

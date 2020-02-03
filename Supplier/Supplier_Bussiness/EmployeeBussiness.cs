@@ -2,6 +2,7 @@
 using Supplier_Bussiness.Interfaces;
 using Supplier_Data;
 using Supplier_Data.Context;
+using Supplier_Data.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
 using Supplier_Helper.ExceptionController;
@@ -15,17 +16,18 @@ namespace Supplier_Bussiness
 {
     public class EmployeeBussiness : IEmployeeBussiness
     {
-        private SupplierContext dbContext;
+        private IExceptionController exceptionController;
 
-        private ExceptionController exceptionController;
+        private IEmployeeRepository employeeRepository;
 
         private IMapper mapper;
 
-        public EmployeeBussiness()
+        public EmployeeBussiness(IExceptionController exceptionController,
+            IEmployeeRepository employeeRepository
+            )
         {
-            SupplierContextProvider.InitializeSupplierContext();
-            dbContext = SupplierContextProvider.GetSupplierContext();
-            exceptionController = new ExceptionController();
+            this.exceptionController = exceptionController;
+            this.employeeRepository = employeeRepository;
 
 
             var config = new MapperConfiguration(cfg => {
@@ -37,9 +39,7 @@ namespace Supplier_Bussiness
 
         public List<Employee> EmployeesList()
         {
-            EmployeeRepository employeeRepository = new EmployeeRepository(dbContext, exceptionController);
-
-            List<Employee> ret = employeeRepository.EmployeesList();
+            List<Employee> ret = this.employeeRepository.EmployeesList();
 
             return ret;
         }
@@ -49,12 +49,10 @@ namespace Supplier_Bussiness
             bool ret;
 
             try
-            {
-                EmployeeRepository employeeRepository = new EmployeeRepository(dbContext, exceptionController);
-                
+            {                
                 Employee employeeAdd = mapper.Map<EmployeeSpecific, Employee>(employeeSpecific);
 
-                ret = employeeRepository.Insert(employeeAdd);
+                ret = this.employeeRepository.Insert(employeeAdd);
             }
             catch (SupplierException)
             {
@@ -79,9 +77,7 @@ namespace Supplier_Bussiness
 
             try
             {
-                EmployeeRepository employeeRepository = new EmployeeRepository(dbContext, exceptionController);
-
-                ret = employeeRepository.Read(EmployeeId);
+                ret = this.employeeRepository.Read(EmployeeId);
             }
             catch (SupplierException)
             {
@@ -106,9 +102,7 @@ namespace Supplier_Bussiness
 
             try
             {
-                EmployeeRepository employeeRepository = new EmployeeRepository(dbContext, exceptionController);
-
-                ret = employeeRepository.ReadDNI(DNI);
+                ret = this.employeeRepository.ReadDNI(DNI);
             }
             catch (SupplierException)
             {
@@ -133,9 +127,7 @@ namespace Supplier_Bussiness
 
             try
             {
-                EmployeeRepository employeeRepository = new EmployeeRepository(dbContext, exceptionController);
-
-                Employee current = employeeRepository.Read(update.EmployeeId);
+                Employee current = this.employeeRepository.Read(update.EmployeeId);
 
                 current.EmployeeName = !String.IsNullOrEmpty(update.EmployeeName) ? update.EmployeeName : current.EmployeeName;
                 current.Surname = !String.IsNullOrEmpty(update.Surname) ? update.Surname : current.Surname;
@@ -145,7 +137,7 @@ namespace Supplier_Bussiness
                 current.CP = !String.IsNullOrEmpty(update.CP) ? update.CP : current.CP;
                 current.MobileNum = !String.IsNullOrEmpty(update.MobileNum) ? update.MobileNum : current.MobileNum;
 
-                ret = employeeRepository.Update(current);
+                ret = this.employeeRepository.Update(current);
 
             }
                 catch (SupplierException)
@@ -170,11 +162,9 @@ namespace Supplier_Bussiness
 
             try
             {
-                EmployeeRepository employeeRepository = new EmployeeRepository(dbContext, exceptionController);
+                Employee del = this.employeeRepository.Read(EmployeeId);
 
-                Employee del = employeeRepository.Read(EmployeeId);
-
-                ret = employeeRepository.Delete(del);
+                ret = this.employeeRepository.Delete(del);
 
             }
             catch (SupplierException)

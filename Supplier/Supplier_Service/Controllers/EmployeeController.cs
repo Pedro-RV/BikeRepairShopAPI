@@ -1,4 +1,6 @@
-﻿using Supplier_Bussiness;
+﻿using Autofac;
+using Supplier_Bussiness;
+using Supplier_Bussiness.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
 using System;
@@ -12,14 +14,21 @@ namespace Supplier_Service.Controllers
 {
     public class EmployeeController : ApiController
     {
+
+        private IEmployeeBussiness employeeBussiness;
+
+        public EmployeeController(IEmployeeBussiness employeeBussiness)
+        {
+            this.employeeBussiness = employeeBussiness;
+
+        }
+
         // GET
         [HttpGet]
         [Route("api/employee/EmployeesList")]
         public List<Employee> EmployeesList()
         {
-            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
-
-            List<Employee> request = employeeBussiness.EmployeesList();
+            List<Employee> request = this.employeeBussiness.EmployeesList();
 
             return request;
         }
@@ -29,9 +38,7 @@ namespace Supplier_Service.Controllers
         [Route("api/employee/GetEmployee/{employeeId}")]
         public Employee GetEmployee(int employeeId)
         {
-            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
-
-            Employee request = employeeBussiness.ReadEmployee(employeeId);
+            Employee request = this.employeeBussiness.ReadEmployee(employeeId);
 
             return request;
         }
@@ -41,9 +48,7 @@ namespace Supplier_Service.Controllers
         [Route("api/employee/GetEmployeeDNI/{dni}")]
         public Employee GetEmployeeDNI(string dni)
         {
-            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
-
-            Employee request = employeeBussiness.ReadEmployeeDNI(dni);
+            Employee request = this.employeeBussiness.ReadEmployeeDNI(dni);
 
             return request;
         }
@@ -53,9 +58,7 @@ namespace Supplier_Service.Controllers
         [Route("api/employee/InsertEmployee")]
         public string InsertEmployee(EmployeeSpecific employeeSpecific)
         {
-            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
-
-            bool introduced_well = employeeBussiness.InsertEmployee(employeeSpecific);
+            bool introduced_well = this.employeeBussiness.InsertEmployee(employeeSpecific);
 
             if (introduced_well == true)
             {
@@ -73,9 +76,7 @@ namespace Supplier_Service.Controllers
         [Route("api/employee/UpdateEmployee")]
         public string UpdateEmployee(EmployeeSpecific update)
         {
-            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
-
-            bool updated_well = employeeBussiness.UpdateEmployee(update);
+            bool updated_well = this.employeeBussiness.UpdateEmployee(update);
 
             if (updated_well == true)
             {
@@ -93,9 +94,7 @@ namespace Supplier_Service.Controllers
         [Route("api/employee/DeleteEmployee/{employeeId}")]
         public string DeleteEmployee(int employeeId)
         {
-            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
-
-            bool deleted_well = employeeBussiness.DeleteEmployee(employeeId);
+            bool deleted_well = this.employeeBussiness.DeleteEmployee(employeeId);
 
             if (deleted_well == true)
             {

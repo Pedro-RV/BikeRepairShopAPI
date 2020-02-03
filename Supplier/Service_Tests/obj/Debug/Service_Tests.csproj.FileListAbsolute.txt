@@ -56,3 +56,17 @@ C:\REPO\becaPedro\Supplier\Service_Tests\obj\Debug\Service_Tests.pdb
 C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\AutoMapper.dll
 C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\AutoMapper.pdb
 C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\AutoMapper.xml
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Autofac.dll
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Autofac.pdb
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Autofac.xml
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Autofac.Integration.Mvc.dll
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Autofac.Integration.WebApi.dll
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Autofac.Integration.Mvc.xml
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Autofac.Integration.WebApi.pdb
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Autofac.Integration.WebApi.xml

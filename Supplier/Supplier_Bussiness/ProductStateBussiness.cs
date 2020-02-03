@@ -2,6 +2,7 @@
 using Supplier_Bussiness.Interfaces;
 using Supplier_Data;
 using Supplier_Data.Context;
+using Supplier_Data.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
 using Supplier_Helper.ExceptionController;
@@ -15,19 +16,17 @@ namespace Supplier_Bussiness
 {
     public class ProductStateBussiness : IProductStateBussiness
     {
+        private IExceptionController exceptionController;
 
-        private SupplierContext dbContext;
-
-        private ExceptionController exceptionController;
+        private IProductStateRepository productStateRepository;
 
         private IMapper mapper;
 
-        public ProductStateBussiness()
+        public ProductStateBussiness(IExceptionController exceptionController,
+            IProductStateRepository productStateRepository)
         {
-            SupplierContextProvider.InitializeSupplierContext();
-            dbContext = SupplierContextProvider.GetSupplierContext();
-            exceptionController = new ExceptionController();
-
+            this.exceptionController = exceptionController;
+            this.productStateRepository = productStateRepository;
 
             var config = new MapperConfiguration(cfg => {
                 cfg.CreateMap<ProductStateSpecific, ProductState>();
@@ -42,11 +41,9 @@ namespace Supplier_Bussiness
 
             try
             {
-                ProductStateRepository productStateRepository = new ProductStateRepository(dbContext, exceptionController);
-
                 ProductState productStateAdd = mapper.Map<ProductStateSpecific, ProductState>(productStateSpecific);
 
-                ret = productStateRepository.Insert(productStateAdd);
+                ret = this.productStateRepository.Insert(productStateAdd);
 
             }
             catch (SupplierException)
@@ -71,9 +68,7 @@ namespace Supplier_Bussiness
 
             try
             {
-                ProductStateRepository productStateRepository = new ProductStateRepository(dbContext, exceptionController);
-
-                ret = productStateRepository.Read(ProductStateId);
+                ret = this.productStateRepository.Read(ProductStateId);
 
             }
             catch (SupplierException)
@@ -98,13 +93,11 @@ namespace Supplier_Bussiness
 
             try
             {
-                ProductStateRepository productStateRepository = new ProductStateRepository(dbContext, exceptionController);
-
-                ProductState current = productStateRepository.Read(update.ProductStateId);
+                ProductState current = this.productStateRepository.Read(update.ProductStateId);
 
                 current.ProductStateDescription = !String.IsNullOrEmpty(update.ProductStateDescription) ? update.ProductStateDescription : current.ProductStateDescription;
 
-                ret = productStateRepository.Update(current);
+                ret = this.productStateRepository.Update(current);
 
             }
             catch (SupplierException)
@@ -129,11 +122,9 @@ namespace Supplier_Bussiness
 
             try
             {
-                ProductStateRepository productStateRepository = new ProductStateRepository(dbContext, exceptionController);
+                ProductState del = this.productStateRepository.Read(ProductStateId);
 
-                ProductState del = productStateRepository.Read(ProductStateId);
-
-                ret = productStateRepository.Delete(del);
+                ret = this.productStateRepository.Delete(del);
 
             }
             catch (SupplierException)

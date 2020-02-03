@@ -12,11 +12,15 @@ namespace Supplier_Data
     {
         private SupplierContext dbContext;
 
-        private ExceptionController exceptionController;
+        private ISupplierContextProvider supplierContextProvider;
 
-        public ProductStateRepository(SupplierContext dbContext, ExceptionController exceptionController)
+        private IExceptionController exceptionController;
+
+        public ProductStateRepository(ISupplierContextProvider supplierContextProvider, IExceptionController exceptionController)
         {
-            this.dbContext = dbContext;
+            this.supplierContextProvider = supplierContextProvider;
+            this.supplierContextProvider.InitializeSupplierContext();
+            this.dbContext = this.supplierContextProvider.GetSupplierContext();
             this.exceptionController = exceptionController;
         }
 

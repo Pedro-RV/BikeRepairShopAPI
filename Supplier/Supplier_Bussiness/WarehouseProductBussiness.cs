@@ -2,6 +2,7 @@
 using Supplier_Bussiness.Interfaces;
 using Supplier_Data;
 using Supplier_Data.Context;
+using Supplier_Data.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
 using Supplier_Helper.ExceptionController;
@@ -15,17 +16,29 @@ namespace Supplier_Bussiness
 {
     public class WarehouseProductBussiness : IWarehouseProductBussiness
     {
-        private SupplierContext dbContext;
+        private IExceptionController exceptionController;
 
-        private ExceptionController exceptionController;
+        private IWarehouseProductRepository warehouseProductRepository;
+
+        private IProductBussiness productBussiness;
+
+        private IProductStateBussiness productStateBussiness;
+
+        private IWarehouseBussiness warehouseBussiness;
 
         private IMapper mapper;
 
-        public WarehouseProductBussiness()
+        public WarehouseProductBussiness(IExceptionController exceptionController,
+            IWarehouseProductRepository warehouseProductRepository,
+            IProductBussiness productBussiness,
+            IProductStateBussiness productStateBussiness,
+            IWarehouseBussiness warehouseBussiness)
         {
-            SupplierContextProvider.InitializeSupplierContext();
-            dbContext = SupplierContextProvider.GetSupplierContext();
-            exceptionController = new ExceptionController();
+            this.exceptionController = exceptionController;
+            this.warehouseProductRepository = warehouseProductRepository;
+            this.productBussiness = productBussiness;
+            this.productStateBussiness = productStateBussiness;
+            this.warehouseBussiness = warehouseBussiness;
 
 
             var config = new MapperConfiguration(cfg => {
@@ -36,38 +49,33 @@ namespace Supplier_Bussiness
 
         }
 
-        public bool InsertWarehouseProduct(WarehouseProductSpecific WarehouseProductSpecific)
+        public bool InsertWarehouseProduct(WarehouseProductSpecific warehouseProductSpecific)
         {
             bool ret;
 
             try
             {
-                WarehouseProductRepository WarehouseProductRepository = new WarehouseProductRepository(dbContext, exceptionController);
-                ProductBussiness productBussiness = new ProductBussiness();
-                ProductStateBussiness productStateBussiness = new ProductStateBussiness();
-                WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
+                WarehouseProduct warehouseProductAdd = mapper.Map<WarehouseProductSpecific, WarehouseProduct>(warehouseProductSpecific);
 
-                WarehouseProduct WarehouseProductAdd = mapper.Map<WarehouseProductSpecific, WarehouseProduct>(WarehouseProductSpecific);
-
-                if (WarehouseProductAdd.ProductId != 0)
+                if (warehouseProductAdd.ProductId != 0)
                 {
-                    Product productAttach = productBussiness.ReadProduct(WarehouseProductAdd.ProductId);
-                    WarehouseProductAdd.Product = productAttach;
+                    Product productAttach = this.productBussiness.ReadProduct(warehouseProductAdd.ProductId);
+                    warehouseProductAdd.Product = productAttach;
                 }
 
-                if (WarehouseProductAdd.ProductStateId != 0)
+                if (warehouseProductAdd.ProductStateId != 0)
                 {
-                    ProductState productStateAttach = productStateBussiness.ReadProductState(WarehouseProductAdd.ProductStateId);
-                    WarehouseProductAdd.ProductState = productStateAttach;
+                    ProductState productStateAttach = this.productStateBussiness.ReadProductState(warehouseProductAdd.ProductStateId);
+                    warehouseProductAdd.ProductState = productStateAttach;
                 }
 
-                if (WarehouseProductAdd.WarehouseId != 0)
+                if (warehouseProductAdd.WarehouseId != 0)
                 {
-                    Warehouse warehouseAttach = warehouseBussiness.ReadWarehouse(WarehouseProductAdd.WarehouseId);
-                    WarehouseProductAdd.Warehouse = warehouseAttach;
+                    Warehouse warehouseAttach = this.warehouseBussiness.ReadWarehouse(warehouseProductAdd.WarehouseId);
+                    warehouseProductAdd.Warehouse = warehouseAttach;
                 }
 
-                ret = WarehouseProductRepository.Insert(WarehouseProductAdd);
+                ret = this.warehouseProductRepository.Insert(warehouseProductAdd);
 
             }
             catch (SupplierException)
@@ -92,9 +100,7 @@ namespace Supplier_Bussiness
 
             try
             {
-                WarehouseProductRepository WarehouseProductRepository = new WarehouseProductRepository(dbContext, exceptionController);
-
-                ret = WarehouseProductRepository.Read(WarehouseProductId);
+                ret = this.warehouseProductRepository.Read(WarehouseProductId);
 
             }
             catch (SupplierException)
@@ -119,35 +125,30 @@ namespace Supplier_Bussiness
 
             try
             {
-                WarehouseProductRepository WarehouseProductRepository = new WarehouseProductRepository(dbContext, exceptionController);
-                ProductBussiness productBussiness = new ProductBussiness();
-                ProductStateBussiness productStateBussiness = new ProductStateBussiness();
-                WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
-
-                WarehouseProduct current = WarehouseProductRepository.Read(update.WarehouseProductId);
+                WarehouseProduct current = this.warehouseProductRepository.Read(update.WarehouseProductId);
 
                 if (update.ProductId != 0)
                 {
                     current.ProductId = update.ProductId;
-                    Product productAttach = productBussiness.ReadProduct(current.ProductId);
+                    Product productAttach = this.productBussiness.ReadProduct(current.ProductId);
                     current.Product = productAttach;
                 }
 
                 if (update.ProductStateId != 0)
                 {
                     current.ProductStateId = update.ProductStateId;
-                    ProductState productStateAttach = productStateBussiness.ReadProductState(current.ProductStateId);
+                    ProductState productStateAttach = this.productStateBussiness.ReadProductState(current.ProductStateId);
                     current.ProductState = productStateAttach;
                 }
 
                 if (update.WarehouseId != 0)
                 {
                     current.WarehouseId = update.WarehouseId;
-                    Warehouse warehouseAttach = warehouseBussiness.ReadWarehouse(current.WarehouseId);
+                    Warehouse warehouseAttach = this.warehouseBussiness.ReadWarehouse(current.WarehouseId);
                     current.Warehouse = warehouseAttach;
                 }
 
-                ret = WarehouseProductRepository.Update(current);
+                ret = this.warehouseProductRepository.Update(current);
 
             }
             catch (SupplierException)
@@ -172,11 +173,9 @@ namespace Supplier_Bussiness
 
             try
             {
-                WarehouseProductRepository WarehouseProductRepository = new WarehouseProductRepository(dbContext, exceptionController);
+                WarehouseProduct del = this.warehouseProductRepository.Read(WarehouseProductId);
 
-                WarehouseProduct del = WarehouseProductRepository.Read(WarehouseProductId);
-
-                ret = WarehouseProductRepository.Delete(del);
+                ret = this.warehouseProductRepository.Delete(del);
 
             }
             catch (SupplierException)

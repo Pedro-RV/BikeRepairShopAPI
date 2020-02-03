@@ -108,3 +108,17 @@ C:\REPO\becaPedro\Supplier\Supplier_Service\bin\EntityFramework.SqlServer.xml
 C:\REPO\becaPedro\Supplier\Supplier_Service\bin\AutoMapper.dll
 C:\REPO\becaPedro\Supplier\Supplier_Service\bin\AutoMapper.pdb
 C:\REPO\becaPedro\Supplier\Supplier_Service\bin\AutoMapper.xml
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\Autofac.dll
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\Microsoft.Bcl.AsyncInterfaces.dll
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\System.Runtime.CompilerServices.Unsafe.dll
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\System.Threading.Tasks.Extensions.dll
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\Autofac.pdb
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\Autofac.xml
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\Microsoft.Bcl.AsyncInterfaces.xml
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\System.Runtime.CompilerServices.Unsafe.xml
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\System.Threading.Tasks.Extensions.xml
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\Autofac.Integration.Mvc.dll
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\Autofac.Integration.WebApi.dll
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\Autofac.Integration.Mvc.xml
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\Autofac.Integration.WebApi.pdb
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\Autofac.Integration.WebApi.xml

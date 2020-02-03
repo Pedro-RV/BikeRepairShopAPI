@@ -1,4 +1,5 @@
 ﻿using Supplier_Bussiness;
+using Supplier_Bussiness.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
 using System;
@@ -12,14 +13,20 @@ namespace Supplier_Service.Controllers
 {
     public class ProductStateController : ApiController
     {
+        private IProductStateBussiness productStateBussiness;
+
+        public ProductStateController(IProductStateBussiness productStateBussiness)
+        {
+            this.productStateBussiness = productStateBussiness;
+
+        }
+
         // GET
         [HttpGet]
         [Route("api/productState/GetProductState/{productStateId}")]
         public ProductState GetProductState(int productStateId)
         {
-            ProductStateBussiness productStateBussiness = new ProductStateBussiness();
-
-            ProductState request = productStateBussiness.ReadProductState(productStateId);
+            ProductState request = this.productStateBussiness.ReadProductState(productStateId);
 
             return request;
         }
@@ -29,9 +36,7 @@ namespace Supplier_Service.Controllers
         [Route("api/productState/InsertProductState")]
         public string InsertProductState(ProductStateSpecific productStateSpecific)
         {
-            ProductStateBussiness productStateBussiness = new ProductStateBussiness();
-
-            bool introduced_well = productStateBussiness.InsertProductState(productStateSpecific);
+            bool introduced_well = this.productStateBussiness.InsertProductState(productStateSpecific);
 
             if (introduced_well == true)
             {
@@ -49,9 +54,7 @@ namespace Supplier_Service.Controllers
         [Route("api/productState/UpdateProductState")]
         public string UpdateProductState(ProductStateSpecific update)
         {
-            ProductStateBussiness productStateBussiness = new ProductStateBussiness();
-
-            bool updated_well = productStateBussiness.UpdateProductState(update);
+            bool updated_well = this.productStateBussiness.UpdateProductState(update);
 
             if (updated_well == true)
             {
@@ -69,9 +72,7 @@ namespace Supplier_Service.Controllers
         [Route("api/productState/DeleteProductState/{productStateId}")]
         public string DeleteProductState(int productStateId)
         {
-            ProductStateBussiness productStateBussiness = new ProductStateBussiness();
-
-            bool deleted_well = productStateBussiness.DeleteProductState(productStateId);
+            bool deleted_well = this.productStateBussiness.DeleteProductState(productStateId);
 
             if (deleted_well == true)
             {

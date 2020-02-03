@@ -1,4 +1,5 @@
 ﻿using Supplier_Bussiness;
+using Supplier_Bussiness.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
 using System;
@@ -12,14 +13,20 @@ namespace Supplier_Service.Controllers
 {
     public class WarehouseProductController : ApiController
     {
+        private IWarehouseProductBussiness warehouseProductBussiness;
+
+        public WarehouseProductController(IWarehouseProductBussiness warehouseProductBussiness)
+        {
+            this.warehouseProductBussiness = warehouseProductBussiness;
+
+        }
+
         // GET
         [HttpGet]
         [Route("api/WarehouseProduct/GetWarehouseProduct/{WarehouseProductId}")]
         public WarehouseProduct GetWarehouseProduct(int WarehouseProductId)
         {
-            WarehouseProductBussiness WarehouseProductBussiness = new WarehouseProductBussiness();
-
-            WarehouseProduct request = WarehouseProductBussiness.ReadWarehouseProduct(WarehouseProductId);
+            WarehouseProduct request = this.warehouseProductBussiness.ReadWarehouseProduct(WarehouseProductId);
 
             return request;
         }
@@ -29,9 +36,7 @@ namespace Supplier_Service.Controllers
         [Route("api/WarehouseProduct/InsertWarehouseProduct")]
         public string InsertWarehouseProduct(WarehouseProductSpecific WarehouseProductSpecific)
         {
-            WarehouseProductBussiness WarehouseProductBussiness = new WarehouseProductBussiness();
-
-            bool introduced_well = WarehouseProductBussiness.InsertWarehouseProduct(WarehouseProductSpecific);
+            bool introduced_well = this.warehouseProductBussiness.InsertWarehouseProduct(WarehouseProductSpecific);
 
             if (introduced_well == true)
             {
@@ -49,9 +54,7 @@ namespace Supplier_Service.Controllers
         [Route("api/WarehouseProduct/UpdateWarehouseProduct")]
         public string UpdateWarehouseProduct(WarehouseProductSpecific update)
         {
-            WarehouseProductBussiness WarehouseProductBussiness = new WarehouseProductBussiness();
-
-            bool updated_well = WarehouseProductBussiness.UpdateWarehouseProduct(update);
+            bool updated_well = this.warehouseProductBussiness.UpdateWarehouseProduct(update);
 
             if (updated_well == true)
             {
@@ -69,9 +72,7 @@ namespace Supplier_Service.Controllers
         [Route("api/WarehouseProduct/DeleteWarehouseProduct/{WarehouseProductId}")]
         public string DeleteWarehouseProduct(int WarehouseProductId)
         {
-            WarehouseProductBussiness WarehouseProductBussiness = new WarehouseProductBussiness();
-
-            bool deleted_well = WarehouseProductBussiness.DeleteWarehouseProduct(WarehouseProductId);
+            bool deleted_well = this.warehouseProductBussiness.DeleteWarehouseProduct(WarehouseProductId);
 
             if (deleted_well == true)
             {

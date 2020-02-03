@@ -2,6 +2,7 @@
 using Supplier_Bussiness.Interfaces;
 using Supplier_Data;
 using Supplier_Data.Context;
+using Supplier_Data.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
 using Supplier_Helper.ExceptionController;
@@ -15,17 +16,17 @@ namespace Supplier_Bussiness
 {
     public class WarehouseBussiness : IWarehouseBussiness
     {
-        private SupplierContext dbContext;
+        private IExceptionController exceptionController;
 
-        private ExceptionController exceptionController;
+        private IWarehouseRepository warehouseRepository;
 
         private IMapper mapper;
 
-        public WarehouseBussiness()
+        public WarehouseBussiness(IExceptionController exceptionController,
+            IWarehouseRepository warehouseRepository)
         {
-            SupplierContextProvider.InitializeSupplierContext();
-            dbContext = SupplierContextProvider.GetSupplierContext();
-            exceptionController = new ExceptionController();
+            this.exceptionController = exceptionController;
+            this.warehouseRepository = warehouseRepository;
 
 
             var config = new MapperConfiguration(cfg => {
@@ -37,9 +38,7 @@ namespace Supplier_Bussiness
 
         public List<Warehouse> WarehousesBiggerThanAnExtensionList(int extension)
         {
-            WarehouseRepository warehouseRepository = new WarehouseRepository(dbContext, exceptionController);
-
-            List<Warehouse> ret = warehouseRepository.WarehousesBiggerThanAnExtensionList(extension);
+            List<Warehouse> ret = this.warehouseRepository.WarehousesBiggerThanAnExtensionList(extension);
 
             return ret;
         }      
@@ -50,11 +49,9 @@ namespace Supplier_Bussiness
 
             try
             {
-                WarehouseRepository warehouseRepository = new WarehouseRepository(dbContext, exceptionController);
-
                 Warehouse warehouseAdd = mapper.Map<WarehouseSpecific, Warehouse>(warehouseSpecific);
 
-                ret = warehouseRepository.Insert(warehouseAdd);
+                ret = this.warehouseRepository.Insert(warehouseAdd);
 
             }
             catch (SupplierException)
@@ -79,9 +76,7 @@ namespace Supplier_Bussiness
 
             try
             {
-                WarehouseRepository warehouseRepository = new WarehouseRepository(dbContext, exceptionController);
-
-                ret = warehouseRepository.Read(WarehouseId);
+                ret = this.warehouseRepository.Read(WarehouseId);
 
             }
             catch (SupplierException)
@@ -106,14 +101,12 @@ namespace Supplier_Bussiness
 
             try
             {
-                WarehouseRepository warehouseRepository = new WarehouseRepository(dbContext, exceptionController);
-
-                Warehouse current = warehouseRepository.Read(update.WarehouseId);
+                Warehouse current = this.warehouseRepository.Read(update.WarehouseId);
 
                 current.WarehouseAddress = !String.IsNullOrEmpty(update.WarehouseAddress) ? update.WarehouseAddress : current.WarehouseAddress;
                 current.Extension = update.Extension != 0 ? update.Extension : current.Extension;            
 
-                ret = warehouseRepository.Update(current);
+                ret = this.warehouseRepository.Update(current);
 
             }
             catch (SupplierException)
@@ -138,11 +131,9 @@ namespace Supplier_Bussiness
 
             try
             {
-                WarehouseRepository warehouseRepository = new WarehouseRepository(dbContext, exceptionController);
+                Warehouse del = this.warehouseRepository.Read(WarehouseId);
 
-                Warehouse del = warehouseRepository.Read(WarehouseId);
-
-                ret = warehouseRepository.Delete(del);
+                ret = this.warehouseRepository.Delete(del);
 
             }
             catch (SupplierException)

@@ -4,7 +4,7 @@ using System.Data.Entity;
 
 namespace Supplier_Data.Context
 {
-    public class SupplierContext : DbContext, ISupplierContext
+    public class SupplierContext : DbContext
     {
         public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<Product> Product { get; set; }

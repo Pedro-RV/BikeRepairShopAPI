@@ -2,6 +2,7 @@
 using Supplier_Bussiness.Interfaces;
 using Supplier_Data;
 using Supplier_Data.Context;
+using Supplier_Data.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
 using Supplier_Helper.ExceptionController;
@@ -15,18 +16,25 @@ namespace Supplier_Bussiness
 {
     public class PurchaseBussiness : IPurchaseBussiness
     {
+        private IExceptionController exceptionController;
 
-        private SupplierContext dbContext;
+        private IPurchaseRepository purchaseRepository;
 
-        private ExceptionController exceptionController;
+        private IProductBussiness productBussiness;
+
+        private ISupplyCompanyBussiness supplyCompanyBussiness;
 
         private IMapper mapper;
 
-        public PurchaseBussiness()
+        public PurchaseBussiness(IExceptionController exceptionController,
+            IPurchaseRepository purchaseRepository,
+            IProductBussiness productBussiness,
+            ISupplyCompanyBussiness supplyCompanyBussiness)
         {
-            SupplierContextProvider.InitializeSupplierContext();
-            dbContext = SupplierContextProvider.GetSupplierContext();
-            exceptionController = new ExceptionController();
+            this.exceptionController = exceptionController;
+            this.purchaseRepository = purchaseRepository;
+            this.productBussiness = productBussiness;
+            this.supplyCompanyBussiness = supplyCompanyBussiness;
 
 
             var config = new MapperConfiguration(cfg => {
@@ -39,18 +47,14 @@ namespace Supplier_Bussiness
 
         public List<Purchase> PurchasesBiggerThanAPrizeList(double prize)
         {
-            PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
-
-            List<Purchase> ret = purchaseRepository.PurchasesBiggerThanAPrizeList(prize);
+            List<Purchase> ret = this.purchaseRepository.PurchasesBiggerThanAPrizeList(prize);
 
             return ret;
         }
 
         public List<PurchaseData> PurchaseDataList()
         {
-            PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
-
-            List<PurchaseData> ret = purchaseRepository.PurchaseDataList();
+            List<PurchaseData> ret = this.purchaseRepository.PurchaseDataList();
 
             return ret;
         }
@@ -61,25 +65,21 @@ namespace Supplier_Bussiness
 
             try
             {
-                PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
-                ProductBussiness productBussiness = new ProductBussiness();
-                SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
-
                 Purchase purchaseAdd = mapper.Map<PurchaseSpecific, Purchase>(purchaseSpecific);
 
                 if (purchaseAdd.SupplyCompanyId != 0)
                 {
-                    SupplyCompany supplyCompanyAttach = supplyCompanyBussiness.ReadSupplyCompany(purchaseAdd.SupplyCompanyId);
+                    SupplyCompany supplyCompanyAttach = this.supplyCompanyBussiness.ReadSupplyCompany(purchaseAdd.SupplyCompanyId);
                     purchaseAdd.SupplyCompany = supplyCompanyAttach;
                 }
 
                 if (purchaseAdd.ProductId != 0)
                 {
-                    Product productAttach = productBussiness.ReadProduct(purchaseAdd.ProductId);
+                    Product productAttach = this.productBussiness.ReadProduct(purchaseAdd.ProductId);
                     purchaseAdd.Product = productAttach;
                 }
 
-                ret = purchaseRepository.Insert(purchaseAdd);
+                ret = this.purchaseRepository.Insert(purchaseAdd);
 
             }
             catch (SupplierException)
@@ -104,9 +104,7 @@ namespace Supplier_Bussiness
 
             try
             {
-                PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
-
-                ret = purchaseRepository.Read(PurchaseId);
+                ret = this.purchaseRepository.Read(PurchaseId);
 
             }
             catch (SupplierException)
@@ -131,11 +129,7 @@ namespace Supplier_Bussiness
 
             try
             {
-                PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
-                ProductBussiness productBussiness = new ProductBussiness();
-                SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
-
-                Purchase current = purchaseRepository.Read(update.PurchaseId);
+                Purchase current = this.purchaseRepository.Read(update.PurchaseId);
 
                 current.PurchaseDate = update.PurchaseDate.Year != 1 ? update.PurchaseDate : current.PurchaseDate;
                 current.Cuantity = update.Cuantity != 0 ? update.Cuantity : current.Cuantity;
@@ -144,18 +138,18 @@ namespace Supplier_Bussiness
                 if (update.SupplyCompanyId != 0)
                 {
                     current.SupplyCompanyId = update.SupplyCompanyId;
-                    SupplyCompany supplyCompanyAttach = supplyCompanyBussiness.ReadSupplyCompany(current.SupplyCompanyId);
+                    SupplyCompany supplyCompanyAttach = this.supplyCompanyBussiness.ReadSupplyCompany(current.SupplyCompanyId);
                     current.SupplyCompany = supplyCompanyAttach;
                 }
 
                 if (update.ProductId != 0)
                 {
                     current.ProductId = update.ProductId;
-                    Product productAttach = productBussiness.ReadProduct(current.ProductId);
+                    Product productAttach = this.productBussiness.ReadProduct(current.ProductId);
                     current.Product = productAttach;
                 }
 
-                ret = purchaseRepository.Update(current);
+                ret = this.purchaseRepository.Update(current);
 
             }
             catch (SupplierException)
@@ -180,11 +174,9 @@ namespace Supplier_Bussiness
 
             try
             {
-                PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
+                Purchase del = this.purchaseRepository.Read(PurchaseId);
 
-                Purchase del = purchaseRepository.Read(PurchaseId);
-
-                ret = purchaseRepository.Delete(del);
+                ret = this.purchaseRepository.Delete(del);
 
             }
             catch (SupplierException)
@@ -209,15 +201,21 @@ namespace Supplier_Bussiness
 
             try
             {
-                PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
-                Purchase del = purchaseRepository.Read(PurchaseId);
+                Purchase del = this.purchaseRepository.Read(PurchaseId);
 
-                ProductRepository productRepository = new ProductRepository(dbContext, exceptionController);
-                Product update = productRepository.Read(del.Product.ProductId);
+                Product update = this.productBussiness.ReadProduct(del.Product.ProductId);
                 update.Cuantity -= del.Cuantity;
-                bool ret2 = productRepository.Update(update);
 
-                bool ret3 = purchaseRepository.Delete(del);
+                ProductSpecific upda = new ProductSpecific();
+                upda.ProductId = update.ProductId;
+                upda.ProductDescription = update.ProductDescription;
+                upda.Prize = update.Prize;
+                upda.Cuantity = update.Cuantity;
+                upda.ActiveFlag = update.ActiveFlag;
+
+                bool ret2 = this.productBussiness.UpdateProduct(upda);
+
+                bool ret3 = this.purchaseRepository.Delete(del);
 
                 ret = (ret2 && ret3);
 

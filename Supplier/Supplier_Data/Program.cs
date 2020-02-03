@@ -10,17 +10,6 @@ namespace Supplier_Data
     {
         static void Main(string[] args)
         {
-            SupplierContext dbContext;
-
-            ExceptionController exceptionController;
-
-            SupplierContextProvider.InitializeSupplierContext();
-            dbContext = SupplierContextProvider.GetSupplierContext();
-            exceptionController = new ExceptionController();
-
-            EmployeeRepository a = new EmployeeRepository(dbContext, exceptionController);
-
-            Employee b = a.Read(1);
 
         }
     }
