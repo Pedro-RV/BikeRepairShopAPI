@@ -12,11 +12,15 @@ namespace Sale_Data
     {
         private SaleContext dbContext;
 
-        private ExceptionController exceptionController;
+        private ISaleContextProvider saleContextProvider;
 
-        public PaymentMethodRepository(SaleContext dbContext, ExceptionController exceptionController)
+        private IExceptionController exceptionController;
+
+        public PaymentMethodRepository(ISaleContextProvider saleContextProvider, IExceptionController exceptionController)
         {
-            this.dbContext = dbContext;
+            this.saleContextProvider = saleContextProvider;
+            this.saleContextProvider.InitializeSaleContext();
+            this.dbContext = this.saleContextProvider.GetSaleContext();
             this.exceptionController = exceptionController;
 
         }
@@ -37,8 +41,8 @@ namespace Sale_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.NullObject);
                 }
 
-                dbContext.PaymentMethod.Add(add);
-                dbContext.SaveChanges();
+                this.dbContext.PaymentMethod.Add(add);
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -60,7 +64,7 @@ namespace Sale_Data
 
             try
             {
-                ret = dbContext.PaymentMethod.Where(x => x.PaymentMethodId == PaymentMethodId).FirstOrDefault();
+                ret = this.dbContext.PaymentMethod.Where(x => x.PaymentMethodId == PaymentMethodId).FirstOrDefault();
 
                 if (ret == null)
                 {
@@ -93,8 +97,8 @@ namespace Sale_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
-                dbContext.Entry(update).State = EntityState.Modified;
-                dbContext.SaveChanges();
+                this.dbContext.Entry(update).State = EntityState.Modified;
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -122,8 +126,8 @@ namespace Sale_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
-                dbContext.Entry(del).State = EntityState.Deleted;
-                dbContext.SaveChanges();
+                this.dbContext.Entry(del).State = EntityState.Deleted;
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -143,7 +147,7 @@ namespace Sale_Data
         {
             bool found;
 
-            found = dbContext.PaymentMethod.Any(x => x.PaymentMethodId == orig.PaymentMethodId);
+            found = this.dbContext.PaymentMethod.Any(x => x.PaymentMethodId == orig.PaymentMethodId);
 
             return found;
         }

@@ -1,5 +1,7 @@
-﻿using NUnit.Framework;
+﻿using Autofac;
+using NUnit.Framework;
 using Sale_Bussiness;
+using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using System;
@@ -13,14 +15,19 @@ namespace Bussiness_Tests
     [TestFixture]
     class ClientBussiness_Tests
     {
+        private IClientBussiness clientBussiness;
+
         [TestFixtureSetUp]
         public void Init()
         {
-            ClientBussiness clientBussiness = new ClientBussiness();
+            var container = ContainerConfig.Configure();
+            var scope = container.BeginLifetimeScope();
 
-            clientBussiness.InsertClient(new ClientSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
-            clientBussiness.InsertClient(new ClientSpecific("Rodolfo", "Suarez", "88", "rodolf@correo", "Avnd Institucion", "123", "321"));
-            clientBussiness.InsertClient(new ClientSpecific("Marco", "Polo", "99", "marco@correo", "Avnd Marco Polo", "000", "000"));
+            this.clientBussiness = scope.Resolve<IClientBussiness>();
+
+            this.clientBussiness.InsertClient(new ClientSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
+            this.clientBussiness.InsertClient(new ClientSpecific("Rodolfo", "Suarez", "88", "rodolf@correo", "Avnd Institucion", "123", "321"));
+            this.clientBussiness.InsertClient(new ClientSpecific("Marco", "Polo", "99", "marco@correo", "Avnd Marco Polo", "000", "000"));
 
         }
 
@@ -28,11 +35,10 @@ namespace Bussiness_Tests
         public void InsertClient_Test()
         {
             bool correct;
-            ClientBussiness clientBussiness = new ClientBussiness();
 
-            correct = clientBussiness.InsertClient(new ClientSpecific("antonio", "carrasco", "22", "carrasco@correo", "calle malagon", "56", "87"));
+            correct = this.clientBussiness.InsertClient(new ClientSpecific("antonio", "carrasco", "22", "carrasco@correo", "calle malagon", "56", "87"));
 
-            Client clientGotten = clientBussiness.ReadClient(4);
+            Client clientGotten = this.clientBussiness.ReadClient(4);
 
             Assert.AreEqual(true, correct);
             Assert.AreEqual(clientGotten.ClientName, "antonio");
@@ -48,9 +54,8 @@ namespace Bussiness_Tests
         [Test]
         public void ReadClient_Test()
         {
-            ClientBussiness clientBussiness = new ClientBussiness();
 
-            Client clientGotten = clientBussiness.ReadClient(3);
+            Client clientGotten = this.clientBussiness.ReadClient(3);
 
             Assert.AreEqual(clientGotten.ClientName, "Marco");
             Assert.AreEqual(clientGotten.Email, "marco@correo");
@@ -60,7 +65,6 @@ namespace Bussiness_Tests
         [Test]
         public void UpdateClient_Test()
         {
-            ClientBussiness clientBussiness = new ClientBussiness();
             bool correct;
 
             ClientSpecific change = new ClientSpecific();
@@ -68,9 +72,9 @@ namespace Bussiness_Tests
             change.ClientName = "Domingo";
             change.MobileNum = "621";
 
-            correct = clientBussiness.UpdateClient(change);
+            correct = this.clientBussiness.UpdateClient(change);
 
-            Client clientCompare = clientBussiness.ReadClient(2);
+            Client clientCompare = this.clientBussiness.ReadClient(2);
 
             Assert.AreEqual(true, correct);
             Assert.AreEqual(clientCompare.ClientName, change.ClientName);
@@ -81,10 +85,9 @@ namespace Bussiness_Tests
         [Test]
         public void DeleteClient_Test()
         {
-            ClientBussiness clientBussiness = new ClientBussiness();
             bool correct;
 
-            correct = clientBussiness.DeleteClient(1);
+            correct = this.clientBussiness.DeleteClient(1);
 
             Assert.AreEqual(true, correct);
 

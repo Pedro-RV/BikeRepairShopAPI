@@ -33,7 +33,7 @@ namespace Service_Tests
         [Test]
         public void InsertProductState_Test()
         {
-            String message = this.productStateController.InsertProductState(new ProductStateSpecific("Fuera de venta"));
+            string message = this.productStateController.InsertProductState(new ProductStateSpecific("Fuera de venta"));
 
             ProductState productStateGotten = this.productStateController.GetProductState(4);
 
@@ -58,7 +58,7 @@ namespace Service_Tests
             change.ProductStateId = 2;
             change.ProductStateDescription = "Agotado";
 
-            String message = this.productStateController.UpdateProductState(change);
+            string message = this.productStateController.UpdateProductState(change);
 
             ProductState productStateGotten = this.productStateController.GetProductState(2);
 
@@ -70,7 +70,7 @@ namespace Service_Tests
         [Test]
         public void DeleteProductState_Test()
         {
-            String message = this.productStateController.DeleteProductState(3);
+            string message = this.productStateController.DeleteProductState(3);
 
             Assert.AreEqual(message, "ProductState deleted satisfactorily.");
 

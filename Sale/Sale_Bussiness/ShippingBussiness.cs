@@ -2,6 +2,7 @@
 using Sale_Bussiness.Interfaces;
 using Sale_Data;
 using Sale_Data.Context;
+using Sale_Data.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using Sale_Helper.ExceptionController;
@@ -15,17 +16,25 @@ namespace Sale_Bussiness
 {
     public class ShippingBussiness : IShippingBussiness
     {
-        private SaleContext dbContext;
+        private IExceptionController exceptionController;
 
-        private ExceptionController exceptionController;
+        private IShippingRepository shippingRepository;
+
+        private ISaleBussiness saleBussiness;
+
+        private ITransportCompanyBussiness transportCompanyBussiness;
 
         private IMapper mapper;
 
-        public ShippingBussiness()
+        public ShippingBussiness(IExceptionController exceptionController,
+            IShippingRepository shippingRepository,
+            ISaleBussiness saleBussiness,
+            ITransportCompanyBussiness transportCompanyBussiness)
         {
-            SaleContextProvider.InitializeSaleContext();
-            dbContext = SaleContextProvider.GetSaleContext();
-            exceptionController = new ExceptionController();
+            this.exceptionController = exceptionController;
+            this.shippingRepository = shippingRepository;
+            this.saleBussiness = saleBussiness;
+            this.transportCompanyBussiness = transportCompanyBussiness;
 
 
             var config = new MapperConfiguration(cfg => {
@@ -41,11 +50,9 @@ namespace Sale_Bussiness
 
             try
             {
-                ShippingRepository shippingRepository = new ShippingRepository(dbContext, exceptionController);
-
                 Shipping shippingAdd = mapper.Map<ShippingSpecific, Shipping>(shippingSpecific);
 
-                ret = shippingRepository.Insert(shippingAdd);
+                ret = this.shippingRepository.Insert(shippingAdd);
             }
             catch (SaleException)
             {
@@ -70,9 +77,7 @@ namespace Sale_Bussiness
 
             try
             {
-                ShippingRepository shippingRepository = new ShippingRepository(dbContext, exceptionController);
-
-                ret = shippingRepository.Read(ShippingId);
+                ret = this.shippingRepository.Read(ShippingId);
             }
             catch (SaleException)
             {
@@ -96,12 +101,8 @@ namespace Sale_Bussiness
             bool ret;
 
             try
-            {
-                ShippingRepository shippingRepository = new ShippingRepository(dbContext, exceptionController);
-                SaleBussiness saleBussiness = new SaleBussiness();
-                TransportCompanyBussiness transportCompanyBussiness = new TransportCompanyBussiness();
-
-                Shipping current = shippingRepository.Read(update.ShippingId);
+            {           
+                Shipping current = this.shippingRepository.Read(update.ShippingId);
 
                 current.DepartureDate = update.DepartureDate.Year != 1 ? update.DepartureDate : current.DepartureDate;
                 current.PackingTime = update.PackingTime.Year != 1 ? update.PackingTime : current.PackingTime;
@@ -109,18 +110,18 @@ namespace Sale_Bussiness
                 if (update.SaleId != 0)
                 {
                     current.SaleId = update.SaleId;
-                    Sale saleAttach = saleBussiness.ReadSale(current.SaleId);
+                    Sale saleAttach = this.saleBussiness.ReadSale(current.SaleId);
                     current.Sale = saleAttach;
                 }
 
                 if (update.TransportCompanyId != 0)
                 {
                     current.TransportCompanyId = update.TransportCompanyId;
-                    TransportCompany transportCompanyAttach = transportCompanyBussiness.ReadTransportCompany(current.TransportCompanyId);
+                    TransportCompany transportCompanyAttach = this.transportCompanyBussiness.ReadTransportCompany(current.TransportCompanyId);
                     current.TransportCompany = transportCompanyAttach;
                 }
 
-                ret = shippingRepository.Update(current);
+                ret = this.shippingRepository.Update(current);
 
             }
             catch (SaleException)
@@ -145,11 +146,9 @@ namespace Sale_Bussiness
 
             try
             {
-                ShippingRepository shippingRepository = new ShippingRepository(dbContext, exceptionController);
+                Shipping del = this.shippingRepository.Read(ShippingId);
 
-                Shipping del = shippingRepository.Read(ShippingId);
-
-                ret = shippingRepository.Delete(del);
+                ret = this.shippingRepository.Delete(del);
 
             }
             catch (SaleException)

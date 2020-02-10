@@ -1,5 +1,7 @@
-﻿using NUnit.Framework;
+﻿using Autofac;
+using NUnit.Framework;
 using Sale_Bussiness;
+using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using System;
@@ -13,14 +15,19 @@ namespace Bussiness_Tests
     [TestFixture]
     class ProductTypeBussiness_Tests
     {
+        private IProductTypeBussiness productTypeBussiness;
+
         [TestFixtureSetUp]
         public void Init()
         {
-            ProductTypeBussiness productTypeBussiness = new ProductTypeBussiness();
+            var container = ContainerConfig.Configure();
+            var scope = container.BeginLifetimeScope();
 
-            productTypeBussiness.InsertProductType(new ProductTypeSpecific("Ruedas"));
-            productTypeBussiness.InsertProductType(new ProductTypeSpecific("Ventiladores"));
-            productTypeBussiness.InsertProductType(new ProductTypeSpecific("Frenos"));
+            this.productTypeBussiness = scope.Resolve<IProductTypeBussiness>();
+
+            this.productTypeBussiness.InsertProductType(new ProductTypeSpecific("Ruedas"));
+            this.productTypeBussiness.InsertProductType(new ProductTypeSpecific("Ventiladores"));
+            this.productTypeBussiness.InsertProductType(new ProductTypeSpecific("Frenos"));
 
         }
 
@@ -28,11 +35,10 @@ namespace Bussiness_Tests
         public void InsertProductType_Test()
         {
             bool correct;
-            ProductTypeBussiness productTypeBussiness = new ProductTypeBussiness();
 
-            correct = productTypeBussiness.InsertProductType(new ProductTypeSpecific("Llantas"));
+            correct = this.productTypeBussiness.InsertProductType(new ProductTypeSpecific("Llantas"));
 
-            ProductType productTypeGotten = productTypeBussiness.ReadProductType(4);
+            ProductType productTypeGotten = this.productTypeBussiness.ReadProductType(4);
 
             Assert.AreEqual(true, correct);
             Assert.AreEqual(productTypeGotten.ProductTypeDescription, "Llantas");
@@ -42,9 +48,7 @@ namespace Bussiness_Tests
         [Test]
         public void ReadProductType_Test()
         {
-            ProductTypeBussiness productTypeBussiness = new ProductTypeBussiness();
-
-            ProductType productTypeGotten = productTypeBussiness.ReadProductType(3);
+            ProductType productTypeGotten = this.productTypeBussiness.ReadProductType(3);
 
             Assert.AreEqual(productTypeGotten.ProductTypeDescription, "Frenos");
 
@@ -53,16 +57,15 @@ namespace Bussiness_Tests
         [Test]
         public void UpdateProductType_Test()
         {
-            ProductTypeBussiness productTypeBussiness = new ProductTypeBussiness();
             bool correct;
 
             ProductTypeSpecific change = new ProductTypeSpecific();
             change.ProductTypeId = 2;
             change.ProductTypeDescription = "Herramientas";
 
-            correct = productTypeBussiness.UpdateProductType(change);
+            correct = this.productTypeBussiness.UpdateProductType(change);
 
-            ProductType productTypeCompare = productTypeBussiness.ReadProductType(2);
+            ProductType productTypeCompare = this.productTypeBussiness.ReadProductType(2);
 
             Assert.AreEqual(true, correct);
             Assert.AreEqual(productTypeCompare.ProductTypeDescription, change.ProductTypeDescription);
@@ -72,10 +75,9 @@ namespace Bussiness_Tests
         [Test]
         public void DeleteProductType_Test()
         {
-            ProductTypeBussiness productTypeBussiness = new ProductTypeBussiness();
             bool correct;
 
-            correct = productTypeBussiness.DeleteProductType(1);
+            correct = this.productTypeBussiness.DeleteProductType(1);
 
             Assert.AreEqual(true, correct);
 

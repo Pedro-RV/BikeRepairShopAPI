@@ -1,5 +1,7 @@
-﻿using NUnit.Framework;
+﻿using Autofac;
+using NUnit.Framework;
 using Sale_Bussiness;
+using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using System;
@@ -13,21 +15,27 @@ namespace Bussiness_Tests
     [TestFixture]
     class BillBussiness_Tests
     {
+        private IBillBussiness billBussiness;
+        private IPaymentMethodBussiness paymentMethodBussiness;
+
         [TestFixtureSetUp]
         public void Init()
         {
-            PaymentMethodBussiness paymentMethodBussiness = new PaymentMethodBussiness();
-            paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("Contrarrembolso"));
-            paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("Paypal"));
-            paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("VISA"));
-            paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("Cupon"));
+            var container = ContainerConfig.Configure();
+            var scope = container.BeginLifetimeScope();
+
+            this.billBussiness = scope.Resolve<IBillBussiness>();
+            this.paymentMethodBussiness = scope.Resolve<IPaymentMethodBussiness>();
+
+            this.paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("Contrarrembolso"));
+            this.paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("Paypal"));
+            this.paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("VISA"));
+            this.paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("Cupon"));
             DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
 
-            BillBussiness billBussiness = new BillBussiness();
-
-            billBussiness.InsertBill(new BillSpecific(dateTime, 1));
-            billBussiness.InsertBill(new BillSpecific(dateTime, 2));
-            billBussiness.InsertBill(new BillSpecific(dateTime, 3));
+            this.billBussiness.InsertBill(new BillSpecific(dateTime, 1));
+            this.billBussiness.InsertBill(new BillSpecific(dateTime, 2));
+            this.billBussiness.InsertBill(new BillSpecific(dateTime, 3));
 
         }
 
@@ -36,11 +44,10 @@ namespace Bussiness_Tests
         {
             bool correct;
             DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
-            BillBussiness billBussiness = new BillBussiness();
 
-            correct = billBussiness.InsertBill(new BillSpecific(dateTime, 4));
+            correct = this.billBussiness.InsertBill(new BillSpecific(dateTime, 4));
 
-            Bill billGotten = billBussiness.ReadBill(4);
+            Bill billGotten = this.billBussiness.ReadBill(4);
 
             Assert.AreEqual(true, correct);
             Assert.AreEqual(billGotten.BillDate, dateTime);
@@ -50,9 +57,7 @@ namespace Bussiness_Tests
         [Test]
         public void ReadBill_Test()
         {
-            BillBussiness billBussiness = new BillBussiness();
-
-            Bill billGotten = billBussiness.ReadBill(3);
+            Bill billGotten = this.billBussiness.ReadBill(3);
 
             DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
 
@@ -63,7 +68,6 @@ namespace Bussiness_Tests
         [Test]
         public void UpdateBill_Test()
         {
-            BillBussiness billBussiness = new BillBussiness();
             bool correct;
 
             DateTime dateTime = new DateTime(2020, 01, 06, 14, 12, 00);
@@ -71,9 +75,9 @@ namespace Bussiness_Tests
             change.BillId = 2;
             change.BillDate = dateTime;
 
-            correct = billBussiness.UpdateBill(change);
+            correct = this.billBussiness.UpdateBill(change);
 
-            Bill billCompare = billBussiness.ReadBill(2);
+            Bill billCompare = this.billBussiness.ReadBill(2);
 
             Assert.AreEqual(true, correct);
             Assert.AreEqual(billCompare.BillDate, change.BillDate);
@@ -83,10 +87,9 @@ namespace Bussiness_Tests
         [Test]
         public void DeleteBill_Test()
         {
-            BillBussiness billBussiness = new BillBussiness();
             bool correct;
 
-            correct = billBussiness.DeleteBill(1);
+            correct = this.billBussiness.DeleteBill(1);
 
             Assert.AreEqual(true, correct);
 

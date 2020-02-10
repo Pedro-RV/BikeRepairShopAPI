@@ -96,8 +96,8 @@ namespace Supplier_Bussiness
             {
                 SupplyCompany current = this.supplyCompanyRepository.Read(update.SupplyCompanyId);
 
-                current.SupplyCompanyName = !String.IsNullOrEmpty(update.SupplyCompanyName) ? update.SupplyCompanyName : current.SupplyCompanyName;
-                current.TelephoneNum = !String.IsNullOrEmpty(update.TelephoneNum) ? update.TelephoneNum : current.TelephoneNum;
+                current.SupplyCompanyName = !string.IsNullOrEmpty(update.SupplyCompanyName) ? update.SupplyCompanyName : current.SupplyCompanyName;
+                current.TelephoneNum = !string.IsNullOrEmpty(update.TelephoneNum) ? update.TelephoneNum : current.TelephoneNum;
 
                 ret = this.supplyCompanyRepository.Update(current);
 

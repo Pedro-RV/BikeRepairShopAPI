@@ -129,13 +129,13 @@ namespace Supplier_Bussiness
             {
                 Employee current = this.employeeRepository.Read(update.EmployeeId);
 
-                current.EmployeeName = !String.IsNullOrEmpty(update.EmployeeName) ? update.EmployeeName : current.EmployeeName;
-                current.Surname = !String.IsNullOrEmpty(update.Surname) ? update.Surname : current.Surname;
-                current.Email = !String.IsNullOrEmpty(update.Email) ? update.Email : current.Email;
-                current.DNI = !String.IsNullOrEmpty(update.DNI) ? update.DNI : current.DNI;
-                current.EmployeeAddress = !String.IsNullOrEmpty(update.EmployeeAddress) ? update.EmployeeAddress : current.EmployeeAddress;
-                current.CP = !String.IsNullOrEmpty(update.CP) ? update.CP : current.CP;
-                current.MobileNum = !String.IsNullOrEmpty(update.MobileNum) ? update.MobileNum : current.MobileNum;
+                current.EmployeeName = !string.IsNullOrEmpty(update.EmployeeName) ? update.EmployeeName : current.EmployeeName;
+                current.Surname = !string.IsNullOrEmpty(update.Surname) ? update.Surname : current.Surname;
+                current.Email = !string.IsNullOrEmpty(update.Email) ? update.Email : current.Email;
+                current.DNI = !string.IsNullOrEmpty(update.DNI) ? update.DNI : current.DNI;
+                current.EmployeeAddress = !string.IsNullOrEmpty(update.EmployeeAddress) ? update.EmployeeAddress : current.EmployeeAddress;
+                current.CP = !string.IsNullOrEmpty(update.CP) ? update.CP : current.CP;
+                current.MobileNum = !string.IsNullOrEmpty(update.MobileNum) ? update.MobileNum : current.MobileNum;
 
                 ret = this.employeeRepository.Update(current);
 

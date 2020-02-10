@@ -1,4 +1,5 @@
 ﻿using Sale_Bussiness;
+using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using System;
@@ -12,14 +13,20 @@ namespace Sale_Service.Controllers
 {
     public class ClientController : ApiController
     {
+        private IClientBussiness clientBussiness;
+
+        public ClientController(IClientBussiness clientBussiness)
+        {
+            this.clientBussiness = clientBussiness;
+
+        }
+
         // GET
         [HttpGet]
         [Route("api/client/GetClient/{clientId}")]
         public Client GetClient(int clientId)
         {
-            ClientBussiness clientBussiness = new ClientBussiness();
-
-            Client request = clientBussiness.ReadClient(clientId);
+            Client request = this.clientBussiness.ReadClient(clientId);
 
             return request;
         }
@@ -29,9 +36,7 @@ namespace Sale_Service.Controllers
         [Route("api/client/InsertClient")]
         public string InsertClient(ClientSpecific clientSpecific)
         {
-            ClientBussiness clientBussiness = new ClientBussiness();
-
-            bool introduced_well = clientBussiness.InsertClient(clientSpecific);
+            bool introduced_well = this.clientBussiness.InsertClient(clientSpecific);
 
             if (introduced_well == true)
             {
@@ -49,9 +54,7 @@ namespace Sale_Service.Controllers
         [Route("api/client/UpdateClient")]
         public string UpdateClient(ClientSpecific update)
         {
-            ClientBussiness clientBussiness = new ClientBussiness();
-
-            bool updated_well = clientBussiness.UpdateClient(update);
+            bool updated_well = this.clientBussiness.UpdateClient(update);
 
             if (updated_well == true)
             {
@@ -69,9 +72,7 @@ namespace Sale_Service.Controllers
         [Route("api/client/DeleteClient/{clientId}")]
         public string DeleteClient(int clientId)
         {
-            ClientBussiness clientBussiness = new ClientBussiness();
-
-            bool deleted_well = clientBussiness.DeleteClient(clientId);
+            bool deleted_well = this.clientBussiness.DeleteClient(clientId);
 
             if (deleted_well == true)
             {

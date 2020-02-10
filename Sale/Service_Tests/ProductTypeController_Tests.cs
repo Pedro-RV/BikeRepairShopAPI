@@ -29,7 +29,7 @@ namespace Service_Tests
         {
             ProductTypeController productTypeController = new ProductTypeController();
 
-            String message = productTypeController.InsertProductType(new ProductTypeSpecific("Llantas"));
+            string message = productTypeController.InsertProductType(new ProductTypeSpecific("Llantas"));
 
             ProductType productTypeGotten = productTypeController.GetProductType(4);
 
@@ -58,7 +58,7 @@ namespace Service_Tests
             change.ProductTypeId = 2;
             change.ProductTypeDescription = "Herramientas";
 
-            String message = productTypeController.UpdateProductType(change);
+            string message = productTypeController.UpdateProductType(change);
 
             ProductType productTypeCompare = productTypeController.GetProductType(2);
 
@@ -72,7 +72,7 @@ namespace Service_Tests
         {
             ProductTypeController productTypeController = new ProductTypeController();
 
-            String message = productTypeController.DeleteProductType(1);
+            string message = productTypeController.DeleteProductType(1);
 
             Assert.AreEqual(message, "ProductType deleted satisfactorily.");
 

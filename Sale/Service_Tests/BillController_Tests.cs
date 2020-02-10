@@ -37,7 +37,7 @@ namespace Service_Tests
             DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
             BillController billController = new BillController();
 
-            String message = billController.InsertBill(new BillSpecific(dateTime, 4));
+            string message = billController.InsertBill(new BillSpecific(dateTime, 4));
 
             Bill billGotten = billController.GetBill(4);
 
@@ -69,7 +69,7 @@ namespace Service_Tests
             change.BillId = 2;
             change.BillDate = dateTime;
 
-            String message = billController.UpdateBill(change);
+            string message = billController.UpdateBill(change);
 
             Bill billCompare = billController.GetBill(2);
 
@@ -83,7 +83,7 @@ namespace Service_Tests
         {
             BillController billController = new BillController();
 
-            String message = billController.DeleteBill(1);
+            string message = billController.DeleteBill(1);
 
             Assert.AreEqual(message, "Bill deleted satisfactorily.");
 

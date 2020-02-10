@@ -28,15 +28,15 @@ namespace Supplier_Data
 
         public List<Purchase> PurchasesBiggerThanAPrizeList(double prize)
         {
-            List<Purchase> ret = dbContext.Purchase.Where(x => x.Prize > prize).ToList();
+            List<Purchase> ret = this.dbContext.Purchase.Where(x => x.Prize > prize).ToList();
 
             return ret;
         }
 
         public List<PurchaseData> PurchaseDataList()
         {
-            var ret = dbContext.Purchase
-                .Join(dbContext.Product,
+            var ret = this.dbContext.Purchase
+                .Join(this.dbContext.Product,
                     purchase => purchase.ProductId,
                     product => product.ProductId,
                     (purchase, product) => new
@@ -45,7 +45,7 @@ namespace Supplier_Data
                         Product = product
                     })
                 .Join(
-                    dbContext.SupplyCompany,
+                    this.dbContext.SupplyCompany,
                     combined => combined.Purchase.SupplyCompanyId,
                     supplyCompany => supplyCompany.SupplyCompanyId,
                     (combined, supplyCompany) => new PurchaseData()
@@ -82,10 +82,10 @@ namespace Supplier_Data
                 if (add.Cuantity < 0)
                 {
                     throw this.exceptionController.CreateMyException(ExceptionEnum.MistakenCuantity);
-                }             
+                }
 
-                dbContext.Purchase.Add(add);
-                dbContext.SaveChanges();
+                this.dbContext.Purchase.Add(add);
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -107,7 +107,7 @@ namespace Supplier_Data
 
             try
             {
-                ret = dbContext.Purchase.Where(x => x.PurchaseId == PurchaseId).FirstOrDefault();
+                ret = this.dbContext.Purchase.Where(x => x.PurchaseId == PurchaseId).FirstOrDefault();
 
                 if (ret == null)
                 {
@@ -140,8 +140,8 @@ namespace Supplier_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
-                dbContext.Entry(update).State = EntityState.Modified;
-                dbContext.SaveChanges();
+                this.dbContext.Entry(update).State = EntityState.Modified;
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -169,8 +169,8 @@ namespace Supplier_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
-                dbContext.Entry(del).State = EntityState.Deleted;
-                dbContext.SaveChanges();
+                this.dbContext.Entry(del).State = EntityState.Deleted;
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -190,7 +190,7 @@ namespace Supplier_Data
         {
             bool found;
 
-            found = dbContext.Purchase.Any(x => x.PurchaseId == orig.PurchaseId);
+            found = this.dbContext.Purchase.Any(x => x.PurchaseId == orig.PurchaseId);
 
             return found;
         }

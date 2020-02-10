@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sale_Data.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sale_Data.Context
 {
-    public class SaleContextProvider
+    public class SaleContextProvider : ISaleContextProvider
     {
         private static SaleContext _instance;
 
@@ -14,7 +15,7 @@ namespace Sale_Data.Context
         {
         }
 
-        public static void InitializeSaleContext()
+        public void InitializeSaleContext()
         {
             if (_instance == null)
             {
@@ -22,7 +23,7 @@ namespace Sale_Data.Context
             }
         }
 
-        public static SaleContext GetSaleContext()
+        public SaleContext GetSaleContext()
         {
             return _instance;
         }

@@ -32,7 +32,7 @@ namespace Supplier_Data
 
         public List<Warehouse> WarehousesBiggerThanAnExtensionList(int extension)
         {
-            List<Warehouse> ret = dbContext.Warehouse.Where(x => x.Extension > extension).ToList();
+            List<Warehouse> ret = this.dbContext.Warehouse.Where(x => x.Extension > extension).ToList();
 
             return ret;
         }       
@@ -53,8 +53,8 @@ namespace Supplier_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.NullWarehouseAddress);
                 }
 
-                dbContext.Warehouse.Add(add);
-                dbContext.SaveChanges();
+                this.dbContext.Warehouse.Add(add);
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -76,7 +76,7 @@ namespace Supplier_Data
 
             try
             {
-                ret = dbContext.Warehouse.Where(x => x.WarehouseId == WarehouseId).FirstOrDefault();
+                ret = this.dbContext.Warehouse.Where(x => x.WarehouseId == WarehouseId).FirstOrDefault();
 
                 if (ret == null)
                 {
@@ -109,8 +109,8 @@ namespace Supplier_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
-                dbContext.Entry(update).State = EntityState.Modified;
-                dbContext.SaveChanges();
+                this.dbContext.Entry(update).State = EntityState.Modified;
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -138,8 +138,8 @@ namespace Supplier_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound); 
                 }
 
-                dbContext.Entry(del).State = EntityState.Deleted;
-                dbContext.SaveChanges();
+                this.dbContext.Entry(del).State = EntityState.Deleted;
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -159,7 +159,7 @@ namespace Supplier_Data
         {
             bool found;
 
-            found = dbContext.Warehouse.Any(x => x.WarehouseId == orig.WarehouseId);
+            found = this.dbContext.Warehouse.Any(x => x.WarehouseId == orig.WarehouseId);
 
             return found;
         }

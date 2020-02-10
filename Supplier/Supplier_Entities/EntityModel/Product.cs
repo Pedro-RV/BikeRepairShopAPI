@@ -12,7 +12,7 @@ namespace Supplier_Entities.EntityModel
 
         }
 
-        public Product(String ProductDescription, double Prize, int Cuantity, bool ActiveFlag)
+        public Product(string ProductDescription, double Prize, int Cuantity, bool ActiveFlag)
         {
             this.ProductDescription = ProductDescription;
             this.Prize = Prize;

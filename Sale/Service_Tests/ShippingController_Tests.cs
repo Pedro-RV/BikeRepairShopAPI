@@ -50,7 +50,7 @@ namespace Service_Tests
             DateTime dateTimePacking = new DateTime(2019, 12, 04, 9, 00, 00);
             ShippingController shippingController = new ShippingController();
 
-            String message = shippingController.InsertShipping(new ShippingSpecific(dateTimeDeparture, dateTimePacking, 1, 1));
+            string message = shippingController.InsertShipping(new ShippingSpecific(dateTimeDeparture, dateTimePacking, 1, 1));
 
             Shipping shippingGotten = shippingController.GetShipping(4);
 
@@ -87,7 +87,7 @@ namespace Service_Tests
             change.DepartureDate = DepartureDateChange;
             change.PackingTime = PackingTimeChange;
 
-            String message = shippingController.UpdateShipping(change);
+            string message = shippingController.UpdateShipping(change);
 
             Shipping shippingCompare = shippingController.GetShipping(2);
 
@@ -102,7 +102,7 @@ namespace Service_Tests
         {
             ShippingController shippingController = new ShippingController();
 
-            String message = shippingController.DeleteShipping(1);
+            string message = shippingController.DeleteShipping(1);
 
             Assert.AreEqual(message, "Shipping deleted satisfactorily.");
 

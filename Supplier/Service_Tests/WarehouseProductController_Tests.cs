@@ -46,7 +46,7 @@ namespace Service_Tests
         [Test]
         public void InsertWarehouseProduct_Test()
         {
-            String message = this.warehouseProductController.InsertWarehouseProduct(new WarehouseProductSpecific(1, 1, 4));
+            string message = this.warehouseProductController.InsertWarehouseProduct(new WarehouseProductSpecific(1, 1, 4));
 
             WarehouseProduct warehouseProductGotten = this.warehouseProductController.GetWarehouseProduct(4);
             ProductState checkProductState = this.productStateController.GetProductState(4);
@@ -73,7 +73,7 @@ namespace Service_Tests
             change.WarehouseProductId = 2;
             change.ProductStateId = 1;
 
-            String message = this.warehouseProductController.UpdateWarehouseProduct(change);
+            string message = this.warehouseProductController.UpdateWarehouseProduct(change);
 
             WarehouseProduct warehouseProductGotten = this.warehouseProductController.GetWarehouseProduct(2);
             ProductState checkProductState = this.productStateController.GetProductState(1);
@@ -86,7 +86,7 @@ namespace Service_Tests
         [Test]
         public void DeleteWarehouseProduct_Test()
         {
-            String message = this.warehouseProductController.DeleteWarehouseProduct(3);
+            string message = this.warehouseProductController.DeleteWarehouseProduct(3);
 
             Assert.AreEqual(message, "WarehouseProduct deleted satisfactorily.");
 

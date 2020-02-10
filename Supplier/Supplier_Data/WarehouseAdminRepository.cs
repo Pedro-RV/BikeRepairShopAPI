@@ -32,8 +32,8 @@ namespace Supplier_Data
 
         public List<WarehouseAdminData> WarehouseAdminDataList()
         {
-            List<WarehouseAdminData> ret = dbContext.WarehouseAdmin
-                .Join(dbContext.Warehouse,
+            List<WarehouseAdminData> ret = this.dbContext.WarehouseAdmin
+                .Join(this.dbContext.Warehouse,
                     warehouseAdmin => warehouseAdmin.WarehouseId,
                     warehouse => warehouse.WarehouseId,
                     (warehouseAdmin, warehouse) => new
@@ -42,7 +42,7 @@ namespace Supplier_Data
                         Warehouse = warehouse
                     })
                 .Join(
-                    dbContext.Employee,
+                    this.dbContext.Employee,
                     combined => combined.WarehouseAdmin.EmployeeId,
                     employee => employee.EmployeeId,
                     (combined, employee) => new WarehouseAdminData()
@@ -63,7 +63,7 @@ namespace Supplier_Data
         {
             List<WarehouseAdminData> ret = new List<WarehouseAdminData>();
 
-            //SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["SupplierContext"].ConnectionString);
+            //SqlConnection connection = new SqlConnection(ConfigurationManager.Connectionstrings["SupplierContext"].Connectionstring);
 
             //if (connection.State == ConnectionState.Closed)
             //    connection.Open();
@@ -91,8 +91,8 @@ namespace Supplier_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.NullObject);
                 }
 
-                dbContext.WarehouseAdmin.Add(add);
-                dbContext.SaveChanges();
+                this.dbContext.WarehouseAdmin.Add(add);
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -114,7 +114,7 @@ namespace Supplier_Data
 
             try
             {
-                ret = dbContext.WarehouseAdmin.Where(x => x.WarehouseAdminId == WarehouseAdminId).FirstOrDefault();
+                ret = this.dbContext.WarehouseAdmin.Where(x => x.WarehouseAdminId == WarehouseAdminId).FirstOrDefault();
 
                 if (ret == null)
                 {
@@ -147,8 +147,8 @@ namespace Supplier_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
-                dbContext.Entry(update).State = EntityState.Modified;
-                dbContext.SaveChanges();
+                this.dbContext.Entry(update).State = EntityState.Modified;
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -176,8 +176,8 @@ namespace Supplier_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
-                dbContext.Entry(del).State = EntityState.Deleted;
-                dbContext.SaveChanges();
+                this.dbContext.Entry(del).State = EntityState.Deleted;
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -197,7 +197,7 @@ namespace Supplier_Data
         {
             bool found;
 
-            found = dbContext.WarehouseAdmin.Any(x => x.WarehouseAdminId == orig.WarehouseAdminId);
+            found = this.dbContext.WarehouseAdmin.Any(x => x.WarehouseAdminId == orig.WarehouseAdminId);
 
             return found;
         }

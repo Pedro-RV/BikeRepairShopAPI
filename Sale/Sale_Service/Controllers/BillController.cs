@@ -1,4 +1,5 @@
 ﻿using Sale_Bussiness;
+using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using System;
@@ -12,14 +13,20 @@ namespace Sale_Service.Controllers
 {
     public class BillController : ApiController
     {
+        private IBillBussiness billBussiness;
+
+        public BillController(IBillBussiness billBussiness)
+        {
+            this.billBussiness = billBussiness;
+
+        }
+
         // GET
         [HttpGet]
         [Route("api/bill/GetBill/{billId}")]
         public Bill GetBill(int billId)
         {
-            BillBussiness billBussiness = new BillBussiness();
-
-            Bill request = billBussiness.ReadBill(billId);
+            Bill request = this.billBussiness.ReadBill(billId);
 
             return request;
         }
@@ -29,9 +36,7 @@ namespace Sale_Service.Controllers
         [Route("api/bill/InsertBill")]
         public string InsertBill(BillSpecific billSpecific)
         {
-            BillBussiness billBussiness = new BillBussiness();
-
-            bool introduced_well = billBussiness.InsertBill(billSpecific);
+            bool introduced_well = this.billBussiness.InsertBill(billSpecific);
 
             if (introduced_well == true)
             {
@@ -49,9 +54,7 @@ namespace Sale_Service.Controllers
         [Route("api/bill/UpdateBill")]
         public string UpdateBill(BillSpecific update)
         {
-            BillBussiness billBussiness = new BillBussiness();
-
-            bool updated_well = billBussiness.UpdateBill(update);
+            bool updated_well = this.billBussiness.UpdateBill(update);
 
             if (updated_well == true)
             {
@@ -69,9 +72,7 @@ namespace Sale_Service.Controllers
         [Route("api/bill/DeleteBill/{billId}")]
         public string DeleteBill(int billId)
         {
-            BillBussiness billBussiness = new BillBussiness();
-
-            bool deleted_well = billBussiness.DeleteBill(billId);
+            bool deleted_well = this.billBussiness.DeleteBill(billId);
 
             if (deleted_well == true)
             {

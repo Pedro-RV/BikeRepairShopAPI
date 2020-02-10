@@ -2,6 +2,7 @@
 using Sale_Bussiness.Interfaces;
 using Sale_Data;
 using Sale_Data.Context;
+using Sale_Data.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using Sale_Helper.ExceptionController;
@@ -15,17 +16,17 @@ namespace Sale_Bussiness
 {
     public class ClientBussiness : IClientBussiness
     {
-        private SaleContext dbContext;
+        private IExceptionController exceptionController;
 
-        private ExceptionController exceptionController;
+        private IClientRepository clientRepository;
 
         private IMapper mapper;
 
-        public ClientBussiness()
+        public ClientBussiness(IExceptionController exceptionController,
+            IClientRepository clientRepository)
         {
-            SaleContextProvider.InitializeSaleContext();
-            dbContext = SaleContextProvider.GetSaleContext();
-            exceptionController = new ExceptionController();
+            this.exceptionController = exceptionController;
+            this.clientRepository = clientRepository;
 
 
             var config = new MapperConfiguration(cfg => {
@@ -41,11 +42,9 @@ namespace Sale_Bussiness
 
             try
             {
-                ClientRepository clientRepository = new ClientRepository(dbContext, exceptionController);
-
                 Client clientAdd = mapper.Map<ClientSpecific, Client>(clientSpecific);
 
-                ret = clientRepository.Insert(clientAdd);
+                ret = this.clientRepository.Insert(clientAdd);
             }
             catch (SaleException)
             {
@@ -70,9 +69,7 @@ namespace Sale_Bussiness
 
             try
             {
-                ClientRepository clientRepository = new ClientRepository(dbContext, exceptionController);
-
-                ret = clientRepository.Read(ClientId);
+                ret = this.clientRepository.Read(ClientId);
             }
             catch (SaleException)
             {
@@ -97,19 +94,17 @@ namespace Sale_Bussiness
 
             try
             {
-                ClientRepository clientRepository = new ClientRepository(dbContext, exceptionController);
+                Client current = this.clientRepository.Read(update.ClientId);
 
-                Client current = clientRepository.Read(update.ClientId);
+                current.ClientName = !string.IsNullOrEmpty(update.ClientName) ? update.ClientName : current.ClientName;
+                current.Surname = !string.IsNullOrEmpty(update.Surname) ? update.Surname : current.Surname;
+                current.Email = !string.IsNullOrEmpty(update.Email) ? update.Email : current.Email;
+                current.DNI = !string.IsNullOrEmpty(update.DNI) ? update.DNI : current.DNI;
+                current.ClientAddress = !string.IsNullOrEmpty(update.ClientAddress) ? update.ClientAddress : current.ClientAddress;
+                current.CP = !string.IsNullOrEmpty(update.CP) ? update.CP : current.CP;
+                current.MobileNum = !string.IsNullOrEmpty(update.MobileNum) ? update.MobileNum : current.MobileNum;
 
-                current.ClientName = !String.IsNullOrEmpty(update.ClientName) ? update.ClientName : current.ClientName;
-                current.Surname = !String.IsNullOrEmpty(update.Surname) ? update.Surname : current.Surname;
-                current.Email = !String.IsNullOrEmpty(update.Email) ? update.Email : current.Email;
-                current.DNI = !String.IsNullOrEmpty(update.DNI) ? update.DNI : current.DNI;
-                current.ClientAddress = !String.IsNullOrEmpty(update.ClientAddress) ? update.ClientAddress : current.ClientAddress;
-                current.CP = !String.IsNullOrEmpty(update.CP) ? update.CP : current.CP;
-                current.MobileNum = !String.IsNullOrEmpty(update.MobileNum) ? update.MobileNum : current.MobileNum;
-
-                ret = clientRepository.Update(current);
+                ret = this.clientRepository.Update(current);
 
             }
             catch (SaleException)
@@ -134,11 +129,9 @@ namespace Sale_Bussiness
 
             try
             {
-                ClientRepository clientRepository = new ClientRepository(dbContext, exceptionController);
+                Client del = this.clientRepository.Read(ClientId);
 
-                Client del = clientRepository.Read(ClientId);
-
-                ret = clientRepository.Delete(del);
+                ret = this.clientRepository.Delete(del);
 
             }
             catch (SaleException)

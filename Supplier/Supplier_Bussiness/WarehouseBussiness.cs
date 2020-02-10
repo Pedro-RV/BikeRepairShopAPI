@@ -103,7 +103,7 @@ namespace Supplier_Bussiness
             {
                 Warehouse current = this.warehouseRepository.Read(update.WarehouseId);
 
-                current.WarehouseAddress = !String.IsNullOrEmpty(update.WarehouseAddress) ? update.WarehouseAddress : current.WarehouseAddress;
+                current.WarehouseAddress = !string.IsNullOrEmpty(update.WarehouseAddress) ? update.WarehouseAddress : current.WarehouseAddress;
                 current.Extension = update.Extension != 0 ? update.Extension : current.Extension;            
 
                 ret = this.warehouseRepository.Update(current);

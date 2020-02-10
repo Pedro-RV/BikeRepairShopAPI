@@ -40,8 +40,8 @@ namespace Supplier_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.NullTelephoneNum);
                 }
 
-                dbContext.SupplyCompany.Add(add);
-                dbContext.SaveChanges();
+                this.dbContext.SupplyCompany.Add(add);
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -63,7 +63,7 @@ namespace Supplier_Data
 
             try
             {
-                ret = dbContext.SupplyCompany.Where(x => x.SupplyCompanyId == SupplyCompanyId).FirstOrDefault();
+                ret = this.dbContext.SupplyCompany.Where(x => x.SupplyCompanyId == SupplyCompanyId).FirstOrDefault();
 
                 if (ret == null)
                 {
@@ -96,8 +96,8 @@ namespace Supplier_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
-                dbContext.Entry(update).State = EntityState.Modified;
-                dbContext.SaveChanges();
+                this.dbContext.Entry(update).State = EntityState.Modified;
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -125,8 +125,8 @@ namespace Supplier_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
-                dbContext.Entry(del).State = EntityState.Deleted;
-                dbContext.SaveChanges();
+                this.dbContext.Entry(del).State = EntityState.Deleted;
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -146,7 +146,7 @@ namespace Supplier_Data
         {
             bool found;
 
-            found = dbContext.SupplyCompany.Any(x => x.SupplyCompanyId == orig.SupplyCompanyId);
+            found = this.dbContext.SupplyCompany.Any(x => x.SupplyCompanyId == orig.SupplyCompanyId);
 
             return found;
         }

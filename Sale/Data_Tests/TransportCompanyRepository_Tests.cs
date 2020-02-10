@@ -1,6 +1,8 @@
-﻿using NUnit.Framework;
+﻿using Autofac;
+using NUnit.Framework;
 using Sale_Data;
 using Sale_Data.Context;
+using Sale_Data.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Helper.ExceptionController;
 using System;
@@ -14,27 +16,23 @@ namespace Data_Tests
     [TestFixture]
     class TransportCompanyRepository_Tests
     {
-        private SaleContext dbContext;
-        private ExceptionController exceptionController;
-
-        public TransportCompanyRepository_Tests()
-        {
-            SaleContextProvider.InitializeSaleContext();
-            dbContext = SaleContextProvider.GetSaleContext();
-            exceptionController = new ExceptionController();
-        }
+        private ITransportCompanyRepository transportCompanyRepository;
 
         [TestFixtureSetUp]
         public void Init()
         {
+            var container = ContainerConfig.Configure();
+            var scope = container.BeginLifetimeScope();
+
+            this.transportCompanyRepository = scope.Resolve<ITransportCompanyRepository>();
+
             TransportCompany transportCompanyOne = new TransportCompany("Envi", "911");
             TransportCompany transportCompanyTwo = new TransportCompany("Correos", "912");
             TransportCompany transportCompanyThree = new TransportCompany("DHL", "913");
-            TransportCompanyRepository transportCompanyRepository = new TransportCompanyRepository(dbContext, exceptionController);
 
-            transportCompanyRepository.Insert(transportCompanyOne);
-            transportCompanyRepository.Insert(transportCompanyTwo);
-            transportCompanyRepository.Insert(transportCompanyThree);
+            this.transportCompanyRepository.Insert(transportCompanyOne);
+            this.transportCompanyRepository.Insert(transportCompanyTwo);
+            this.transportCompanyRepository.Insert(transportCompanyThree);
         }
 
         [Test]
@@ -42,11 +40,10 @@ namespace Data_Tests
         {
             TransportCompany transportCompanyAdd = new TransportCompany("ShipEx", "914");
             bool correct;
-            TransportCompanyRepository transportCompanyRepository = new TransportCompanyRepository(dbContext, exceptionController);
 
-            correct = transportCompanyRepository.Insert(transportCompanyAdd);
+            correct = this.transportCompanyRepository.Insert(transportCompanyAdd);
 
-            TransportCompany transportCompanyGotten = transportCompanyRepository.Read(4);
+            TransportCompany transportCompanyGotten = this.transportCompanyRepository.Read(4);
 
             Assert.AreEqual(true, correct);
             Assert.AreEqual(transportCompanyGotten.TransportCompanyName, transportCompanyAdd.TransportCompanyName);
@@ -57,9 +54,7 @@ namespace Data_Tests
         [Test]
         public void Read_Test()
         {
-            TransportCompanyRepository transportCompanyRepository = new TransportCompanyRepository(dbContext, exceptionController);
-
-            TransportCompany transportCompanyGotten = transportCompanyRepository.Read(3);
+            TransportCompany transportCompanyGotten = this.transportCompanyRepository.Read(3);
 
             Assert.AreEqual(transportCompanyGotten.TransportCompanyName, "DHL");
             Assert.AreEqual(transportCompanyGotten.TelephoneNum, "913");
@@ -69,16 +64,15 @@ namespace Data_Tests
         [Test]
         public void Update_Test()
         {
-            TransportCompanyRepository transportCompanyRepository = new TransportCompanyRepository(dbContext, exceptionController);
             bool correct;
-            TransportCompany transportCompanyGotten = transportCompanyRepository.Read(2);
+            TransportCompany transportCompanyGotten = this.transportCompanyRepository.Read(2);
 
             transportCompanyGotten.TransportCompanyName = "Seur";
             transportCompanyGotten.TelephoneNum = "900";
 
-            correct = transportCompanyRepository.Update(transportCompanyGotten);
+            correct = this.transportCompanyRepository.Update(transportCompanyGotten);
 
-            TransportCompany transportCompanyCompare = transportCompanyRepository.Read(2);
+            TransportCompany transportCompanyCompare = this.transportCompanyRepository.Read(2);
 
             Assert.AreEqual(true, correct);
             Assert.AreEqual(transportCompanyCompare.TransportCompanyName, transportCompanyGotten.TransportCompanyName);
@@ -89,11 +83,10 @@ namespace Data_Tests
         [Test]
         public void Delete_Test()
         {
-            TransportCompanyRepository transportCompanyRepository = new TransportCompanyRepository(dbContext, exceptionController);
             bool correct;
-            TransportCompany transportCompanyGotten = transportCompanyRepository.Read(1);
+            TransportCompany transportCompanyGotten = this.transportCompanyRepository.Read(1);
 
-            correct = transportCompanyRepository.Delete(transportCompanyGotten);
+            correct = this.transportCompanyRepository.Delete(transportCompanyGotten);
 
             Assert.AreEqual(true, correct);
 

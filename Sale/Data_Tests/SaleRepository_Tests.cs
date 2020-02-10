@@ -1,6 +1,8 @@
-﻿using NUnit.Framework;
+﻿using Autofac;
+using NUnit.Framework;
 using Sale_Data;
 using Sale_Data.Context;
+using Sale_Data.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Helper.ExceptionController;
 using System;
@@ -14,19 +16,16 @@ namespace Data_Tests
     [TestFixture]
     class SaleRepository_Tests
     {
-        private SaleContext dbContext;
-        private ExceptionController exceptionController;
-
-        public SaleRepository_Tests()
-        {
-            SaleContextProvider.InitializeSaleContext();
-            dbContext = SaleContextProvider.GetSaleContext();
-            exceptionController = new ExceptionController();
-        }
+        private ISaleRepository saleRepository;
 
         [TestFixtureSetUp]
         public void Init()
         {
+            var container = ContainerConfig.Configure();
+            var scope = container.BeginLifetimeScope();
+
+            this.saleRepository = scope.Resolve<ISaleRepository>();
+
             Client client = new Client("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
             ProductType productType = new ProductType("Ruedas");
             Product product = new Product("Ruedas Michelin", 50, 50, productType);
@@ -37,11 +36,10 @@ namespace Data_Tests
             Sale saleOne = new Sale(5, client, product, bill);
             Sale saleTwo = new Sale(15, client, product, bill);
             Sale saleThree = new Sale(20, client, product, bill);
-            SaleRepository saleRepository = new SaleRepository(dbContext, exceptionController);
 
-            saleRepository.Insert(saleOne);
-            saleRepository.Insert(saleTwo);
-            saleRepository.Insert(saleThree);
+            this.saleRepository.Insert(saleOne);
+            this.saleRepository.Insert(saleTwo);
+            this.saleRepository.Insert(saleThree);
         }
 
         [Test]
@@ -56,11 +54,10 @@ namespace Data_Tests
 
             Sale saleAdd = new Sale(50, client, product, bill);
             bool correct;
-            SaleRepository saleRepository = new SaleRepository(dbContext, exceptionController);
 
-            correct = saleRepository.Insert(saleAdd);
+            correct = this.saleRepository.Insert(saleAdd);
 
-            Sale saleGotten = saleRepository.Read(4);
+            Sale saleGotten = this.saleRepository.Read(4);
 
             Assert.AreEqual(true, correct);
             Assert.AreEqual(saleGotten.Cuantity, saleAdd.Cuantity);
@@ -73,9 +70,7 @@ namespace Data_Tests
         [Test]
         public void Read_Test()
         {
-            SaleRepository saleRepository = new SaleRepository(dbContext, exceptionController);
-
-            Sale saleGotten = saleRepository.Read(3);
+            Sale saleGotten = this.saleRepository.Read(3);
 
             Assert.AreEqual(saleGotten.Cuantity, 20);
 
@@ -84,15 +79,14 @@ namespace Data_Tests
         [Test]
         public void Update_Test()
         {
-            SaleRepository saleRepository = new SaleRepository(dbContext, exceptionController);
             bool correct;
-            Sale saleGotten = saleRepository.Read(2);
+            Sale saleGotten = this.saleRepository.Read(2);
 
             saleGotten.Cuantity = 22;
 
-            correct = saleRepository.Update(saleGotten);
+            correct = this.saleRepository.Update(saleGotten);
 
-            Sale saleCompare = saleRepository.Read(2);
+            Sale saleCompare = this.saleRepository.Read(2);
 
             Assert.AreEqual(true, correct);
             Assert.AreEqual(saleCompare.Cuantity, saleGotten.Cuantity);
@@ -102,11 +96,10 @@ namespace Data_Tests
         [Test]
         public void Delete_Test()
         {
-            SaleRepository saleRepository = new SaleRepository(dbContext, exceptionController);
             bool correct;
-            Sale saleGotten = saleRepository.Read(1);
+            Sale saleGotten = this.saleRepository.Read(1);
 
-            correct = saleRepository.Delete(saleGotten);
+            correct = this.saleRepository.Delete(saleGotten);
 
             Assert.AreEqual(true, correct);
 

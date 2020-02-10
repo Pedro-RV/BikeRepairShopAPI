@@ -2,6 +2,7 @@
 using Sale_Bussiness.Interfaces;
 using Sale_Data;
 using Sale_Data.Context;
+using Sale_Data.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using Sale_Helper.ExceptionController;
@@ -15,17 +16,29 @@ namespace Sale_Bussiness
 {
     public class SaleBussiness : ISaleBussiness
     {
-        private SaleContext dbContext;
+        private IExceptionController exceptionController;
 
-        private ExceptionController exceptionController;
+        private ISaleRepository saleRepository;
+
+        private IClientBussiness clientBussiness;
+
+        private IProductBussiness productBussiness;
+
+        private IBillBussiness billBussiness;
 
         private IMapper mapper;
 
-        public SaleBussiness()
+        public SaleBussiness(IExceptionController exceptionController,
+            ISaleRepository saleRepository,
+            IClientBussiness clientBussiness,
+            IProductBussiness productBussiness,
+            IBillBussiness billBussiness)
         {
-            SaleContextProvider.InitializeSaleContext();
-            dbContext = SaleContextProvider.GetSaleContext();
-            exceptionController = new ExceptionController();
+            this.exceptionController = exceptionController;
+            this.saleRepository = saleRepository;
+            this.clientBussiness = clientBussiness;
+            this.productBussiness = productBussiness;
+            this.billBussiness = billBussiness;
 
 
             var config = new MapperConfiguration(cfg => {
@@ -41,11 +54,9 @@ namespace Sale_Bussiness
 
             try
             {
-                SaleRepository saleRepository = new SaleRepository(dbContext, exceptionController);
-
                 Sale saleAdd = mapper.Map<SaleSpecific, Sale>(saleSpecific);
 
-                ret = saleRepository.Insert(saleAdd);
+                ret = this.saleRepository.Insert(saleAdd);
             }
             catch (SaleException)
             {
@@ -70,9 +81,7 @@ namespace Sale_Bussiness
 
             try
             {
-                SaleRepository saleRepository = new SaleRepository(dbContext, exceptionController);
-
-                ret = saleRepository.Read(SaleId);
+                ret = this.saleRepository.Read(SaleId);
             }
             catch (SaleException)
             {
@@ -97,37 +106,32 @@ namespace Sale_Bussiness
 
             try
             {
-                SaleRepository saleRepository = new SaleRepository(dbContext, exceptionController);
-                ClientBussiness clientBussiness = new ClientBussiness();
-                ProductBussiness productBussiness = new ProductBussiness();
-                BillBussiness billBussiness = new BillBussiness();
-
-                Sale current = saleRepository.Read(update.SaleId);
+                Sale current = this.saleRepository.Read(update.SaleId);
 
                 current.Cuantity = update.Cuantity != 0 ? update.Cuantity : current.Cuantity;
 
                 if (update.ClientId != 0)
                 {
                     current.ClientId = update.ClientId;
-                    Client clientAttach = clientBussiness.ReadClient(current.ClientId);
+                    Client clientAttach = this.clientBussiness.ReadClient(current.ClientId);
                     current.Client = clientAttach;
                 }
 
                 if (update.ProductId != 0)
                 {
                     current.ProductId = update.ProductId;
-                    Product productAttach = productBussiness.ReadProduct(current.ProductId);
+                    Product productAttach = this.productBussiness.ReadProduct(current.ProductId);
                     current.Product = productAttach;
                 }
 
                 if (update.BillId != 0)
                 {
                     current.BillId = update.BillId;
-                    Bill billAttach = billBussiness.ReadBill(current.BillId);
+                    Bill billAttach = this.billBussiness.ReadBill(current.BillId);
                     current.Bill = billAttach;
                 }
 
-                ret = saleRepository.Update(current);
+                ret = this.saleRepository.Update(current);
 
             }
             catch (SaleException)
@@ -152,11 +156,9 @@ namespace Sale_Bussiness
 
             try
             {
-                SaleRepository saleRepository = new SaleRepository(dbContext, exceptionController);
+                Sale del = this.saleRepository.Read(SaleId);
 
-                Sale del = saleRepository.Read(SaleId);
-
-                ret = saleRepository.Delete(del);
+                ret = this.saleRepository.Delete(del);
 
             }
             catch (SaleException)

@@ -2,6 +2,7 @@
 using Sale_Bussiness.Interfaces;
 using Sale_Data;
 using Sale_Data.Context;
+using Sale_Data.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using Sale_Helper.ExceptionController;
@@ -15,17 +16,17 @@ namespace Sale_Bussiness
 {
     public class ProductTypeBussiness : IProductTypeBussiness
     {
-        private SaleContext dbContext;
+        private IExceptionController exceptionController;
 
-        private ExceptionController exceptionController;
+        private IProductTypeRepository productTypeRepository;
 
         private IMapper mapper;
 
-        public ProductTypeBussiness()
+        public ProductTypeBussiness(IExceptionController exceptionController,
+            IProductTypeRepository productTypeRepository)
         {
-            SaleContextProvider.InitializeSaleContext();
-            dbContext = SaleContextProvider.GetSaleContext();
-            exceptionController = new ExceptionController();
+            this.exceptionController = exceptionController;
+            this.productTypeRepository = productTypeRepository;
 
 
             var config = new MapperConfiguration(cfg => {
@@ -41,11 +42,9 @@ namespace Sale_Bussiness
 
             try
             {
-                ProductTypeRepository productTypeRepository = new ProductTypeRepository(dbContext, exceptionController);
-
                 ProductType productTypeAdd = mapper.Map<ProductTypeSpecific, ProductType>(productTypeSpecific);
 
-                ret = productTypeRepository.Insert(productTypeAdd);
+                ret = this.productTypeRepository.Insert(productTypeAdd);
             }
             catch (SaleException)
             {
@@ -70,9 +69,7 @@ namespace Sale_Bussiness
 
             try
             {
-                ProductTypeRepository productTypeRepository = new ProductTypeRepository(dbContext, exceptionController);
-
-                ret = productTypeRepository.Read(ProductTypeId);
+                ret = this.productTypeRepository.Read(ProductTypeId);
             }
             catch (SaleException)
             {
@@ -97,13 +94,11 @@ namespace Sale_Bussiness
 
             try
             {
-                ProductTypeRepository productTypeRepository = new ProductTypeRepository(dbContext, exceptionController);
+                ProductType current = this.productTypeRepository.Read(update.ProductTypeId);
 
-                ProductType current = productTypeRepository.Read(update.ProductTypeId);
+                current.ProductTypeDescription = !string.IsNullOrEmpty(update.ProductTypeDescription) ? update.ProductTypeDescription : current.ProductTypeDescription;
 
-                current.ProductTypeDescription = !String.IsNullOrEmpty(update.ProductTypeDescription) ? update.ProductTypeDescription : current.ProductTypeDescription;
-
-                ret = productTypeRepository.Update(current);
+                ret = this.productTypeRepository.Update(current);
 
             }
             catch (SaleException)
@@ -128,11 +123,9 @@ namespace Sale_Bussiness
 
             try
             {
-                ProductTypeRepository productTypeRepository = new ProductTypeRepository(dbContext, exceptionController);
+                ProductType del = this.productTypeRepository.Read(ProductTypeId);
 
-                ProductType del = productTypeRepository.Read(ProductTypeId);
-
-                ret = productTypeRepository.Delete(del);
+                ret = this.productTypeRepository.Delete(del);
 
             }
             catch (SaleException)

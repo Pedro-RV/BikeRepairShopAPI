@@ -1,5 +1,7 @@
-﻿using NUnit.Framework;
+﻿using Autofac;
+using NUnit.Framework;
 using Sale_Bussiness;
+using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using System;
@@ -13,14 +15,19 @@ namespace Bussiness_Tests
     [TestFixture]
     class TransportCompanyBussiness_Tests
     {
+        private ITransportCompanyBussiness transportCompanyBussiness;
+
         [TestFixtureSetUp]
         public void Init()
         {
-            TransportCompanyBussiness transportCompanyBussiness = new TransportCompanyBussiness();
+            var container = ContainerConfig.Configure();
+            var scope = container.BeginLifetimeScope();
 
-            transportCompanyBussiness.InsertTransportCompany(new TransportCompanySpecific("Envi", "911"));
-            transportCompanyBussiness.InsertTransportCompany(new TransportCompanySpecific("Correos", "912"));
-            transportCompanyBussiness.InsertTransportCompany(new TransportCompanySpecific("DHL", "913"));
+            this.transportCompanyBussiness = scope.Resolve<ITransportCompanyBussiness>();
+
+            this.transportCompanyBussiness.InsertTransportCompany(new TransportCompanySpecific("Envi", "911"));
+            this.transportCompanyBussiness.InsertTransportCompany(new TransportCompanySpecific("Correos", "912"));
+            this.transportCompanyBussiness.InsertTransportCompany(new TransportCompanySpecific("DHL", "913"));
 
         }
 
@@ -28,11 +35,10 @@ namespace Bussiness_Tests
         public void InsertTransportCompany_Test()
         {
             bool correct;
-            TransportCompanyBussiness transportCompanyBussiness = new TransportCompanyBussiness();
 
-            correct = transportCompanyBussiness.InsertTransportCompany(new TransportCompanySpecific("ShipEx", "914"));
+            correct = this.transportCompanyBussiness.InsertTransportCompany(new TransportCompanySpecific("ShipEx", "914"));
 
-            TransportCompany transportCompanyGotten = transportCompanyBussiness.ReadTransportCompany(4);
+            TransportCompany transportCompanyGotten = this.transportCompanyBussiness.ReadTransportCompany(4);
 
             Assert.AreEqual(true, correct);
             Assert.AreEqual(transportCompanyGotten.TransportCompanyName, "ShipEx");
@@ -43,9 +49,7 @@ namespace Bussiness_Tests
         [Test]
         public void ReadTransportCompany_Test()
         {
-            TransportCompanyBussiness transportCompanyBussiness = new TransportCompanyBussiness();
-
-            TransportCompany transportCompanyGotten = transportCompanyBussiness.ReadTransportCompany(3);
+            TransportCompany transportCompanyGotten = this.transportCompanyBussiness.ReadTransportCompany(3);
 
             Assert.AreEqual(transportCompanyGotten.TransportCompanyName, "DHL");
             Assert.AreEqual(transportCompanyGotten.TelephoneNum, "913");
@@ -55,7 +59,6 @@ namespace Bussiness_Tests
         [Test]
         public void UpdateTransportCompany_Test()
         {
-            TransportCompanyBussiness transportCompanyBussiness = new TransportCompanyBussiness();
             bool correct;
 
             TransportCompanySpecific change = new TransportCompanySpecific();
@@ -63,9 +66,9 @@ namespace Bussiness_Tests
             change.TransportCompanyName = "Seur";
             change.TelephoneNum = "900";
 
-            correct = transportCompanyBussiness.UpdateTransportCompany(change);
+            correct = this.transportCompanyBussiness.UpdateTransportCompany(change);
 
-            TransportCompany transportCompanyCompare = transportCompanyBussiness.ReadTransportCompany(2);
+            TransportCompany transportCompanyCompare = this.transportCompanyBussiness.ReadTransportCompany(2);
 
             Assert.AreEqual(true, correct);
             Assert.AreEqual(transportCompanyCompare.TransportCompanyName, change.TransportCompanyName);
@@ -76,10 +79,9 @@ namespace Bussiness_Tests
         [Test]
         public void DeleteTransportCompany_Test()
         {
-            TransportCompanyBussiness transportCompanyBussiness = new TransportCompanyBussiness();
             bool correct;
 
-            correct = transportCompanyBussiness.DeleteTransportCompany(1);
+            correct = this.transportCompanyBussiness.DeleteTransportCompany(1);
 
             Assert.AreEqual(true, correct);
 

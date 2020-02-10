@@ -1,4 +1,5 @@
 ﻿using Sale_Bussiness;
+using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using System;
@@ -12,14 +13,20 @@ namespace Sale_Service.Controllers
 {
     public class TransportCompanyController : ApiController
     {
+        private ITransportCompanyBussiness transportCompanyBussiness;
+
+        public TransportCompanyController(ITransportCompanyBussiness transportCompanyBussiness)
+        {
+            this.transportCompanyBussiness = transportCompanyBussiness;
+
+        }
+
         // GET
         [HttpGet]
         [Route("api/transportCompany/GetTransportCompany/{transportCompanyId}")]
         public TransportCompany GetTransportCompany(int transportCompanyId)
         {
-            TransportCompanyBussiness transportCompanyBussiness = new TransportCompanyBussiness();
-
-            TransportCompany request = transportCompanyBussiness.ReadTransportCompany(transportCompanyId);
+            TransportCompany request = this.transportCompanyBussiness.ReadTransportCompany(transportCompanyId);
 
             return request;
         }
@@ -29,9 +36,7 @@ namespace Sale_Service.Controllers
         [Route("api/transportCompany/InsertTransportCompany")]
         public string InsertTransportCompany(TransportCompanySpecific transportCompanySpecific)
         {
-            TransportCompanyBussiness transportCompanyBussiness = new TransportCompanyBussiness();
-
-            bool introduced_well = transportCompanyBussiness.InsertTransportCompany(transportCompanySpecific);
+            bool introduced_well = this.transportCompanyBussiness.InsertTransportCompany(transportCompanySpecific);
 
             if (introduced_well == true)
             {
@@ -49,9 +54,7 @@ namespace Sale_Service.Controllers
         [Route("api/transportCompany/UpdateTransportCompany")]
         public string UpdateTransportCompany(TransportCompanySpecific update)
         {
-            TransportCompanyBussiness transportCompanyBussiness = new TransportCompanyBussiness();
-
-            bool updated_well = transportCompanyBussiness.UpdateTransportCompany(update);
+            bool updated_well = this.transportCompanyBussiness.UpdateTransportCompany(update);
 
             if (updated_well == true)
             {
@@ -69,9 +72,7 @@ namespace Sale_Service.Controllers
         [Route("api/transportCompany/DeleteTransportCompany/{transportCompanyId}")]
         public string DeleteTransportCompany(int transportCompanyId)
         {
-            TransportCompanyBussiness transportCompanyBussiness = new TransportCompanyBussiness();
-
-            bool deleted_well = transportCompanyBussiness.DeleteTransportCompany(transportCompanyId);
+            bool deleted_well = this.transportCompanyBussiness.DeleteTransportCompany(transportCompanyId);
 
             if (deleted_well == true)
             {

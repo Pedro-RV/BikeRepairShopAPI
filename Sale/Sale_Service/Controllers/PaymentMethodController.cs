@@ -1,4 +1,5 @@
 ﻿using Sale_Bussiness;
+using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using System;
@@ -12,14 +13,20 @@ namespace Sale_Service.Controllers
 {
     public class PaymentMethodController : ApiController
     {
+        private IPaymentMethodBussiness paymentMethodBussiness;
+
+        public PaymentMethodController(IPaymentMethodBussiness paymentMethodBussiness)
+        {
+            this.paymentMethodBussiness = paymentMethodBussiness;
+
+        }
+
         // GET
         [HttpGet]
         [Route("api/paymentMethod/GetPaymentMethod/{paymentMethodId}")]
         public PaymentMethod GetPaymentMethod(int paymentMethodId)
         {
-            PaymentMethodBussiness paymentMethodBussiness = new PaymentMethodBussiness();
-
-            PaymentMethod request = paymentMethodBussiness.ReadPaymentMethod(paymentMethodId);
+            PaymentMethod request = this.paymentMethodBussiness.ReadPaymentMethod(paymentMethodId);
 
             return request;
         }
@@ -29,9 +36,7 @@ namespace Sale_Service.Controllers
         [Route("api/paymentMethod/InsertPaymentMethod")]
         public string InsertPaymentMethod(PaymentMethodSpecific paymentMethodSpecific)
         {
-            PaymentMethodBussiness paymentMethodBussiness = new PaymentMethodBussiness();
-
-            bool introduced_well = paymentMethodBussiness.InsertPaymentMethod(paymentMethodSpecific);
+            bool introduced_well = this.paymentMethodBussiness.InsertPaymentMethod(paymentMethodSpecific);
 
             if (introduced_well == true)
             {
@@ -49,9 +54,7 @@ namespace Sale_Service.Controllers
         [Route("api/paymentMethod/UpdatePaymentMethod")]
         public string UpdatePaymentMethod(PaymentMethodSpecific update)
         {
-            PaymentMethodBussiness paymentMethodBussiness = new PaymentMethodBussiness();
-
-            bool updated_well = paymentMethodBussiness.UpdatePaymentMethod(update);
+            bool updated_well = this.paymentMethodBussiness.UpdatePaymentMethod(update);
 
             if (updated_well == true)
             {
@@ -69,9 +72,7 @@ namespace Sale_Service.Controllers
         [Route("api/paymentMethod/DeletePaymentMethod/{paymentMethodId}")]
         public string DeletePaymentMethod(int paymentMethodId)
         {
-            PaymentMethodBussiness paymentMethodBussiness = new PaymentMethodBussiness();
-
-            bool deleted_well = paymentMethodBussiness.DeletePaymentMethod(paymentMethodId);
+            bool deleted_well = this.paymentMethodBussiness.DeletePaymentMethod(paymentMethodId);
 
             if (deleted_well == true)
             {

@@ -44,7 +44,7 @@ namespace Service_Tests
         [Test]
         public void InsertProduct_Test()
         {
-            String message = this.productController.InsertProduct(new ProductSpecific("Teclado", 60, 20, true));
+            string message = this.productController.InsertProduct(new ProductSpecific("Teclado", 60, 20, true));
 
             Product productGotten = this.productController.GetProduct(4);
 
@@ -74,7 +74,7 @@ namespace Service_Tests
             change.ProductDescription = "Secador";
             change.Prize = 50;
 
-            String message = this.productController.UpdateProduct(change);
+            string message = this.productController.UpdateProduct(change);
 
             Product productGotten = this.productController.GetProduct(2);
 
@@ -87,7 +87,7 @@ namespace Service_Tests
         [Test]
         public void DeleteProduct_Test()
         {
-            String message = this.productController.DeleteProduct(3);
+            string message = this.productController.DeleteProduct(3);
 
             Assert.AreEqual(message, "Product deleted satisfactorily.");
 

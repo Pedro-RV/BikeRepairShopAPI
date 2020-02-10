@@ -62,7 +62,7 @@
     <Compile Include="Interfaces\IPaymentMethodRepository.cs" />
     <Compile Include="Interfaces\IProductRepository.cs" />
     <Compile Include="Interfaces\IProductTypeRepository.cs" />
-    <Compile Include="Interfaces\ISaleContext.cs" />
+    <Compile Include="Interfaces\ISaleContextProvider.cs" />
     <Compile Include="Interfaces\ISaleRepository.cs" />
     <Compile Include="Interfaces\IShippingRepository.cs" />
     <Compile Include="Interfaces\ITransportCompanyRepository.cs" />

@@ -33,7 +33,7 @@ namespace Service_Tests
         [Test]
         public void InsertSupplyCompany_Test()
         {
-            String message = this.supplyCompanyController.InsertSupplyCompany(new SupplyCompanySpecific("Pesas Cañada", "003"));
+            string message = this.supplyCompanyController.InsertSupplyCompany(new SupplyCompanySpecific("Pesas Cañada", "003"));
 
             SupplyCompany supplyCompanyGotten = this.supplyCompanyController.GetSupplyCompany(4);
 
@@ -61,7 +61,7 @@ namespace Service_Tests
             change.SupplyCompanyName = "Tecnologia RapidMax";
             change.TelephoneNum = "555";
 
-            String message = this.supplyCompanyController.UpdateSupplyCompany(change);
+            string message = this.supplyCompanyController.UpdateSupplyCompany(change);
 
             SupplyCompany supplyCompanyGotten = this.supplyCompanyController.GetSupplyCompany(2);
 
@@ -74,7 +74,7 @@ namespace Service_Tests
         [Test]
         public void DeleteSupplyCompany_Test()
         {
-            String message = this.supplyCompanyController.DeleteSupplyCompany(3);
+            string message = this.supplyCompanyController.DeleteSupplyCompany(3);
 
             Assert.AreEqual(message, "SupplyCompany deleted satisfactorily.");
 

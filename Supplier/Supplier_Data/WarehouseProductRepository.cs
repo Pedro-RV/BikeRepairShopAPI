@@ -38,8 +38,8 @@ namespace Supplier_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.NullObject);
                 }
 
-                dbContext.WarehouseProduct.Add(add);
-                dbContext.SaveChanges();
+                this.dbContext.WarehouseProduct.Add(add);
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -61,7 +61,7 @@ namespace Supplier_Data
 
             try
             {
-                ret = dbContext.WarehouseProduct.Where(x => x.WarehouseProductId == WarehouseProductId).FirstOrDefault();
+                ret = this.dbContext.WarehouseProduct.Where(x => x.WarehouseProductId == WarehouseProductId).FirstOrDefault();
 
                 if (ret == null)
                 {
@@ -95,8 +95,8 @@ namespace Supplier_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
-                dbContext.Entry(update).State = EntityState.Modified;
-                dbContext.SaveChanges();
+                this.dbContext.Entry(update).State = EntityState.Modified;
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -124,8 +124,8 @@ namespace Supplier_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
-                dbContext.Entry(del).State = EntityState.Deleted;
-                dbContext.SaveChanges();
+                this.dbContext.Entry(del).State = EntityState.Deleted;
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -145,7 +145,7 @@ namespace Supplier_Data
         {
             bool found;
 
-            found = dbContext.WarehouseProduct.Any(x => x.WarehouseProductId == orig.WarehouseProductId);
+            found = this.dbContext.WarehouseProduct.Any(x => x.WarehouseProductId == orig.WarehouseProductId);
 
             return found;
         }

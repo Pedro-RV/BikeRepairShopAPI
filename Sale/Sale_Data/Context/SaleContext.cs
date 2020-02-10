@@ -4,7 +4,7 @@ using System.Data.Entity;
 
 namespace Sale_Data.Context
 {
-    public class SaleContext : DbContext, ISaleContext
+    public class SaleContext : DbContext
     {
         public virtual DbSet<Bill> Bill { get; set; }
         public virtual DbSet<Client> Client { get; set; }

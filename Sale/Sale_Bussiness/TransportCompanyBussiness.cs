@@ -2,6 +2,7 @@
 using Sale_Bussiness.Interfaces;
 using Sale_Data;
 using Sale_Data.Context;
+using Sale_Data.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using Sale_Helper.ExceptionController;
@@ -15,17 +16,17 @@ namespace Sale_Bussiness
 {
     public class TransportCompanyBussiness : ITransportCompanyBussiness
     {
-        private SaleContext dbContext;
+        private IExceptionController exceptionController;
 
-        private ExceptionController exceptionController;
+        private ITransportCompanyRepository transportCompanyRepository;
 
         private IMapper mapper;
 
-        public TransportCompanyBussiness()
+        public TransportCompanyBussiness(IExceptionController exceptionController,
+            ITransportCompanyRepository transportCompanyRepository)
         {
-            SaleContextProvider.InitializeSaleContext();
-            dbContext = SaleContextProvider.GetSaleContext();
-            exceptionController = new ExceptionController();
+            this.exceptionController = exceptionController;
+            this.transportCompanyRepository = transportCompanyRepository;
 
 
             var config = new MapperConfiguration(cfg => {
@@ -41,11 +42,9 @@ namespace Sale_Bussiness
 
             try
             {
-                TransportCompanyRepository transportCompanyRepository = new TransportCompanyRepository(dbContext, exceptionController);
-
                 TransportCompany transportCompanyAdd = mapper.Map<TransportCompanySpecific, TransportCompany>(transportCompanySpecific);
 
-                ret = transportCompanyRepository.Insert(transportCompanyAdd);
+                ret = this.transportCompanyRepository.Insert(transportCompanyAdd);
             }
             catch (SaleException)
             {
@@ -70,9 +69,7 @@ namespace Sale_Bussiness
 
             try
             {
-                TransportCompanyRepository transportCompanyRepository = new TransportCompanyRepository(dbContext, exceptionController);
-
-                ret = transportCompanyRepository.Read(TransportCompanyId);
+                ret = this.transportCompanyRepository.Read(TransportCompanyId);
             }
             catch (SaleException)
             {
@@ -97,14 +94,12 @@ namespace Sale_Bussiness
 
             try
             {
-                TransportCompanyRepository transportCompanyRepository = new TransportCompanyRepository(dbContext, exceptionController);
+                TransportCompany current = this.transportCompanyRepository.Read(update.TransportCompanyId);
 
-                TransportCompany current = transportCompanyRepository.Read(update.TransportCompanyId);
+                current.TransportCompanyName = !string.IsNullOrEmpty(update.TransportCompanyName) ? update.TransportCompanyName : current.TransportCompanyName;
+                current.TelephoneNum = !string.IsNullOrEmpty(update.TelephoneNum) ? update.TelephoneNum : current.TelephoneNum;
 
-                current.TransportCompanyName = !String.IsNullOrEmpty(update.TransportCompanyName) ? update.TransportCompanyName : current.TransportCompanyName;
-                current.TelephoneNum = !String.IsNullOrEmpty(update.TelephoneNum) ? update.TelephoneNum : current.TelephoneNum;
-
-                ret = transportCompanyRepository.Update(current);
+                ret = this.transportCompanyRepository.Update(current);
 
             }
             catch (SaleException)
@@ -129,11 +124,9 @@ namespace Sale_Bussiness
 
             try
             {
-                TransportCompanyRepository transportCompanyRepository = new TransportCompanyRepository(dbContext, exceptionController);
+                TransportCompany del = this.transportCompanyRepository.Read(TransportCompanyId);
 
-                TransportCompany del = transportCompanyRepository.Read(TransportCompanyId);
-
-                ret = transportCompanyRepository.Delete(del);
+                ret = this.transportCompanyRepository.Delete(del);
 
             }
             catch (SaleException)

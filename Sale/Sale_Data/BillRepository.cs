@@ -12,11 +12,15 @@ namespace Sale_Data
     {
         private SaleContext dbContext;
 
-        private ExceptionController exceptionController;
+        private ISaleContextProvider saleContextProvider;
 
-        public BillRepository(SaleContext dbContext, ExceptionController exceptionController)
+        private IExceptionController exceptionController;
+
+        public BillRepository(ISaleContextProvider saleContextProvider, IExceptionController exceptionController)
         {
-            this.dbContext = dbContext;
+            this.saleContextProvider = saleContextProvider;
+            this.saleContextProvider.InitializeSaleContext();
+            this.dbContext = this.saleContextProvider.GetSaleContext();
             this.exceptionController = exceptionController;
 
         }
@@ -32,8 +36,8 @@ namespace Sale_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.NullObject);
                 }
 
-                dbContext.Bill.Add(add);
-                dbContext.SaveChanges();
+                this.dbContext.Bill.Add(add);
+                this.dbContext.SaveChanges();
                 result = true;
 
             }
@@ -55,7 +59,7 @@ namespace Sale_Data
 
             try
             {
-                ret = dbContext.Bill.Where(x => x.BillId == BillId).FirstOrDefault();
+                ret = this.dbContext.Bill.Where(x => x.BillId == BillId).FirstOrDefault();
 
                 if (ret == null)
                 {
@@ -88,8 +92,8 @@ namespace Sale_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
-                dbContext.Entry(update).State = EntityState.Modified;
-                dbContext.SaveChanges();
+                this.dbContext.Entry(update).State = EntityState.Modified;
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -117,8 +121,8 @@ namespace Sale_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
-                dbContext.Entry(del).State = EntityState.Deleted;
-                dbContext.SaveChanges();
+                this.dbContext.Entry(del).State = EntityState.Deleted;
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -138,7 +142,7 @@ namespace Sale_Data
         {
             bool found;
 
-            found = dbContext.Bill.Any(x => x.BillId == orig.BillId);
+            found = this.dbContext.Bill.Any(x => x.BillId == orig.BillId);
 
             return found;
         }

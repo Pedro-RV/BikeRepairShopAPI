@@ -29,7 +29,7 @@ namespace Service_Tests
         {
             TransportCompanyController transportCompanyController = new TransportCompanyController();
 
-            String message = transportCompanyController.InsertTransportCompany(new TransportCompanySpecific("ShipEx", "914"));
+            string message = transportCompanyController.InsertTransportCompany(new TransportCompanySpecific("ShipEx", "914"));
 
             TransportCompany transportCompanyGotten = transportCompanyController.GetTransportCompany(4);
 
@@ -61,7 +61,7 @@ namespace Service_Tests
             change.TransportCompanyName = "Seur";
             change.TelephoneNum = "900";
 
-            String message = transportCompanyController.UpdateTransportCompany(change);
+            string message = transportCompanyController.UpdateTransportCompany(change);
 
             TransportCompany transportCompanyCompare = transportCompanyController.GetTransportCompany(2);
 
@@ -76,7 +76,7 @@ namespace Service_Tests
         {
             TransportCompanyController transportCompanyController = new TransportCompanyController();
 
-            String message = transportCompanyController.DeleteTransportCompany(1);
+            string message = transportCompanyController.DeleteTransportCompany(1);
 
             Assert.AreEqual(message, "TransportCompany deleted satisfactorily.");
 

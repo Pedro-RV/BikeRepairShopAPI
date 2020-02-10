@@ -43,7 +43,7 @@ namespace Service_Tests
         {
             DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
 
-            String message = this.warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
+            string message = this.warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
 
             WarehouseAdmin warehouseAdminGotten = this.warehouseAdminController.GetWarehouseAdmin(4);
 
@@ -72,7 +72,7 @@ namespace Service_Tests
             change.WarehouseAdminId = 2;
             change.StartDate = modify;
 
-            String message = this.warehouseAdminController.UpdateWarehouseAdmin(change);
+            string message = this.warehouseAdminController.UpdateWarehouseAdmin(change);
 
             WarehouseAdmin warehouseAdminCompare = this.warehouseAdminController.GetWarehouseAdmin(2);
 
@@ -84,7 +84,7 @@ namespace Service_Tests
         [Test]
         public void DeleteWarehouseAdmin_Test()
         {
-            String message = this.warehouseAdminController.DeleteWarehouseAdmin(3);
+            string message = this.warehouseAdminController.DeleteWarehouseAdmin(3);
 
             Assert.AreEqual(message, "WarehouseAdmin deleted satisfactorily.");
 

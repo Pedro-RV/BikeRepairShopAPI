@@ -66,7 +66,7 @@ namespace Service_Tests
         {
             DateTime dateTime = new DateTime(2019, 05, 17, 13, 05, 00);
 
-            String message = this.purchaseController.InsertPurchase(new PurchaseSpecific(dateTime, 10, 500, 1, 1));
+            string message = this.purchaseController.InsertPurchase(new PurchaseSpecific(dateTime, 10, 500, 1, 1));
 
             Purchase purchaseGotten = this.purchaseController.GetPurchase(5);
 
@@ -98,7 +98,7 @@ namespace Service_Tests
             change.Cuantity = 9;
             change.Prize = 85;
 
-            String message = this.purchaseController.UpdatePurchase(change);
+            string message = this.purchaseController.UpdatePurchase(change);
 
             Purchase purchaseGotten = this.purchaseController.GetPurchase(2);
 
@@ -111,7 +111,7 @@ namespace Service_Tests
         [Test]
         public void DeletePurchase_Test()
         {
-            String message = this.purchaseController.DeletePurchase(3);
+            string message = this.purchaseController.DeletePurchase(3);
 
             Assert.AreEqual(message, "Purchase deleted satisfactorily.");
 
@@ -120,7 +120,7 @@ namespace Service_Tests
         [Test]
         public void DeletePurchaseAndChangeProduct_Test()
         {
-            String message = this.purchaseController.DeletePurchaseAndChangeProduct(4);
+            string message = this.purchaseController.DeletePurchaseAndChangeProduct(4);
 
             Assert.AreEqual(message, "Purchase deleted and Product changed satisfactorily.");
 

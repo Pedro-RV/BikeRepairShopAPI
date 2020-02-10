@@ -1,4 +1,5 @@
 ﻿using Sale_Bussiness;
+using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using System;
@@ -12,14 +13,20 @@ namespace Sale_Service.Controllers
 {
     public class ShippingController : ApiController
     {
+        private IShippingBussiness shippingBussiness;
+
+        public ShippingController(IShippingBussiness shippingBussiness)
+        {
+            this.shippingBussiness = shippingBussiness;
+
+        }
+
         // GET
         [HttpGet]
         [Route("api/shipping/GetShipping/{shippingId}")]
         public Shipping GetShipping(int shippingId)
         {
-            ShippingBussiness shippingBussiness = new ShippingBussiness();
-
-            Shipping request = shippingBussiness.ReadShipping(shippingId);
+            Shipping request = this.shippingBussiness.ReadShipping(shippingId);
 
             return request;
         }
@@ -29,9 +36,7 @@ namespace Sale_Service.Controllers
         [Route("api/shipping/InsertShipping")]
         public string InsertShipping(ShippingSpecific shippingSpecific)
         {
-            ShippingBussiness shippingBussiness = new ShippingBussiness();
-
-            bool introduced_well = shippingBussiness.InsertShipping(shippingSpecific);
+            bool introduced_well = this.shippingBussiness.InsertShipping(shippingSpecific);
 
             if (introduced_well == true)
             {
@@ -49,9 +54,7 @@ namespace Sale_Service.Controllers
         [Route("api/shipping/UpdateShipping")]
         public string UpdateShipping(ShippingSpecific update)
         {
-            ShippingBussiness shippingBussiness = new ShippingBussiness();
-
-            bool updated_well = shippingBussiness.UpdateShipping(update);
+            bool updated_well = this.shippingBussiness.UpdateShipping(update);
 
             if (updated_well == true)
             {
@@ -69,9 +72,7 @@ namespace Sale_Service.Controllers
         [Route("api/shipping/DeleteShipping/{shippingId}")]
         public string DeleteShipping(int shippingId)
         {
-            ShippingBussiness shippingBussiness = new ShippingBussiness();
-
-            bool deleted_well = shippingBussiness.DeleteShipping(shippingId);
+            bool deleted_well = this.shippingBussiness.DeleteShipping(shippingId);
 
             if (deleted_well == true)
             {

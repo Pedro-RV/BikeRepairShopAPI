@@ -103,7 +103,7 @@ namespace Supplier_Bussiness
             {
                 Product current = this.productRepository.Read(update.ProductId);
 
-                current.ProductDescription = !String.IsNullOrEmpty(update.ProductDescription) ? update.ProductDescription : current.ProductDescription;
+                current.ProductDescription = !string.IsNullOrEmpty(update.ProductDescription) ? update.ProductDescription : current.ProductDescription;
                 current.Prize = update.Prize != 0 ? update.Prize : current.Prize;
                 current.Cuantity = update.Cuantity != 0 ? update.Cuantity : current.Cuantity;
                 current.ActiveFlag = update.ActiveFlag == true ? update.ActiveFlag : current.ActiveFlag;

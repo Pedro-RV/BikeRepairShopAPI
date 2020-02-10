@@ -1,5 +1,7 @@
-﻿using NUnit.Framework;
+﻿using Autofac;
+using NUnit.Framework;
 using Sale_Bussiness;
+using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using System;
@@ -13,17 +15,23 @@ namespace Bussiness_Tests
     [TestFixture]
     class ProductBussiness_Tests
     {
+        private IProductBussiness productBussiness;
+        private IProductTypeBussiness productTypeBussiness;
+
         [TestFixtureSetUp]
         public void Init()
         {
-            ProductTypeBussiness productTypeBussiness = new ProductTypeBussiness();
-            productTypeBussiness.InsertProductType(new ProductTypeSpecific("Ruedas"));
+            var container = ContainerConfig.Configure();
+            var scope = container.BeginLifetimeScope();
 
-            ProductBussiness productBussiness = new ProductBussiness();
+            this.productBussiness = scope.Resolve<IProductBussiness>();
+            this.productTypeBussiness = scope.Resolve<IProductTypeBussiness>();
 
-            productBussiness.InsertProduct(new ProductSpecific("Ruedas Michelin", 50, 50, 1));
-            productBussiness.InsertProduct(new ProductSpecific("Ruedas Tractor", 200, 25, 1));
-            productBussiness.InsertProduct(new ProductSpecific("Ruedas Grua", 350, 20, 1));
+            this.productTypeBussiness.InsertProductType(new ProductTypeSpecific("Ruedas"));
+
+            this.productBussiness.InsertProduct(new ProductSpecific("Ruedas Michelin", 50, 50, 1));
+            this.productBussiness.InsertProduct(new ProductSpecific("Ruedas Tractor", 200, 25, 1));
+            this.productBussiness.InsertProduct(new ProductSpecific("Ruedas Grua", 350, 20, 1));
 
         }
 
@@ -31,11 +39,10 @@ namespace Bussiness_Tests
         public void InsertProduct_Test()
         {
             bool correct;
-            ProductBussiness productBussiness = new ProductBussiness();
 
-            correct = productBussiness.InsertProduct(new ProductSpecific("Ruedas Armilla", 45, 60, 1));
+            correct = this.productBussiness.InsertProduct(new ProductSpecific("Ruedas Armilla", 45, 60, 1));
 
-            Product productGotten = productBussiness.ReadProduct(4);
+            Product productGotten = this.productBussiness.ReadProduct(4);
 
             Assert.AreEqual(true, correct);
             Assert.AreEqual(productGotten.ProductDescription, "Ruedas Armilla");
@@ -47,9 +54,7 @@ namespace Bussiness_Tests
         [Test]
         public void ReadProduct_Test()
         {
-            ProductBussiness productBussiness = new ProductBussiness();
-
-            Product productGotten = productBussiness.ReadProduct(3);
+            Product productGotten = this.productBussiness.ReadProduct(3);
 
             Assert.AreEqual(productGotten.ProductDescription, "Ruedas Grua");
             Assert.AreEqual(productGotten.Prize, 350);
@@ -60,7 +65,6 @@ namespace Bussiness_Tests
         [Test]
         public void UpdateProduct_Test()
         {
-            ProductBussiness productBussiness = new ProductBussiness();
             bool correct;
 
             ProductSpecific change = new ProductSpecific();
@@ -68,9 +72,9 @@ namespace Bussiness_Tests
             change.ProductDescription = "Ruedas China";
             change.Prize = 25;
 
-            correct = productBussiness.UpdateProduct(change);
+            correct = this.productBussiness.UpdateProduct(change);
 
-            Product productCompare = productBussiness.ReadProduct(2);
+            Product productCompare = this.productBussiness.ReadProduct(2);
 
             Assert.AreEqual(true, correct);
             Assert.AreEqual(productCompare.ProductDescription, change.ProductDescription);
@@ -81,10 +85,9 @@ namespace Bussiness_Tests
         [Test]
         public void DeleteProduct_Test()
         {
-            ProductBussiness productBussiness = new ProductBussiness();
             bool correct;
 
-            correct = productBussiness.DeleteProduct(1);
+            correct = this.productBussiness.DeleteProduct(1);
 
             Assert.AreEqual(true, correct);
 

@@ -2,6 +2,7 @@
 using Sale_Bussiness.Interfaces;
 using Sale_Data;
 using Sale_Data.Context;
+using Sale_Data.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using Sale_Helper.ExceptionController;
@@ -15,17 +16,17 @@ namespace Sale_Bussiness
 {
     public class PaymentMethodBussiness : IPaymentMethodBussiness
     {
-        private SaleContext dbContext;
+        private IExceptionController exceptionController;
 
-        private ExceptionController exceptionController;
+        private IPaymentMethodRepository paymentMethodRepository;
 
         private IMapper mapper;
 
-        public PaymentMethodBussiness()
+        public PaymentMethodBussiness(IExceptionController exceptionController,
+            IPaymentMethodRepository paymentMethodRepository)
         {
-            SaleContextProvider.InitializeSaleContext();
-            dbContext = SaleContextProvider.GetSaleContext();
-            exceptionController = new ExceptionController();
+            this.exceptionController = exceptionController;
+            this.paymentMethodRepository = paymentMethodRepository;
 
 
             var config = new MapperConfiguration(cfg => {
@@ -41,11 +42,9 @@ namespace Sale_Bussiness
 
             try
             {
-                PaymentMethodRepository paymentMethodRepository = new PaymentMethodRepository(dbContext, exceptionController);
-
                 PaymentMethod paymentMethodAdd = mapper.Map<PaymentMethodSpecific, PaymentMethod>(paymentMethodSpecific);
 
-                ret = paymentMethodRepository.Insert(paymentMethodAdd);
+                ret = this.paymentMethodRepository.Insert(paymentMethodAdd);
             }
             catch (SaleException)
             {
@@ -70,9 +69,7 @@ namespace Sale_Bussiness
 
             try
             {
-                PaymentMethodRepository paymentMethodRepository = new PaymentMethodRepository(dbContext, exceptionController);
-
-                ret = paymentMethodRepository.Read(PaymentMethodId);
+                ret = this.paymentMethodRepository.Read(PaymentMethodId);
             }
             catch (SaleException)
             {
@@ -97,13 +94,11 @@ namespace Sale_Bussiness
 
             try
             {
-                PaymentMethodRepository paymentMethodRepository = new PaymentMethodRepository(dbContext, exceptionController);
+                PaymentMethod current = this.paymentMethodRepository.Read(update.PaymentMethodId);
 
-                PaymentMethod current = paymentMethodRepository.Read(update.PaymentMethodId);
+                current.PaymentMethodDescription = !string.IsNullOrEmpty(update.PaymentMethodDescription) ? update.PaymentMethodDescription : current.PaymentMethodDescription;
 
-                current.PaymentMethodDescription = !String.IsNullOrEmpty(update.PaymentMethodDescription) ? update.PaymentMethodDescription : current.PaymentMethodDescription;
-
-                ret = paymentMethodRepository.Update(current);
+                ret = this.paymentMethodRepository.Update(current);
 
             }
             catch (SaleException)
@@ -128,11 +123,9 @@ namespace Sale_Bussiness
 
             try
             {
-                PaymentMethodRepository paymentMethodRepository = new PaymentMethodRepository(dbContext, exceptionController);
+                PaymentMethod del = this.paymentMethodRepository.Read(PaymentMethodId);
 
-                PaymentMethod del = paymentMethodRepository.Read(PaymentMethodId);
-
-                ret = paymentMethodRepository.Delete(del);
+                ret = this.paymentMethodRepository.Delete(del);
 
             }
             catch (SaleException)

@@ -32,7 +32,7 @@ namespace Service_Tests
         {
             ProductController productController = new ProductController();
 
-            String message = productController.InsertProduct(new ProductSpecific("Ruedas Armilla", 45, 60, 1));
+            string message = productController.InsertProduct(new ProductSpecific("Ruedas Armilla", 45, 60, 1));
 
             Product productGotten = productController.GetProduct(4);
 
@@ -66,7 +66,7 @@ namespace Service_Tests
             change.ProductDescription = "Ruedas China";
             change.Prize = 25;
 
-            String message = productController.UpdateProduct(change);
+            string message = productController.UpdateProduct(change);
 
             Product productCompare = productController.GetProduct(2);
 
@@ -81,7 +81,7 @@ namespace Service_Tests
         {
             ProductController productController = new ProductController();
 
-            String message = productController.DeleteProduct(1);
+            string message = productController.DeleteProduct(1);
 
             Assert.AreEqual(message, "Product deleted satisfactorily.");
 

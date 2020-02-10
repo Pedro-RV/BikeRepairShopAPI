@@ -23,7 +23,7 @@ namespace Sale_Data.Migrations
         
         string IMigrationMetadata.Target
         {
-            get { return Resources.GetString("Target"); }
+            get { return Resources.Getstring("Target"); }
         }
     }
 }

@@ -44,7 +44,7 @@ namespace Service_Tests
         [Test]
         public void InsertWarehouse_Test()
         {
-            String message = this.warehouseController.InsertWarehouse(new WarehouseSpecific("Calle Tajo", 300));
+            string message = this.warehouseController.InsertWarehouse(new WarehouseSpecific("Calle Tajo", 300));
 
             Warehouse warehouseGotten = this.warehouseController.GetWarehouse(5);
 
@@ -72,7 +72,7 @@ namespace Service_Tests
             change.WarehouseAddress = "Calle Nilo";
             change.Extension = 1000;
 
-            String message = this.warehouseController.UpdateWarehouse(change);
+            string message = this.warehouseController.UpdateWarehouse(change);
 
             Warehouse warehouseGotten = this.warehouseController.GetWarehouse(2);
 
@@ -85,7 +85,7 @@ namespace Service_Tests
         [Test]
         public void DeleteWarehouse_Test()
         {
-            String message = this.warehouseController.DeleteWarehouse(3);
+            string message = this.warehouseController.DeleteWarehouse(3);
 
             Assert.AreEqual(message, "Warehouse deleted satisfactorily.");
 

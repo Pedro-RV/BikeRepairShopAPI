@@ -12,11 +12,15 @@ namespace Sale_Data
     {
         private SaleContext dbContext;
 
-        private ExceptionController exceptionController;
+        private ISaleContextProvider saleContextProvider;
 
-        public ShippingRepository(SaleContext dbContext, ExceptionController exceptionController)
+        private IExceptionController exceptionController;
+
+        public ShippingRepository(ISaleContextProvider saleContextProvider, IExceptionController exceptionController)
         {
-            this.dbContext = dbContext;
+            this.saleContextProvider = saleContextProvider;
+            this.saleContextProvider.InitializeSaleContext();
+            this.dbContext = this.saleContextProvider.GetSaleContext();
             this.exceptionController = exceptionController;
 
         }
@@ -33,8 +37,8 @@ namespace Sale_Data
 
                 }
 
-                dbContext.Shipping.Add(add);
-                dbContext.SaveChanges();
+                this.dbContext.Shipping.Add(add);
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -56,7 +60,7 @@ namespace Sale_Data
 
             try
             {
-                ret = dbContext.Shipping.Where(x => x.ShippingId == ShippingId).FirstOrDefault();
+                ret = this.dbContext.Shipping.Where(x => x.ShippingId == ShippingId).FirstOrDefault();
 
                 if (ret == null)
                 {
@@ -90,8 +94,8 @@ namespace Sale_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
-                dbContext.Entry(update).State = EntityState.Modified;
-                dbContext.SaveChanges();
+                this.dbContext.Entry(update).State = EntityState.Modified;
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -119,8 +123,8 @@ namespace Sale_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
-                dbContext.Entry(del).State = EntityState.Deleted;
-                dbContext.SaveChanges();
+                this.dbContext.Entry(del).State = EntityState.Deleted;
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -140,7 +144,7 @@ namespace Sale_Data
         {
             bool found;
 
-            found = dbContext.Shipping.Any(x => x.ShippingId == orig.ShippingId);
+            found = this.dbContext.Shipping.Any(x => x.ShippingId == orig.ShippingId);
 
             return found;
         }

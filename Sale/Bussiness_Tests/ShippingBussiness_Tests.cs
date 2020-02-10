@@ -1,5 +1,7 @@
-﻿using NUnit.Framework;
+﻿using Autofac;
+using NUnit.Framework;
 using Sale_Bussiness;
+using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using System;
@@ -13,32 +15,43 @@ namespace Bussiness_Tests
     [TestFixture]
     class ShippingBussiness_Tests
     {
+        private IShippingBussiness shippingBussiness;
+        private ISaleBussiness saleBussiness;
+        private IProductBussiness productBussiness;
+        private IProductTypeBussiness productTypeBussiness;
+        private IClientBussiness clientBussiness;
+        private IPaymentMethodBussiness paymentMethodBussiness;
+        private IBillBussiness billBussiness;
+        private ITransportCompanyBussiness transportCompanyBussiness;
+
         [TestFixtureSetUp]
         public void Init()
         {
-            ClientBussiness clientBussiness = new ClientBussiness();
-            clientBussiness.InsertClient(new ClientSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
-            ProductTypeBussiness productTypeBussiness = new ProductTypeBussiness();
-            productTypeBussiness.InsertProductType(new ProductTypeSpecific("Ruedas"));
-            ProductBussiness productBussiness = new ProductBussiness();
-            productBussiness.InsertProduct(new ProductSpecific("Ruedas Michelin", 50, 50, 1));
-            PaymentMethodBussiness paymentMethodBussiness = new PaymentMethodBussiness();
-            paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("Contrarrembolso"));
+            var container = ContainerConfig.Configure();
+            var scope = container.BeginLifetimeScope();
+
+            this.shippingBussiness = scope.Resolve<IShippingBussiness>();
+            this.saleBussiness = scope.Resolve<ISaleBussiness>();
+            this.productBussiness = scope.Resolve<IProductBussiness>();
+            this.productTypeBussiness = scope.Resolve<IProductTypeBussiness>();
+            this.clientBussiness = scope.Resolve<IClientBussiness>();
+            this.paymentMethodBussiness = scope.Resolve<IPaymentMethodBussiness>();
+            this.billBussiness = scope.Resolve<IBillBussiness>();
+
+            this.clientBussiness.InsertClient(new ClientSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
+            this.productTypeBussiness.InsertProductType(new ProductTypeSpecific("Ruedas"));
+            this.productBussiness.InsertProduct(new ProductSpecific("Ruedas Michelin", 50, 50, 1));
+            this.paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("Contrarrembolso"));
             DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
-            BillBussiness billBussiness = new BillBussiness();
-            billBussiness.InsertBill(new BillSpecific(dateTime, 1));
-            SaleBussiness saleBussiness = new SaleBussiness();
-            saleBussiness.InsertSale(new SaleSpecific(5, 1, 1, 1));
-            TransportCompanyBussiness transportCompanyBussiness = new TransportCompanyBussiness();
-            transportCompanyBussiness.InsertTransportCompany(new TransportCompanySpecific("Envi", "911"));
+            this.billBussiness.InsertBill(new BillSpecific(dateTime, 1));
+            this.saleBussiness.InsertSale(new SaleSpecific(5, 1, 1, 1));
+            this.transportCompanyBussiness.InsertTransportCompany(new TransportCompanySpecific("Envi", "911"));
             DateTime dateTimeDeparture = new DateTime(2019, 12, 04, 9, 38, 00);
             DateTime dateTimePacking = new DateTime(2019, 12, 04, 9, 00, 00);
 
-            ShippingBussiness shippingBussiness = new ShippingBussiness();
-
-            shippingBussiness.InsertShipping(new ShippingSpecific(dateTimeDeparture, dateTimePacking, 1, 1));
-            shippingBussiness.InsertShipping(new ShippingSpecific(dateTimeDeparture, dateTimePacking, 1, 1));
-            shippingBussiness.InsertShipping(new ShippingSpecific(dateTimeDeparture, dateTimePacking, 1, 1));
+            this.shippingBussiness.InsertShipping(new ShippingSpecific(dateTimeDeparture, dateTimePacking, 1, 1));
+            this.shippingBussiness.InsertShipping(new ShippingSpecific(dateTimeDeparture, dateTimePacking, 1, 1));
+            this.shippingBussiness.InsertShipping(new ShippingSpecific(dateTimeDeparture, dateTimePacking, 1, 1));
 
         }
 
@@ -48,11 +61,10 @@ namespace Bussiness_Tests
             bool correct;
             DateTime dateTimeDeparture = new DateTime(2019, 12, 04, 9, 38, 00);
             DateTime dateTimePacking = new DateTime(2019, 12, 04, 9, 00, 00);
-            ShippingBussiness shippingBussiness = new ShippingBussiness();
 
-            correct = shippingBussiness.InsertShipping(new ShippingSpecific(dateTimeDeparture, dateTimePacking, 1, 1));
+            correct = this.shippingBussiness.InsertShipping(new ShippingSpecific(dateTimeDeparture, dateTimePacking, 1, 1));
 
-            Shipping shippingGotten = shippingBussiness.ReadShipping(4);
+            Shipping shippingGotten = this.shippingBussiness.ReadShipping(4);
 
             Assert.AreEqual(true, correct);
             Assert.AreEqual(shippingGotten.DepartureDate, dateTimeDeparture);
@@ -63,9 +75,7 @@ namespace Bussiness_Tests
         [Test]
         public void ReadShipping_Test()
         {
-            ShippingBussiness shippingBussiness = new ShippingBussiness();
-
-            Shipping shippingGotten = shippingBussiness.ReadShipping(3);
+            Shipping shippingGotten = this.shippingBussiness.ReadShipping(3);
 
             DateTime dateTimeDeparture = new DateTime(2019, 12, 04, 9, 38, 00);
             DateTime dateTimePacking = new DateTime(2019, 12, 04, 9, 00, 00);
@@ -78,7 +88,6 @@ namespace Bussiness_Tests
         [Test]
         public void UpdateShipping_Test()
         {
-            ShippingBussiness shippingBussiness = new ShippingBussiness();
             bool correct;
 
             DateTime DepartureDateChange = new DateTime(2019, 12, 05, 9, 45, 00);
@@ -88,9 +97,9 @@ namespace Bussiness_Tests
             change.DepartureDate = DepartureDateChange;
             change.PackingTime = PackingTimeChange;
 
-            correct = shippingBussiness.UpdateShipping(change);
+            correct = this.shippingBussiness.UpdateShipping(change);
 
-            Shipping shippingCompare = shippingBussiness.ReadShipping(2);
+            Shipping shippingCompare = this.shippingBussiness.ReadShipping(2);
 
             Assert.AreEqual(true, correct);
             Assert.AreEqual(shippingCompare.DepartureDate, change.DepartureDate);
@@ -101,10 +110,9 @@ namespace Bussiness_Tests
         [Test]
         public void DeleteShipping_Test()
         {
-            ShippingBussiness shippingBussiness = new ShippingBussiness();
             bool correct;
 
-            correct = shippingBussiness.DeleteShipping(1);
+            correct = this.shippingBussiness.DeleteShipping(1);
 
             Assert.AreEqual(true, correct);
 

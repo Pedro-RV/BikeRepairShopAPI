@@ -16,7 +16,7 @@ namespace Supplier_Entities.Specific
 
         }
 
-        public ProductSpecific(String ProductDescription, double Prize, int Cuantity, bool ActiveFlag)
+        public ProductSpecific(string ProductDescription, double Prize, int Cuantity, bool ActiveFlag)
         {
             this.ProductDescription = ProductDescription;
             this.Prize = Prize;

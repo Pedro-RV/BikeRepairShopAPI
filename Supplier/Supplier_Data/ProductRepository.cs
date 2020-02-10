@@ -28,7 +28,7 @@ namespace Supplier_Data
 
         public List<Product> ProductsList()
         {
-            List<Product> ret = dbContext.Product.ToList();
+            List<Product> ret = this.dbContext.Product.ToList();
 
             return ret;
         }
@@ -49,8 +49,8 @@ namespace Supplier_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.MistakenPrize);
                 }
 
-                dbContext.Product.Add(add);
-                dbContext.SaveChanges();
+                this.dbContext.Product.Add(add);
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -72,7 +72,7 @@ namespace Supplier_Data
 
             try
             {
-                ret = dbContext.Product.Where(x => x.ProductId == ProductId).FirstOrDefault();
+                ret = this.dbContext.Product.Where(x => x.ProductId == ProductId).FirstOrDefault();
 
                 if (ret == null)
                 {
@@ -106,8 +106,8 @@ namespace Supplier_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
-                dbContext.Entry(update).State = EntityState.Modified;
-                dbContext.SaveChanges();
+                this.dbContext.Entry(update).State = EntityState.Modified;
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -135,8 +135,8 @@ namespace Supplier_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
-                dbContext.Entry(del).State = EntityState.Deleted;
-                dbContext.SaveChanges();
+                this.dbContext.Entry(del).State = EntityState.Deleted;
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -156,7 +156,7 @@ namespace Supplier_Data
         {
             bool found;
 
-            found = dbContext.Product.Any(x => x.ProductId == orig.ProductId);
+            found = this.dbContext.Product.Any(x => x.ProductId == orig.ProductId);
 
             return found;
         }

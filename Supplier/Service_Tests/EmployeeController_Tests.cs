@@ -44,7 +44,7 @@ namespace Service_Tests
         [Test]
         public void InsertEmployee_Test()
         {
-            String message = this.employeeController.InsertEmployee(new EmployeeSpecific("antonio", "carrasco", "22", "carrasco@correo", "calle malagon", "56", "87"));
+            string message = this.employeeController.InsertEmployee(new EmployeeSpecific("antonio", "carrasco", "22", "carrasco@correo", "calle malagon", "56", "87"));
 
             Employee employeeGotten = this.employeeController.GetEmployee(4);
 
@@ -87,7 +87,7 @@ namespace Service_Tests
             change.EmployeeName = "Domingo";
             change.MobileNum = "621";
 
-            String message = this.employeeController.UpdateEmployee(change);
+            string message = this.employeeController.UpdateEmployee(change);
 
             Employee employeeCompare = this.employeeController.GetEmployee(2);
 
@@ -100,7 +100,7 @@ namespace Service_Tests
         [Test]
         public void DeleteEmployee_Test()
         {
-            String message = this.employeeController.DeleteEmployee(3);
+            string message = this.employeeController.DeleteEmployee(3);
 
             Assert.AreEqual(message, "Employee deleted satisfactorily.");
 

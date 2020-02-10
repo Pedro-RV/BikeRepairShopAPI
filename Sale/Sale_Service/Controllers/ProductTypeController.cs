@@ -1,4 +1,5 @@
 ﻿using Sale_Bussiness;
+using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using System;
@@ -12,14 +13,20 @@ namespace Sale_Service.Controllers
 {
     public class ProductTypeController : ApiController
     {
+        private IProductTypeBussiness productTypeBussiness;
+
+        public ProductTypeController(IProductTypeBussiness productTypeBussiness)
+        {
+            this.productTypeBussiness = productTypeBussiness;
+
+        }
+
         // GET
         [HttpGet]
         [Route("api/productType/GetProductType/{productTypeId}")]
         public ProductType GetProductType(int productTypeId)
         {
-            ProductTypeBussiness productTypeBussiness = new ProductTypeBussiness();
-
-            ProductType request = productTypeBussiness.ReadProductType(productTypeId);
+            ProductType request = this.productTypeBussiness.ReadProductType(productTypeId);
 
             return request;
         }
@@ -29,9 +36,7 @@ namespace Sale_Service.Controllers
         [Route("api/productType/InsertProductType")]
         public string InsertProductType(ProductTypeSpecific productTypeSpecific)
         {
-            ProductTypeBussiness productTypeBussiness = new ProductTypeBussiness();
-
-            bool introduced_well = productTypeBussiness.InsertProductType(productTypeSpecific);
+            bool introduced_well = this.productTypeBussiness.InsertProductType(productTypeSpecific);
 
             if (introduced_well == true)
             {
@@ -49,9 +54,7 @@ namespace Sale_Service.Controllers
         [Route("api/productType/UpdateProductType")]
         public string UpdateProductType(ProductTypeSpecific update)
         {
-            ProductTypeBussiness productTypeBussiness = new ProductTypeBussiness();
-
-            bool updated_well = productTypeBussiness.UpdateProductType(update);
+            bool updated_well = this.productTypeBussiness.UpdateProductType(update);
 
             if (updated_well == true)
             {
@@ -69,9 +72,7 @@ namespace Sale_Service.Controllers
         [Route("api/productType/DeleteProductType/{productTypeId}")]
         public string DeleteProductType(int productTypeId)
         {
-            ProductTypeBussiness productTypeBussiness = new ProductTypeBussiness();
-
-            bool deleted_well = productTypeBussiness.DeleteProductType(productTypeId);
+            bool deleted_well = this.productTypeBussiness.DeleteProductType(productTypeId);
 
             if (deleted_well == true)
             {

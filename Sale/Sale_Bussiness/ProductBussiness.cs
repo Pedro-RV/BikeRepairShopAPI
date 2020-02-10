@@ -2,6 +2,7 @@
 using Sale_Bussiness.Interfaces;
 using Sale_Data;
 using Sale_Data.Context;
+using Sale_Data.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using Sale_Helper.ExceptionController;
@@ -15,17 +16,21 @@ namespace Sale_Bussiness
 {
     public class ProductBussiness : IProductBussiness
     {
-        private SaleContext dbContext;
+        private IExceptionController exceptionController;
 
-        private ExceptionController exceptionController;
+        private IProductRepository productRepository;
+
+        private IProductTypeBussiness productTypeBussiness;
 
         private IMapper mapper;
 
-        public ProductBussiness()
+        public ProductBussiness(IExceptionController exceptionController,
+            IProductRepository productRepository,
+            IProductTypeBussiness productTypeBussiness)
         {
-            SaleContextProvider.InitializeSaleContext();
-            dbContext = SaleContextProvider.GetSaleContext();
-            exceptionController = new ExceptionController();
+            this.exceptionController = exceptionController;
+            this.productRepository = productRepository;
+            this.productTypeBussiness = productTypeBussiness;
 
 
             var config = new MapperConfiguration(cfg => {
@@ -41,11 +46,9 @@ namespace Sale_Bussiness
 
             try
             {
-                ProductRepository productRepository = new ProductRepository(dbContext, exceptionController);
-
                 Product productAdd = mapper.Map<ProductSpecific, Product>(productSpecific);
 
-                ret = productRepository.Insert(productAdd);
+                ret = this.productRepository.Insert(productAdd);
             }
             catch (SaleException)
             {
@@ -70,9 +73,7 @@ namespace Sale_Bussiness
 
             try
             {
-                ProductRepository productRepository = new ProductRepository(dbContext, exceptionController);
-
-                ret = productRepository.Read(ProductId);
+                ret = this.productRepository.Read(ProductId);
             }
             catch (SaleException)
             {
@@ -97,23 +98,20 @@ namespace Sale_Bussiness
 
             try
             {
-                ProductRepository productRepository = new ProductRepository(dbContext, exceptionController);
-                ProductTypeBussiness productTypeBussiness = new ProductTypeBussiness();
+                Product current = this.productRepository.Read(update.ProductId);
 
-                Product current = productRepository.Read(update.ProductId);
-
-                current.ProductDescription = !String.IsNullOrEmpty(update.ProductDescription) ? update.ProductDescription : current.ProductDescription;
+                current.ProductDescription = !string.IsNullOrEmpty(update.ProductDescription) ? update.ProductDescription : current.ProductDescription;
                 current.Prize = update.Prize != 0 ? update.Prize : current.Prize;
                 current.Cuantity = update.Cuantity != 0 ? update.Cuantity : current.Cuantity;
 
                 if (update.ProductTypeId != 0)
                 {
                     current.ProductTypeId = update.ProductTypeId;
-                    ProductType productTypeAttach = productTypeBussiness.ReadProductType(current.ProductTypeId);
+                    ProductType productTypeAttach = this.productTypeBussiness.ReadProductType(current.ProductTypeId);
                     current.ProductType = productTypeAttach;
                 }
 
-                ret = productRepository.Update(current);
+                ret = this.productRepository.Update(current);
 
             }
             catch (SaleException)
@@ -138,11 +136,9 @@ namespace Sale_Bussiness
 
             try
             {
-                ProductRepository productRepository = new ProductRepository(dbContext, exceptionController);
+                Product del = this.productRepository.Read(ProductId);
 
-                Product del = productRepository.Read(ProductId);
-
-                ret = productRepository.Delete(del);
+                ret = this.productRepository.Delete(del);
 
             }
             catch (SaleException)

@@ -1,5 +1,7 @@
-﻿using NUnit.Framework;
+﻿using Autofac;
+using NUnit.Framework;
 using Sale_Bussiness;
+using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using System;
@@ -13,14 +15,19 @@ namespace Bussiness_Tests
     [TestFixture]
     class PaymentMethodBussiness_Tests
     {
+        private IPaymentMethodBussiness paymentMethodBussiness;
+
         [TestFixtureSetUp]
         public void Init()
         {
-            PaymentMethodBussiness paymentMethodBussiness = new PaymentMethodBussiness();
+            var container = ContainerConfig.Configure();
+            var scope = container.BeginLifetimeScope();
 
-            paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("Contrarrembolso"));
-            paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("Paypal"));
-            paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("VISA"));
+            this.paymentMethodBussiness = scope.Resolve<IPaymentMethodBussiness>();
+
+            this.paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("Contrarrembolso"));
+            this.paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("Paypal"));
+            this.paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("VISA"));
 
         }
 
@@ -28,11 +35,10 @@ namespace Bussiness_Tests
         public void InsertPaymentMethod_Test()
         {
             bool correct;
-            PaymentMethodBussiness paymentMethodBussiness = new PaymentMethodBussiness();
 
-            correct = paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("Cheque"));
+            correct = this.paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("Cheque"));
 
-            PaymentMethod paymentMethodGotten = paymentMethodBussiness.ReadPaymentMethod(4);
+            PaymentMethod paymentMethodGotten = this.paymentMethodBussiness.ReadPaymentMethod(4);
 
             Assert.AreEqual(true, correct);
             Assert.AreEqual(paymentMethodGotten.PaymentMethodDescription, "Cheque");
@@ -42,9 +48,7 @@ namespace Bussiness_Tests
         [Test]
         public void ReadPaymentMethod_Test()
         {
-            PaymentMethodBussiness paymentMethodBussiness = new PaymentMethodBussiness();
-
-            PaymentMethod paymentMethodGotten = paymentMethodBussiness.ReadPaymentMethod(3);
+            PaymentMethod paymentMethodGotten = this.paymentMethodBussiness.ReadPaymentMethod(3);
 
             Assert.AreEqual(paymentMethodGotten.PaymentMethodDescription, "VISA");
 
@@ -53,16 +57,15 @@ namespace Bussiness_Tests
         [Test]
         public void UpdatePaymentMethod_Test()
         {
-            PaymentMethodBussiness paymentMethodBussiness = new PaymentMethodBussiness();
             bool correct;
 
             PaymentMethodSpecific change = new PaymentMethodSpecific();
             change.PaymentMethodId = 2;
             change.PaymentMethodDescription = "Cupon";
 
-            correct = paymentMethodBussiness.UpdatePaymentMethod(change);
+            correct = this.paymentMethodBussiness.UpdatePaymentMethod(change);
 
-            PaymentMethod paymentMethodCompare = paymentMethodBussiness.ReadPaymentMethod(2);
+            PaymentMethod paymentMethodCompare = this.paymentMethodBussiness.ReadPaymentMethod(2);
 
             Assert.AreEqual(true, correct);
             Assert.AreEqual(paymentMethodCompare.PaymentMethodDescription, change.PaymentMethodDescription);
@@ -72,10 +75,9 @@ namespace Bussiness_Tests
         [Test]
         public void DeletePaymentMethod_Test()
         {
-            PaymentMethodBussiness paymentMethodBussiness = new PaymentMethodBussiness();
             bool correct;
 
-            correct = paymentMethodBussiness.DeletePaymentMethod(1);
+            correct = this.paymentMethodBussiness.DeletePaymentMethod(1);
 
             Assert.AreEqual(true, correct);
 

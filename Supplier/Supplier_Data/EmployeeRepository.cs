@@ -27,7 +27,7 @@ namespace Supplier_Data
 
         public List<Employee> EmployeesList()
         {
-            List<Employee> ret = dbContext.Employee.ToList();
+            List<Employee> ret = this.dbContext.Employee.ToList();
 
             return ret;
         }
@@ -46,10 +46,10 @@ namespace Supplier_Data
                 if (add.DNI == null)
                 {
                     throw this.exceptionController.CreateMyException(ExceptionEnum.NullDNI);
-                }              
+                }
 
-                dbContext.Employee.Add(add);
-                dbContext.SaveChanges();
+                this.dbContext.Employee.Add(add);
+                this.dbContext.SaveChanges();
                 result = true;
 
             }
@@ -71,7 +71,7 @@ namespace Supplier_Data
 
             try
             {
-                ret = dbContext.Employee.Where(x => x.EmployeeId == EmployeeId).FirstOrDefault();
+                ret = this.dbContext.Employee.Where(x => x.EmployeeId == EmployeeId).FirstOrDefault();
 
                 if (ret == null)
                 {
@@ -97,7 +97,7 @@ namespace Supplier_Data
 
             try
             {
-                ret = dbContext.Employee.Where(x => x.DNI == DNI).FirstOrDefault();
+                ret = this.dbContext.Employee.Where(x => x.DNI == DNI).FirstOrDefault();
 
                 if (ret == null)
                 {
@@ -129,9 +129,9 @@ namespace Supplier_Data
                 {
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
-                
-                dbContext.Entry(update).State = EntityState.Modified;
-                dbContext.SaveChanges();
+
+                this.dbContext.Entry(update).State = EntityState.Modified;
+                this.dbContext.SaveChanges();
                 ret = true;
 
             }
@@ -159,8 +159,8 @@ namespace Supplier_Data
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ObjectNotFound);
                 }
 
-                dbContext.Entry(del).State = EntityState.Deleted;
-                dbContext.SaveChanges();
+                this.dbContext.Entry(del).State = EntityState.Deleted;
+                this.dbContext.SaveChanges();
                 ret = true;
   
             }
@@ -180,7 +180,7 @@ namespace Supplier_Data
         {
             bool found;
 
-            found = dbContext.Employee.Any(x => x.EmployeeId == orig.EmployeeId);
+            found = this.dbContext.Employee.Any(x => x.EmployeeId == orig.EmployeeId);
 
             return found;
         }
