@@ -54,10 +54,10 @@ namespace Data_Tests
         [Test]
         public void Read_Test()
         {
-            TransportCompany transportCompanyGotten = this.transportCompanyRepository.Read(3);
+            TransportCompany transportCompanyGotten = this.transportCompanyRepository.Read(1);
 
-            Assert.AreEqual(transportCompanyGotten.TransportCompanyName, "DHL");
-            Assert.AreEqual(transportCompanyGotten.TelephoneNum, "913");
+            Assert.AreEqual(transportCompanyGotten.TransportCompanyName, "Envi");
+            Assert.AreEqual(transportCompanyGotten.TelephoneNum, "911");
 
         }
 
@@ -84,7 +84,7 @@ namespace Data_Tests
         public void Delete_Test()
         {
             bool correct;
-            TransportCompany transportCompanyGotten = this.transportCompanyRepository.Read(1);
+            TransportCompany transportCompanyGotten = this.transportCompanyRepository.Read(3);
 
             correct = this.transportCompanyRepository.Delete(transportCompanyGotten);
 

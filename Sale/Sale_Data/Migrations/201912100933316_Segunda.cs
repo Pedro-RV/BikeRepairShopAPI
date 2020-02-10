@@ -7,7 +7,7 @@
     {
         public override void Up()
         {
-            AddColumn("dbo.Client", "DNI", c => c.string(maxLength: 15));
+            AddColumn("dbo.Client", "DNI", c => c.String(maxLength: 15));
         }
         
         public override void Down()

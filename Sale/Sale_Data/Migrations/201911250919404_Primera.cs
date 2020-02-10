@@ -12,12 +12,12 @@
                 c => new
                     {
                         ClientId = c.Int(nullable: false, identity: true),
-                        ClientName = c.string(maxLength: 20),
-                        Surname = c.string(maxLength: 30),
-                        Email = c.string(maxLength: 20),
-                        ClientAddress = c.string(maxLength: 100),
-                        CP = c.string(maxLength: 10),
-                        MobileNum = c.string(maxLength: 15),
+                        ClientName = c.String(maxLength: 20),
+                        Surname = c.String(maxLength: 30),
+                        Email = c.String(maxLength: 20),
+                        ClientAddress = c.String(maxLength: 100),
+                        CP = c.String(maxLength: 10),
+                        MobileNum = c.String(maxLength: 15),
                     })
                 .PrimaryKey(t => t.ClientId);
             
@@ -26,7 +26,7 @@
                 c => new
                     {
                         PaymentMethodId = c.Int(nullable: false, identity: true),
-                        PaymentMethodDescription = c.string(maxLength: 20),
+                        PaymentMethodDescription = c.String(maxLength: 20),
                     })
                 .PrimaryKey(t => t.PaymentMethodId);
             
@@ -36,7 +36,7 @@
                     {
                         ProductId = c.Int(nullable: false, identity: true),
                         ProductTypeId = c.Int(nullable: false),
-                        ProductDescription = c.string(maxLength: 500),
+                        ProductDescription = c.String(maxLength: 500),
                         Prize = c.Double(nullable: false),
                         Cuantity = c.Int(nullable: false),
                     })
@@ -49,7 +49,7 @@
                 c => new
                     {
                         ProductTypeId = c.Int(nullable: false, identity: true),
-                        ProductTypeDescription = c.string(maxLength: 50),
+                        ProductTypeDescription = c.String(maxLength: 50),
                     })
                 .PrimaryKey(t => t.ProductTypeId);
             
@@ -93,8 +93,8 @@
                 c => new
                     {
                         TransportCompanyId = c.Int(nullable: false, identity: true),
-                        TransportCompanyName = c.string(maxLength: 100),
-                        TelephoneNum = c.string(maxLength: 15),
+                        TransportCompanyName = c.String(maxLength: 100),
+                        TelephoneNum = c.String(maxLength: 15),
                     })
                 .PrimaryKey(t => t.TransportCompanyId);
             

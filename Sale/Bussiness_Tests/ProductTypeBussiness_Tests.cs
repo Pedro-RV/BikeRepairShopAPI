@@ -48,9 +48,9 @@ namespace Bussiness_Tests
         [Test]
         public void ReadProductType_Test()
         {
-            ProductType productTypeGotten = this.productTypeBussiness.ReadProductType(3);
+            ProductType productTypeGotten = this.productTypeBussiness.ReadProductType(1);
 
-            Assert.AreEqual(productTypeGotten.ProductTypeDescription, "Frenos");
+            Assert.AreEqual(productTypeGotten.ProductTypeDescription, "Ruedas");
 
         }
 
@@ -77,7 +77,7 @@ namespace Bussiness_Tests
         {
             bool correct;
 
-            correct = this.productTypeBussiness.DeleteProductType(1);
+            correct = this.productTypeBussiness.DeleteProductType(3);
 
             Assert.AreEqual(true, correct);
 

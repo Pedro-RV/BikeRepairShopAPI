@@ -52,9 +52,9 @@ namespace Data_Tests
         [Test]
         public void Read_Test()
         {
-            PaymentMethod paymentMethodGotten = this.paymentMethodRepository.Read(3);
+            PaymentMethod paymentMethodGotten = this.paymentMethodRepository.Read(1);
 
-            Assert.AreEqual(paymentMethodGotten.PaymentMethodDescription, "VISA");
+            Assert.AreEqual(paymentMethodGotten.PaymentMethodDescription, "Contrarrembolso");
 
         }
 
@@ -79,7 +79,7 @@ namespace Data_Tests
         public void Delete_Test()
         {
             bool correct;
-            PaymentMethod paymentMethodGotten = this.paymentMethodRepository.Read(1);
+            PaymentMethod paymentMethodGotten = this.paymentMethodRepository.Read(3);
 
             correct = this.paymentMethodRepository.Delete(paymentMethodGotten);
 

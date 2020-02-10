@@ -58,11 +58,11 @@ namespace Data_Tests
         [Test]
         public void Read_Test()
         {
-            Product productGotten = this.productRepository.Read(3);
+            Product productGotten = this.productRepository.Read(1);
 
-            Assert.AreEqual(productGotten.ProductDescription, "Ruedas Grua");
-            Assert.AreEqual(productGotten.Prize, 350);
-            Assert.AreEqual(productGotten.Cuantity, 20);
+            Assert.AreEqual(productGotten.ProductDescription, "Ruedas Michelin");
+            Assert.AreEqual(productGotten.Prize, 50);
+            Assert.AreEqual(productGotten.Cuantity, 50);
 
         }
 
@@ -89,7 +89,7 @@ namespace Data_Tests
         public void Delete_Test()
         {
             bool correct;
-            Product productGotten = this.productRepository.Read(1);
+            Product productGotten = this.productRepository.Read(3);
 
             correct = this.productRepository.Delete(productGotten);
 

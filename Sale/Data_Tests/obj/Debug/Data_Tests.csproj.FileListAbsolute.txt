@@ -50,3 +50,12 @@ C:\REPO\becaPedro\Sale\Data_Tests\bin\Debug\EntityFramework.xml
 C:\REPO\becaPedro\Sale\Data_Tests\bin\Debug\EntityFramework.SqlServer.xml
 C:\REPO\becaPedro\Sale\Data_Tests\bin\Debug\nunit.framework.xml
 C:\REPO\becaPedro\Sale\Data_Tests\obj\Debug\Data_Tests.csproj.CopyComplete
+C:\REPO\becaPedro\Sale\Data_Tests\bin\Debug\Autofac.dll
+C:\REPO\becaPedro\Sale\Data_Tests\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\REPO\becaPedro\Sale\Data_Tests\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\REPO\becaPedro\Sale\Data_Tests\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\REPO\becaPedro\Sale\Data_Tests\bin\Debug\Autofac.pdb
+C:\REPO\becaPedro\Sale\Data_Tests\bin\Debug\Autofac.xml
+C:\REPO\becaPedro\Sale\Data_Tests\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\REPO\becaPedro\Sale\Data_Tests\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\REPO\becaPedro\Sale\Data_Tests\bin\Debug\System.Threading.Tasks.Extensions.xml

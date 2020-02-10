@@ -22,8 +22,8 @@
                 .Index(t => t.PaymentMethodId);
             
             AddColumn("dbo.Sale", "BillId", c => c.Int(nullable: false));
-            AlterColumn("dbo.PaymentMethod", "PaymentMethodDescription", c => c.string(maxLength: 70));
-            AlterColumn("dbo.ProductType", "ProductTypeDescription", c => c.string(maxLength: 100));
+            AlterColumn("dbo.PaymentMethod", "PaymentMethodDescription", c => c.String(maxLength: 70));
+            AlterColumn("dbo.ProductType", "ProductTypeDescription", c => c.String(maxLength: 100));
             CreateIndex("dbo.Sale", "BillId");
             AddForeignKey("dbo.Sale", "BillId", "dbo.Bill", "BillId", cascadeDelete: true);
             DropColumn("dbo.Sale", "PaymentMethodId");
@@ -38,8 +38,8 @@
             DropForeignKey("dbo.Bill", "PaymentMethodId", "dbo.PaymentMethod");
             DropIndex("dbo.Sale", new[] { "BillId" });
             DropIndex("dbo.Bill", new[] { "PaymentMethodId" });
-            AlterColumn("dbo.ProductType", "ProductTypeDescription", c => c.string(maxLength: 50));
-            AlterColumn("dbo.PaymentMethod", "PaymentMethodDescription", c => c.string(maxLength: 20));
+            AlterColumn("dbo.ProductType", "ProductTypeDescription", c => c.String(maxLength: 50));
+            AlterColumn("dbo.PaymentMethod", "PaymentMethodDescription", c => c.String(maxLength: 20));
             DropColumn("dbo.Sale", "BillId");
             DropTable("dbo.Bill");
             CreateIndex("dbo.Sale", "PaymentMethodId");

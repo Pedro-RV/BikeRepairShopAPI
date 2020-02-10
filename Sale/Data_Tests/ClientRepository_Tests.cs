@@ -59,10 +59,10 @@ namespace Data_Tests
         [Test]
         public void Read_Test()
         {
-            Client clientGotten = this.clientRepository.Read(3);
+            Client clientGotten = this.clientRepository.Read(1);
 
-            Assert.AreEqual(clientGotten.ClientName, "Marco");
-            Assert.AreEqual(clientGotten.Email, "marco@correo");
+            Assert.AreEqual(clientGotten.ClientName, "Jacinto");
+            Assert.AreEqual(clientGotten.Email, "sierra@correo");
 
         }
 
@@ -89,7 +89,7 @@ namespace Data_Tests
         public void Delete_Test()
         {
             bool correct;
-            Client clientGotten = this.clientRepository.Read(1);
+            Client clientGotten = this.clientRepository.Read(3);
 
             correct = this.clientRepository.Delete(clientGotten);
 

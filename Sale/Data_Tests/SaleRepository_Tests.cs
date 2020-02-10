@@ -70,9 +70,9 @@ namespace Data_Tests
         [Test]
         public void Read_Test()
         {
-            Sale saleGotten = this.saleRepository.Read(3);
+            Sale saleGotten = this.saleRepository.Read(1);
 
-            Assert.AreEqual(saleGotten.Cuantity, 20);
+            Assert.AreEqual(saleGotten.Cuantity, 5);
 
         }
 
@@ -97,7 +97,7 @@ namespace Data_Tests
         public void Delete_Test()
         {
             bool correct;
-            Sale saleGotten = this.saleRepository.Read(1);
+            Sale saleGotten = this.saleRepository.Read(3);
 
             correct = this.saleRepository.Delete(saleGotten);
 

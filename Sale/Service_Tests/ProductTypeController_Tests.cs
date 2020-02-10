@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Autofac;
+using NUnit.Framework;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using Sale_Service.Controllers;
@@ -13,25 +14,28 @@ namespace Service_Tests
     [TestFixture]
     class ProductTypeController_Tests
     {
+        private ProductTypeController productTypeController;
+
         [TestFixtureSetUp]
         public void Init()
         {
-            ProductTypeController productTypeController = new ProductTypeController();
+            var container = ContainerConfig.Configure();
+            var scope = container.BeginLifetimeScope();
 
-            productTypeController.InsertProductType(new ProductTypeSpecific("Ruedas"));
-            productTypeController.InsertProductType(new ProductTypeSpecific("Ventiladores"));
-            productTypeController.InsertProductType(new ProductTypeSpecific("Frenos"));
+            this.productTypeController = scope.Resolve<ProductTypeController>();
+
+            this.productTypeController.InsertProductType(new ProductTypeSpecific("Ruedas"));
+            this.productTypeController.InsertProductType(new ProductTypeSpecific("Ventiladores"));
+            this.productTypeController.InsertProductType(new ProductTypeSpecific("Frenos"));
 
         }
 
         [Test]
         public void InsertProductType_Test()
         {
-            ProductTypeController productTypeController = new ProductTypeController();
+            string message = this.productTypeController.InsertProductType(new ProductTypeSpecific("Llantas"));
 
-            string message = productTypeController.InsertProductType(new ProductTypeSpecific("Llantas"));
-
-            ProductType productTypeGotten = productTypeController.GetProductType(4);
+            ProductType productTypeGotten = this.productTypeController.GetProductType(4);
 
             Assert.AreEqual(message, "ProductType introduced satisfactorily.");
             Assert.AreEqual(productTypeGotten.ProductTypeDescription, "Llantas");
@@ -41,26 +45,22 @@ namespace Service_Tests
         [Test]
         public void GetProductType_Test()
         {
-            ProductTypeController productTypeController = new ProductTypeController();
+            ProductType productTypeGotten = this.productTypeController.GetProductType(1);
 
-            ProductType productTypeGotten = productTypeController.GetProductType(3);
-
-            Assert.AreEqual(productTypeGotten.ProductTypeDescription, "Frenos");
+            Assert.AreEqual(productTypeGotten.ProductTypeDescription, "Ruedas");
 
         }
 
         [Test]
         public void UpdateProductType_Test()
         {
-            ProductTypeController productTypeController = new ProductTypeController();
-
             ProductTypeSpecific change = new ProductTypeSpecific();
             change.ProductTypeId = 2;
             change.ProductTypeDescription = "Herramientas";
 
-            string message = productTypeController.UpdateProductType(change);
+            string message = this.productTypeController.UpdateProductType(change);
 
-            ProductType productTypeCompare = productTypeController.GetProductType(2);
+            ProductType productTypeCompare = this.productTypeController.GetProductType(2);
 
             Assert.AreEqual(message, "ProductType updated satisfactorily.");
             Assert.AreEqual(productTypeCompare.ProductTypeDescription, change.ProductTypeDescription);
@@ -70,9 +70,7 @@ namespace Service_Tests
         [Test]
         public void DeleteProductType_Test()
         {
-            ProductTypeController productTypeController = new ProductTypeController();
-
-            string message = productTypeController.DeleteProductType(1);
+            string message = this.productTypeController.DeleteProductType(3);
 
             Assert.AreEqual(message, "ProductType deleted satisfactorily.");
 

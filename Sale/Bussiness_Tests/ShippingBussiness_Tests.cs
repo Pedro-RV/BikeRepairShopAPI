@@ -37,6 +37,7 @@ namespace Bussiness_Tests
             this.clientBussiness = scope.Resolve<IClientBussiness>();
             this.paymentMethodBussiness = scope.Resolve<IPaymentMethodBussiness>();
             this.billBussiness = scope.Resolve<IBillBussiness>();
+            this.transportCompanyBussiness = scope.Resolve<ITransportCompanyBussiness>();
 
             this.clientBussiness.InsertClient(new ClientSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
             this.productTypeBussiness.InsertProductType(new ProductTypeSpecific("Ruedas"));
@@ -75,7 +76,7 @@ namespace Bussiness_Tests
         [Test]
         public void ReadShipping_Test()
         {
-            Shipping shippingGotten = this.shippingBussiness.ReadShipping(3);
+            Shipping shippingGotten = this.shippingBussiness.ReadShipping(1);
 
             DateTime dateTimeDeparture = new DateTime(2019, 12, 04, 9, 38, 00);
             DateTime dateTimePacking = new DateTime(2019, 12, 04, 9, 00, 00);
@@ -112,7 +113,7 @@ namespace Bussiness_Tests
         {
             bool correct;
 
-            correct = this.shippingBussiness.DeleteShipping(1);
+            correct = this.shippingBussiness.DeleteShipping(3);
 
             Assert.AreEqual(true, correct);
 

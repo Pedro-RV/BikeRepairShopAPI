@@ -76,7 +76,7 @@ namespace Data_Tests
         [Test]
         public void Read_Test()
         {
-            Shipping shippingGotten = this.shippingRepository.Read(3);
+            Shipping shippingGotten = this.shippingRepository.Read(1);
 
             DateTime dateTimeDeparture = new DateTime(2019, 12, 04, 9, 38, 00);
             DateTime dateTimePacking = new DateTime(2019, 12, 04, 9, 00, 00);
@@ -112,7 +112,7 @@ namespace Data_Tests
         public void Delete_Test()
         {
             bool correct;
-            Shipping shippingGotten = shippingRepository.Read(1);
+            Shipping shippingGotten = shippingRepository.Read(3);
 
             correct = this.shippingRepository.Delete(shippingGotten);
 

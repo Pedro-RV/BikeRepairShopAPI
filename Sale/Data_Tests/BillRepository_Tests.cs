@@ -60,7 +60,7 @@ namespace Data_Tests
         [Test]
         public void Read_Test()
         {
-            Bill billGotten = this.billRepository.Read(3);
+            Bill billGotten = this.billRepository.Read(1);
 
             DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
 
@@ -91,7 +91,7 @@ namespace Data_Tests
         public void Delete_Test()
         {
             bool correct;
-            Bill billGotten = this.billRepository.Read(1);
+            Bill billGotten = this.billRepository.Read(3);
 
             correct = this.billRepository.Delete(billGotten);
 

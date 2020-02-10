@@ -49,10 +49,10 @@ namespace Bussiness_Tests
         [Test]
         public void ReadTransportCompany_Test()
         {
-            TransportCompany transportCompanyGotten = this.transportCompanyBussiness.ReadTransportCompany(3);
+            TransportCompany transportCompanyGotten = this.transportCompanyBussiness.ReadTransportCompany(1);
 
-            Assert.AreEqual(transportCompanyGotten.TransportCompanyName, "DHL");
-            Assert.AreEqual(transportCompanyGotten.TelephoneNum, "913");
+            Assert.AreEqual(transportCompanyGotten.TransportCompanyName, "Envi");
+            Assert.AreEqual(transportCompanyGotten.TelephoneNum, "911");
 
         }
 
@@ -81,7 +81,7 @@ namespace Bussiness_Tests
         {
             bool correct;
 
-            correct = this.transportCompanyBussiness.DeleteTransportCompany(1);
+            correct = this.transportCompanyBussiness.DeleteTransportCompany(3);
 
             Assert.AreEqual(true, correct);
 

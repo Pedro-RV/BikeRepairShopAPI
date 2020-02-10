@@ -54,11 +54,11 @@ namespace Bussiness_Tests
         [Test]
         public void ReadProduct_Test()
         {
-            Product productGotten = this.productBussiness.ReadProduct(3);
+            Product productGotten = this.productBussiness.ReadProduct(1);
 
-            Assert.AreEqual(productGotten.ProductDescription, "Ruedas Grua");
-            Assert.AreEqual(productGotten.Prize, 350);
-            Assert.AreEqual(productGotten.Cuantity, 20);
+            Assert.AreEqual(productGotten.ProductDescription, "Ruedas Michelin");
+            Assert.AreEqual(productGotten.Prize, 50);
+            Assert.AreEqual(productGotten.Cuantity, 50);
 
         }
 
@@ -87,7 +87,7 @@ namespace Bussiness_Tests
         {
             bool correct;
 
-            correct = this.productBussiness.DeleteProduct(1);
+            correct = this.productBussiness.DeleteProduct(3);
 
             Assert.AreEqual(true, correct);
 

@@ -48,9 +48,9 @@ namespace Bussiness_Tests
         [Test]
         public void ReadPaymentMethod_Test()
         {
-            PaymentMethod paymentMethodGotten = this.paymentMethodBussiness.ReadPaymentMethod(3);
+            PaymentMethod paymentMethodGotten = this.paymentMethodBussiness.ReadPaymentMethod(1);
 
-            Assert.AreEqual(paymentMethodGotten.PaymentMethodDescription, "VISA");
+            Assert.AreEqual(paymentMethodGotten.PaymentMethodDescription, "Contrarrembolso");
 
         }
 
@@ -77,7 +77,7 @@ namespace Bussiness_Tests
         {
             bool correct;
 
-            correct = this.paymentMethodBussiness.DeletePaymentMethod(1);
+            correct = this.paymentMethodBussiness.DeletePaymentMethod(3);
 
             Assert.AreEqual(true, correct);
 

@@ -112,7 +112,7 @@ namespace Sale_Data
             {
                 throw;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
@@ -141,7 +141,7 @@ namespace Sale_Data
             {
                 throw;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }

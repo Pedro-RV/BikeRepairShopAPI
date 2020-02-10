@@ -55,10 +55,10 @@ namespace Bussiness_Tests
         public void ReadClient_Test()
         {
 
-            Client clientGotten = this.clientBussiness.ReadClient(3);
+            Client clientGotten = this.clientBussiness.ReadClient(1);
 
-            Assert.AreEqual(clientGotten.ClientName, "Marco");
-            Assert.AreEqual(clientGotten.Email, "marco@correo");
+            Assert.AreEqual(clientGotten.ClientName, "Jacinto");
+            Assert.AreEqual(clientGotten.Email, "sierra@correo");
 
         }
 
@@ -87,7 +87,7 @@ namespace Bussiness_Tests
         {
             bool correct;
 
-            correct = this.clientBussiness.DeleteClient(1);
+            correct = this.clientBussiness.DeleteClient(3);
 
             Assert.AreEqual(true, correct);
 

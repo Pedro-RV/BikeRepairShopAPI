@@ -57,7 +57,7 @@ namespace Bussiness_Tests
         [Test]
         public void ReadBill_Test()
         {
-            Bill billGotten = this.billBussiness.ReadBill(3);
+            Bill billGotten = this.billBussiness.ReadBill(1);
 
             DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
 
@@ -89,7 +89,7 @@ namespace Bussiness_Tests
         {
             bool correct;
 
-            correct = this.billBussiness.DeleteBill(1);
+            correct = this.billBussiness.DeleteBill(3);
 
             Assert.AreEqual(true, correct);
 

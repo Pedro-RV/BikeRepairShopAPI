@@ -53,9 +53,9 @@ namespace Data_Tests
         [Test]
         public void Read_Test()
         {
-            ProductType productTypeGotten = this.productTypeRepository.Read(3);
+            ProductType productTypeGotten = this.productTypeRepository.Read(1);
 
-            Assert.AreEqual(productTypeGotten.ProductTypeDescription, "Frenos");
+            Assert.AreEqual(productTypeGotten.ProductTypeDescription, "Ruedas");
 
         }
 
@@ -80,7 +80,7 @@ namespace Data_Tests
         public void Delete_Test()
         {
             bool correct;
-            ProductType productTypeGotten = this.productTypeRepository.Read(1);
+            ProductType productTypeGotten = this.productTypeRepository.Read(3);
 
             correct = this.productTypeRepository.Delete(productTypeGotten);
 

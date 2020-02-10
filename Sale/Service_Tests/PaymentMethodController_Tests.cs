@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Autofac;
+using NUnit.Framework;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using Sale_Service.Controllers;
@@ -13,25 +14,28 @@ namespace Service_Tests
     [TestFixture]
     class PaymentMethodController_Tests
     {
+        private PaymentMethodController paymentMethodController;
+
         [TestFixtureSetUp]
         public void Init()
         {
-            PaymentMethodController paymentMethodController = new PaymentMethodController();
+            var container = ContainerConfig.Configure();
+            var scope = container.BeginLifetimeScope();
 
-            paymentMethodController.InsertPaymentMethod(new PaymentMethodSpecific("Contrarrembolso"));
-            paymentMethodController.InsertPaymentMethod(new PaymentMethodSpecific("Paypal"));
-            paymentMethodController.InsertPaymentMethod(new PaymentMethodSpecific("VISA"));
+            this.paymentMethodController = scope.Resolve<PaymentMethodController>();
+
+            this.paymentMethodController.InsertPaymentMethod(new PaymentMethodSpecific("Contrarrembolso"));
+            this.paymentMethodController.InsertPaymentMethod(new PaymentMethodSpecific("Paypal"));
+            this.paymentMethodController.InsertPaymentMethod(new PaymentMethodSpecific("VISA"));
 
         }
 
         [Test]
         public void InsertPaymentMethod_Test()
         {
-            PaymentMethodController paymentMethodController = new PaymentMethodController();
+            string message = this.paymentMethodController.InsertPaymentMethod(new PaymentMethodSpecific("Cheque"));
 
-            String message = paymentMethodController.InsertPaymentMethod(new PaymentMethodSpecific("Cheque"));
-
-            PaymentMethod paymentMethodGotten = paymentMethodController.GetPaymentMethod(4);
+            PaymentMethod paymentMethodGotten = this.paymentMethodController.GetPaymentMethod(4);
 
             Assert.AreEqual(message, "PaymentMethod introduced satisfactorily.");
             Assert.AreEqual(paymentMethodGotten.PaymentMethodDescription, "Cheque");
@@ -41,26 +45,22 @@ namespace Service_Tests
         [Test]
         public void GetPaymentMethod_Test()
         {
-            PaymentMethodController paymentMethodController = new PaymentMethodController();
+            PaymentMethod paymentMethodGotten = this.paymentMethodController.GetPaymentMethod(1);
 
-            PaymentMethod paymentMethodGotten = paymentMethodController.GetPaymentMethod(3);
-
-            Assert.AreEqual(paymentMethodGotten.PaymentMethodDescription, "VISA");
+            Assert.AreEqual(paymentMethodGotten.PaymentMethodDescription, "Contrarrembolso");
 
         }
 
         [Test]
         public void UpdatePaymentMethod_Test()
         {
-            PaymentMethodController paymentMethodController = new PaymentMethodController();
-
             PaymentMethodSpecific change = new PaymentMethodSpecific();
             change.PaymentMethodId = 2;
             change.PaymentMethodDescription = "Cupon";
 
-            String message = paymentMethodController.UpdatePaymentMethod(change);
+            string message = this.paymentMethodController.UpdatePaymentMethod(change);
 
-            PaymentMethod paymentMethodCompare = paymentMethodController.GetPaymentMethod(2);
+            PaymentMethod paymentMethodCompare = this.paymentMethodController.GetPaymentMethod(2);
 
             Assert.AreEqual(message, "PaymentMethod updated satisfactorily.");
             Assert.AreEqual(paymentMethodCompare.PaymentMethodDescription, change.PaymentMethodDescription);
@@ -70,9 +70,7 @@ namespace Service_Tests
         [Test]
         public void DeletePaymentMethod_Test()
         {
-            PaymentMethodController paymentMethodController = new PaymentMethodController();
-
-            String message = paymentMethodController.DeletePaymentMethod(1);
+            string message = this.paymentMethodController.DeletePaymentMethod(3);
 
             Assert.AreEqual(message, "PaymentMethod deleted satisfactorily.");
 

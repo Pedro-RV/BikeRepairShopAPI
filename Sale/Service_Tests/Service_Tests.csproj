@@ -117,6 +117,18 @@
       <Project>{a787784a-2839-4182-bdc4-66bc1c0206cc}</Project>
       <Name>Sale_Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sale_Bussiness\Sale_Bussiness.csproj">
+      <Project>{ab814b5c-bc34-42b5-9d3b-8444b48b52ab}</Project>
+      <Name>Sale_Bussiness</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sale_Data\Sale_Data.csproj">
+      <Project>{cb8f251e-39a0-42d0-93e8-cd1f57b0115e}</Project>
+      <Name>Sale_Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sale_Helper\Sale_Helper.csproj">
+      <Project>{ef4f277f-ec4f-419f-8873-eef5bc2ae8a0}</Project>
+      <Name>Sale_Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sale_Service\Sale_Service.csproj">
       <Project>{0bcf0f01-65ed-4e28-aeb1-87cb5dbe0370}</Project>
       <Name>Sale_Service</Name>

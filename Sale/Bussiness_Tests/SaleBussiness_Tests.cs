@@ -66,9 +66,9 @@ namespace Bussiness_Tests
         [Test]
         public void ReadSale_Test()
         {
-            Sale saleGotten = this.saleBussiness.ReadSale(3);
+            Sale saleGotten = this.saleBussiness.ReadSale(1);
 
-            Assert.AreEqual(saleGotten.Cuantity, 20);
+            Assert.AreEqual(saleGotten.Cuantity, 5);
 
         }
 
@@ -95,7 +95,7 @@ namespace Bussiness_Tests
         {
             bool correct;
 
-            correct = this.saleBussiness.DeleteSale(1);
+            correct = this.saleBussiness.DeleteSale(3);
 
             Assert.AreEqual(true, correct);
 

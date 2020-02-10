@@ -51,10 +51,10 @@ namespace Service_Tests
         [Test]
         public void GetClient_Test()
         {
-            Client clientGotten = this.clientController.GetClient(3);
+            Client clientGotten = this.clientController.GetClient(1);
 
-            Assert.AreEqual(clientGotten.ClientName, "Marco");
-            Assert.AreEqual(clientGotten.Email, "marco@correo");
+            Assert.AreEqual(clientGotten.ClientName, "Jacinto");
+            Assert.AreEqual(clientGotten.Email, "sierra@correo");
 
         }
 
@@ -79,7 +79,7 @@ namespace Service_Tests
         [Test]
         public void DeleteClient_Test()
         {
-            string message = this.clientController.DeleteClient(1);
+            string message = this.clientController.DeleteClient(3);
 
             Assert.AreEqual(message, "Client deleted satisfactorily.");
         }
