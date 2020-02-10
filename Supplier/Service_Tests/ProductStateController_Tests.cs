@@ -1,81 +1,79 @@
-﻿//using NUnit.Framework;
-//using Supplier_Entities.EntityModel;
-//using Supplier_Entities.Specific;
-//using Supplier_Service.Controllers;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using Autofac;
+using NUnit.Framework;
+using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
+using Supplier_Service.Controllers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-//namespace Service_Tests
-//{
-//    [TestFixture]
-//    class ProductStateController_Tests
-//    {
-//        [TestFixtureSetUp]
-//        public void Init()
-//        {
-//            ProductStateController productStateController = new ProductStateController();
+namespace Service_Tests
+{
+    [TestFixture]
+    class ProductStateController_Tests
+    {
+        private ProductStateController productStateController;
 
-//            productStateController.InsertProductState(new ProductStateSpecific("No disponible"));
-//            productStateController.InsertProductState(new ProductStateSpecific("Sin existencias"));
-//            productStateController.InsertProductState(new ProductStateSpecific("Con existencias"));
+        [TestFixtureSetUp]
+        public void Init()
+        {
+            var container = ContainerConfig.Configure();
+            var scope = container.BeginLifetimeScope();
 
-//        }
+            this.productStateController = scope.Resolve<ProductStateController>();
 
-//        [Test]
-//        public void InsertProductState_Test()
-//        {
-//            ProductStateController productStateController = new ProductStateController();
+            this.productStateController.InsertProductState(new ProductStateSpecific("No disponible"));
+            this.productStateController.InsertProductState(new ProductStateSpecific("Sin existencias"));
+            this.productStateController.InsertProductState(new ProductStateSpecific("Con existencias"));
 
-//            String message = productStateController.InsertProductState(new ProductStateSpecific("Fuera de venta"));
+        }
 
-//            ProductState productStateGotten = productStateController.GetProductState(4);
+        [Test]
+        public void InsertProductState_Test()
+        {
+            String message = this.productStateController.InsertProductState(new ProductStateSpecific("Fuera de venta"));
 
-//            Assert.AreEqual(message, "ProductState introduced satisfactorily.");
-//            Assert.AreEqual(productStateGotten.ProductStateDescription, "Fuera de venta");
+            ProductState productStateGotten = this.productStateController.GetProductState(4);
 
-//        }
+            Assert.AreEqual(message, "ProductState introduced satisfactorily.");
+            Assert.AreEqual(productStateGotten.ProductStateDescription, "Fuera de venta");
 
-//        [Test]
-//        public void GetProductState_Test()
-//        {
-//            ProductStateController productStateController = new ProductStateController();
+        }
 
-//            ProductState productStateGotten = productStateController.GetProductState(1);
+        [Test]
+        public void GetProductState_Test()
+        {
+            ProductState productStateGotten = this.productStateController.GetProductState(1);
 
-//            Assert.AreEqual(productStateGotten.ProductStateDescription, "No disponible");
+            Assert.AreEqual(productStateGotten.ProductStateDescription, "No disponible");
 
-//        }
+        }
 
-//        [Test]
-//        public void UpdateProductState_Test()
-//        {
-//            ProductStateController productStateController = new ProductStateController();
+        [Test]
+        public void UpdateProductState_Test()
+        {
+            ProductStateSpecific change = new ProductStateSpecific();
+            change.ProductStateId = 2;
+            change.ProductStateDescription = "Agotado";
 
-//            ProductStateSpecific change = new ProductStateSpecific();
-//            change.ProductStateId = 2;
-//            change.ProductStateDescription = "Agotado";
+            String message = this.productStateController.UpdateProductState(change);
 
-//            String message = productStateController.UpdateProductState(change);
+            ProductState productStateGotten = this.productStateController.GetProductState(2);
 
-//            ProductState productStateGotten = productStateController.GetProductState(2);
+            Assert.AreEqual(message, "ProductState updated satisfactorily.");
+            Assert.AreEqual(productStateGotten.ProductStateDescription, "Agotado");
 
-//            Assert.AreEqual(message, "ProductState updated satisfactorily.");
-//            Assert.AreEqual(productStateGotten.ProductStateDescription, "Agotado");
+        }
 
-//        }
+        [Test]
+        public void DeleteProductState_Test()
+        {
+            String message = this.productStateController.DeleteProductState(3);
 
-//        [Test]
-//        public void DeleteProductState_Test()
-//        {
-//            ProductStateController productStateController = new ProductStateController();
+            Assert.AreEqual(message, "ProductState deleted satisfactorily.");
 
-//            String message = productStateController.DeleteProductState(3);
-
-//            Assert.AreEqual(message, "ProductState deleted satisfactorily.");
-
-//        }
-//    }
-//}
+        }
+    }
+}

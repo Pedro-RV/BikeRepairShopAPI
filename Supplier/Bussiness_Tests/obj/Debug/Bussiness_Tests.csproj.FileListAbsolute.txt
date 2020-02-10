@@ -51,3 +51,12 @@ C:\REPO\becaPedro\Supplier\Bussiness_Tests\obj\Debug\Bussiness_Tests.csproj.Copy
 C:\REPO\becaPedro\Supplier\Bussiness_Tests\bin\Debug\AutoMapper.dll
 C:\REPO\becaPedro\Supplier\Bussiness_Tests\bin\Debug\AutoMapper.pdb
 C:\REPO\becaPedro\Supplier\Bussiness_Tests\bin\Debug\AutoMapper.xml
+C:\REPO\becaPedro\Supplier\Bussiness_Tests\bin\Debug\Autofac.dll
+C:\REPO\becaPedro\Supplier\Bussiness_Tests\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\REPO\becaPedro\Supplier\Bussiness_Tests\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\REPO\becaPedro\Supplier\Bussiness_Tests\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\REPO\becaPedro\Supplier\Bussiness_Tests\bin\Debug\Autofac.pdb
+C:\REPO\becaPedro\Supplier\Bussiness_Tests\bin\Debug\Autofac.xml
+C:\REPO\becaPedro\Supplier\Bussiness_Tests\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\REPO\becaPedro\Supplier\Bussiness_Tests\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\REPO\becaPedro\Supplier\Bussiness_Tests\bin\Debug\System.Threading.Tasks.Extensions.xml

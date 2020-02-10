@@ -1,88 +1,90 @@
-﻿//using NUnit.Framework;
-//using Supplier_Bussiness;
-//using Supplier_Entities.EntityModel;
-//using Supplier_Entities.Specific;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using Autofac;
+using NUnit.Framework;
+using Supplier_Bussiness;
+using Supplier_Bussiness.Interfaces;
+using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-//namespace Bussiness_Tests
-//{
-//    [TestFixture]
-//    class SupplyCompanyBussiness_Tests
-//    {
-//        [TestFixtureSetUp]
-//        public void Init()
-//        {
-//            SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
+namespace Bussiness_Tests
+{
+    [TestFixture]
+    class SupplyCompanyBussiness_Tests
+    {
+        private ISupplyCompanyBussiness supplyCompanyBussiness;
 
-//            supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompanySpecific("Ruedas Hermanos Carrasco", "123"));
-//            supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompanySpecific("Tecnologia ComputerMax", "001"));
-//            supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompanySpecific("Ropa Osuna", "002"));
+        [TestFixtureSetUp]
+        public void Init()
+        {
+            var container = ContainerConfig.Configure();
+            var scope = container.BeginLifetimeScope();
 
-//        }
+            this.supplyCompanyBussiness = scope.Resolve<ISupplyCompanyBussiness>();
 
-//        [Test]
-//        public void InsertSupplyCompany_Test()
-//        {
-//            bool correct;
-//            SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
+            this.supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompanySpecific("Ruedas Hermanos Carrasco", "123"));
+            this.supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompanySpecific("Tecnologia ComputerMax", "001"));
+            this.supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompanySpecific("Ropa Osuna", "002"));
 
-//            correct = supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompanySpecific("Pesas Cañada", "003"));
+        }
 
-//            SupplyCompany supplyCompanyGotten = supplyCompanyBussiness.ReadSupplyCompany(4);
+        [Test]
+        public void InsertSupplyCompany_Test()
+        {
+            bool correct;
 
-//            Assert.AreEqual(true, correct);
-//            Assert.AreEqual(supplyCompanyGotten.SupplyCompanyName, "Pesas Cañada");
-//            Assert.AreEqual(supplyCompanyGotten.TelephoneNum, "003");
+            correct = this.supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompanySpecific("Pesas Cañada", "003"));
 
-//        }
+            SupplyCompany supplyCompanyGotten = this.supplyCompanyBussiness.ReadSupplyCompany(4);
 
-//        [Test]
-//        public void ReadSupplyCompany_Test()
-//        {
-//            SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
+            Assert.AreEqual(true, correct);
+            Assert.AreEqual(supplyCompanyGotten.SupplyCompanyName, "Pesas Cañada");
+            Assert.AreEqual(supplyCompanyGotten.TelephoneNum, "003");
 
-//            SupplyCompany supplyCompanyGotten = supplyCompanyBussiness.ReadSupplyCompany(1);
+        }
 
-//            Assert.AreEqual(supplyCompanyGotten.SupplyCompanyName, "Ruedas Hermanos Carrasco");
-//            Assert.AreEqual(supplyCompanyGotten.TelephoneNum, "123");
+        [Test]
+        public void ReadSupplyCompany_Test()
+        {
+            SupplyCompany supplyCompanyGotten = this.supplyCompanyBussiness.ReadSupplyCompany(1);
 
-//        }
+            Assert.AreEqual(supplyCompanyGotten.SupplyCompanyName, "Ruedas Hermanos Carrasco");
+            Assert.AreEqual(supplyCompanyGotten.TelephoneNum, "123");
 
-//        [Test]
-//        public void UpdateSupplyCompany_Test()
-//        {
-//            bool correct;
-//            SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
+        }
 
-//            SupplyCompanySpecific change = new SupplyCompanySpecific();
-//            change.SupplyCompanyId = 2;
-//            change.SupplyCompanyName = "Tecnologia RapidMax";
-//            change.TelephoneNum = "555";
+        [Test]
+        public void UpdateSupplyCompany_Test()
+        {
+            bool correct;
 
-//            correct = supplyCompanyBussiness.UpdateSupplyCompany(change);
+            SupplyCompanySpecific change = new SupplyCompanySpecific();
+            change.SupplyCompanyId = 2;
+            change.SupplyCompanyName = "Tecnologia RapidMax";
+            change.TelephoneNum = "555";
 
-//            SupplyCompany supplyCompanyGotten = supplyCompanyBussiness.ReadSupplyCompany(2);
+            correct = this.supplyCompanyBussiness.UpdateSupplyCompany(change);
 
-//            Assert.AreEqual(true, correct);
-//            Assert.AreEqual(supplyCompanyGotten.SupplyCompanyName, "Tecnologia RapidMax");
-//            Assert.AreEqual(supplyCompanyGotten.TelephoneNum, "555");
+            SupplyCompany supplyCompanyGotten = this.supplyCompanyBussiness.ReadSupplyCompany(2);
 
-//        }
+            Assert.AreEqual(true, correct);
+            Assert.AreEqual(supplyCompanyGotten.SupplyCompanyName, "Tecnologia RapidMax");
+            Assert.AreEqual(supplyCompanyGotten.TelephoneNum, "555");
 
-//        [Test]
-//        public void DeleteSupplyCompany_Test()
-//        {
-//            bool correct;
-//            SupplyCompanyBussiness supplyCompanyBussiness = new SupplyCompanyBussiness();
+        }
 
-//            correct = supplyCompanyBussiness.DeleteSupplyCompany(3);
+        [Test]
+        public void DeleteSupplyCompany_Test()
+        {
+            bool correct;
 
-//            Assert.AreEqual(true, correct);
+            correct = this.supplyCompanyBussiness.DeleteSupplyCompany(3);
 
-//        }
-//    }
-//}
+            Assert.AreEqual(true, correct);
+
+        }
+    }
+}

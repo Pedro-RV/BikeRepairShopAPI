@@ -1,96 +1,99 @@
-﻿//using NUnit.Framework;
-//using Supplier_Bussiness;
-//using Supplier_Entities.EntityModel;
-//using Supplier_Entities.Specific;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using Autofac;
+using NUnit.Framework;
+using Supplier_Bussiness;
+using Supplier_Bussiness.Interfaces;
+using Supplier_Entities.EntityModel;
+using Supplier_Entities.Specific;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-//namespace Bussiness_Tests
-//{
-//    [TestFixture]
-//    class WarehouseAdminBussiness_Tests
-//    {
-//        [TestFixtureSetUp]
-//        public void Init()
-//        {
-//            EmployeeBussiness employeeBussiness = new EmployeeBussiness();
-//            employeeBussiness.InsertEmployee(new EmployeeSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
-//            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
-//            WarehouseBussiness warehouseBussiness = new WarehouseBussiness();
-//            warehouseBussiness.InsertWarehouse(new WarehouseSpecific("Calle Ebro", 120));
+namespace Bussiness_Tests
+{
+    [TestFixture]
+    class WarehouseAdminBussiness_Tests
+    {
+        private IWarehouseBussiness warehouseBussiness;
+        private IEmployeeBussiness employeeBussiness;
+        private IWarehouseAdminBussiness warehouseAdminBussiness;
 
-//            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
+        [TestFixtureSetUp]
+        public void Init()
+        {
+            var container = ContainerConfig.Configure();
+            var scope = container.BeginLifetimeScope();
 
-//            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
-//            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
-//            warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
+            this.warehouseBussiness = scope.Resolve<IWarehouseBussiness>();
+            this.employeeBussiness = scope.Resolve<IEmployeeBussiness>();
+            this.warehouseAdminBussiness = scope.Resolve<IWarehouseAdminBussiness>();
 
-//        }
+            this.employeeBussiness.InsertEmployee(new EmployeeSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
+            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
+            this.warehouseBussiness.InsertWarehouse(new WarehouseSpecific("Calle Ebro", 120));
 
-//        [Test]
-//        public void InsertWarehouseAdmin_Test()
-//        {
-//            bool correct;
-//            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
+            this.warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
+            this.warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
+            this.warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
 
-//            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
+        }
 
-//            correct = warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
+        [Test]
+        public void InsertWarehouseAdmin_Test()
+        {
+            bool correct;
+            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
 
-//            WarehouseAdmin warehouseAdminGotten = warehouseAdminBussiness.ReadWarehouseAdmin(4);
+            correct = this.warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
 
-//            Assert.AreEqual(true, correct);
-//            Assert.AreEqual(warehouseAdminGotten.StartDate, dateTime);
+            WarehouseAdmin warehouseAdminGotten = this.warehouseAdminBussiness.ReadWarehouseAdmin(4);
 
-//        }
+            Assert.AreEqual(true, correct);
+            Assert.AreEqual(warehouseAdminGotten.StartDate, dateTime);
+
+        }
 
 
-//        [Test]
-//        public void ReadWarehouseAdmin_Test()
-//        {
-//            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
+        [Test]
+        public void ReadWarehouseAdmin_Test()
+        {
+            WarehouseAdmin warehouseAdminGotten = this.warehouseAdminBussiness.ReadWarehouseAdmin(1);
 
-//            WarehouseAdmin warehouseAdminGotten = warehouseAdminBussiness.ReadWarehouseAdmin(1);
+            DateTime seeDateTime = new DateTime(2019, 12, 03, 9, 38, 00);
 
-//            DateTime seeDateTime = new DateTime(2019, 12, 03, 9, 38, 00);
+            Assert.AreEqual(warehouseAdminGotten.StartDate, seeDateTime);
 
-//            Assert.AreEqual(warehouseAdminGotten.StartDate, seeDateTime);
+        }
 
-//        }
+        [Test]
+        public void UpdateWarehouseAdmin_Test()
+        {
+            bool correct;
+            DateTime modify = new DateTime(2019, 10, 03, 10, 51, 00);
 
-//        [Test]
-//        public void UpdateWarehouseAdmin_Test()
-//        {
-//            bool correct;
-//            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
-//            DateTime modify = new DateTime(2019, 10, 03, 10, 51, 00);
+            WarehouseAdminSpecific change = new WarehouseAdminSpecific();
+            change.WarehouseAdminId = 2;
+            change.StartDate = modify;
 
-//            WarehouseAdminSpecific change = new WarehouseAdminSpecific();
-//            change.WarehouseAdminId = 2;
-//            change.StartDate = modify;
+            correct = this.warehouseAdminBussiness.UpdateWarehouseAdmin(change);
 
-//            correct = warehouseAdminBussiness.UpdateWarehouseAdmin(change);
+            WarehouseAdmin warehouseAdminCompare = this.warehouseAdminBussiness.ReadWarehouseAdmin(2);
 
-//            WarehouseAdmin warehouseAdminCompare = warehouseAdminBussiness.ReadWarehouseAdmin(2);
+            Assert.AreEqual(true, correct);
+            Assert.AreEqual(warehouseAdminCompare.StartDate, modify);
 
-//            Assert.AreEqual(true, correct);
-//            Assert.AreEqual(warehouseAdminCompare.StartDate, modify);
+        }
 
-//        }
+        [Test]
+        public void DeleteWarehouseAdmin_Test()
+        {
+            bool correct;
 
-//        [Test]
-//        public void DeleteWarehouseAdmin_Test()
-//        {
-//            bool correct;
-//            WarehouseAdminBussiness warehouseAdminBussiness = new WarehouseAdminBussiness();
+            correct = this.warehouseAdminBussiness.DeleteWarehouseAdmin(3);
 
-//            correct = warehouseAdminBussiness.DeleteWarehouseAdmin(3);
+            Assert.AreEqual(true, correct);
 
-//            Assert.AreEqual(true, correct);
-
-//        }
-//    }
-//}
+        }
+    }
+}

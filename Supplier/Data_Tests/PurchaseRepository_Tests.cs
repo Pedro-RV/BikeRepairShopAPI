@@ -1,127 +1,109 @@
-﻿//using NUnit.Framework;
-//using Supplier_Data;
-//using Supplier_Data.Context;
-//using Supplier_Entities.EntityModel;
-//using Supplier_Helper.ExceptionController;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using Autofac;
+using NUnit.Framework;
+using Supplier_Data;
+using Supplier_Data.Context;
+using Supplier_Data.Interfaces;
+using Supplier_Entities.EntityModel;
+using Supplier_Helper.ExceptionController;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-//namespace Data_Tests
-//{
-//    class PurchaseRepository_Tests
-//    {
-//        private SupplierContext dbContext;
-//        private ExceptionController exceptionController;
+namespace Data_Tests
+{
+    [TestFixture]
+    class PurchaseRepository_Tests
+    {
+        private IPurchaseRepository purchaseRepository;
 
-//        public PurchaseRepository_Tests()
-//        {
-//            SupplierContextProvider.InitializeSupplierContext();
-//            dbContext = SupplierContextProvider.GetSupplierContext();
-//            exceptionController = new ExceptionController();
-//        }
+        [TestFixtureSetUp]
+        public void Init()
+        {
+            var container = ContainerConfig.Configure();
+            var scope = container.BeginLifetimeScope();
 
-//        [TestFixtureSetUp]
-//        public void Init()
-//        {
-//            Employee employee = new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
-//            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
-//            Warehouse warehouse = new Warehouse("Calle Ebro", 120);
-//            WarehouseAdmin warehouseAdmin = new WarehouseAdmin(dateTime, employee, warehouse);
-//            ProductState productState = new ProductState("No disponible");
-//            Product product = new Product("Pelota", 20, 15, true);
-//            SupplyCompany supplyCompany = new SupplyCompany("Ruedas Hermanos Carrasco", "123");
+            this.purchaseRepository = scope.Resolve<IPurchaseRepository>();
 
-//            DateTime dateTime2 = new DateTime(2019, 12, 03, 9, 38, 00);
+            Product product = new Product("Pelota", 20, 15, true);
+            SupplyCompany supplyCompany = new SupplyCompany("Ruedas Hermanos Carrasco", "123");
 
-//            Purchase purchaseOne = new Purchase(dateTime2, 2, 30, product, supplyCompany);
-//            Purchase purchaseTwo = new Purchase(dateTime2, 1, 10, product, supplyCompany);
-//            Purchase purchaseThree = new Purchase(dateTime2, 5, 120, product, supplyCompany);
+            DateTime dateTime2 = new DateTime(2019, 12, 03, 9, 38, 00);
 
+            Purchase purchaseOne = new Purchase(dateTime2, 2, 30, product, supplyCompany);
+            Purchase purchaseTwo = new Purchase(dateTime2, 1, 10, product, supplyCompany);
+            Purchase purchaseThree = new Purchase(dateTime2, 5, 120, product, supplyCompany);
 
-//            PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
+            this.purchaseRepository.Insert(purchaseOne);
+            this.purchaseRepository.Insert(purchaseTwo);
+            this.purchaseRepository.Insert(purchaseThree);
+        }
 
-//            purchaseRepository.Insert(purchaseOne);
-//            purchaseRepository.Insert(purchaseTwo);
-//            purchaseRepository.Insert(purchaseThree);
-//        }
+        [Test]
+        public void Insert_Test()
+        {
+            Product product = new Product("Pelota", 20, 15, true);
+            SupplyCompany supplyCompany = new SupplyCompany("Ruedas Hermanos Carrasco", "123");
+            DateTime dateTime2 = new DateTime(2019, 12, 03, 9, 38, 00);
+            Purchase purchaseAdd = new Purchase(dateTime2, 10, 500, product, supplyCompany);
 
-//        [Test]
-//        public void Insert_Test()
-//        {
-//            Employee employee = new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
-//            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);           
-//            Warehouse warehouse = new Warehouse("Calle Ebro", 120);
-//            WarehouseAdmin warehouseAdmin = new WarehouseAdmin(dateTime, employee, warehouse);
-//            ProductState productState = new ProductState("No disponible");
-//            Product product = new Product("Pelota", 20, 15, true);
-//            SupplyCompany supplyCompany = new SupplyCompany("Ruedas Hermanos Carrasco", "123");
-//            DateTime dateTime2 = new DateTime(2019, 12, 03, 9, 38, 00);
-//            Purchase purchaseAdd = new Purchase(dateTime2, 10, 500, product, supplyCompany);
+            bool correct;
 
-//            bool correct;
-//            PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
+            correct = this.purchaseRepository.Insert(purchaseAdd);
 
-//            correct = purchaseRepository.Insert(purchaseAdd);
+            Purchase purchaseGotten = this.purchaseRepository.Read(4);
 
-//            Purchase purchaseGotten = purchaseRepository.Read(4);
+            Assert.AreEqual(true, correct);
+            Assert.AreEqual(purchaseGotten.PurchaseDate, purchaseAdd.PurchaseDate);
+            Assert.AreEqual(purchaseGotten.Cuantity, purchaseAdd.Cuantity);
+            Assert.AreEqual(purchaseGotten.Prize, purchaseAdd.Prize);
+            Assert.AreEqual(purchaseGotten.Product, purchaseAdd.Product);
+            Assert.AreEqual(purchaseGotten.SupplyCompany, purchaseAdd.SupplyCompany);
+        }
 
-//            Assert.AreEqual(true, correct);
-//            Assert.AreEqual(purchaseGotten.PurchaseDate, purchaseAdd.PurchaseDate);
-//            Assert.AreEqual(purchaseGotten.Cuantity, purchaseAdd.Cuantity);
-//            Assert.AreEqual(purchaseGotten.Prize, purchaseAdd.Prize);
-//            Assert.AreEqual(purchaseGotten.Product, purchaseAdd.Product);
-//            Assert.AreEqual(purchaseGotten.SupplyCompany, purchaseAdd.SupplyCompany);
-//        }
+        [Test]
+        public void Read_Test()
+        {
+            Purchase purchaseGotten = this.purchaseRepository.Read(3);
 
-//        [Test]
-//        public void Read_Test()
-//        {
-//            PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
+            DateTime seeDateTime = new DateTime(2019, 12, 03, 9, 38, 00);
 
-//            Purchase purchaseGotten = purchaseRepository.Read(3);
+            Assert.AreEqual(purchaseGotten.PurchaseDate, seeDateTime);
+            Assert.AreEqual(purchaseGotten.Cuantity, 5);
+            Assert.AreEqual(purchaseGotten.Prize, 120);
 
-//            DateTime seeDateTime = new DateTime(2019, 12, 03, 9, 38, 00);
+        }
 
-//            Assert.AreEqual(purchaseGotten.PurchaseDate, seeDateTime);
-//            Assert.AreEqual(purchaseGotten.Cuantity, 5);
-//            Assert.AreEqual(purchaseGotten.Prize, 120);
+        [Test]
+        public void Update_Test()
+        {
+            bool correct;
+            Purchase purchaseGotten = this.purchaseRepository.Read(2);
 
-//        }
+            purchaseGotten.Cuantity = 9;
+            purchaseGotten.Prize = 85;
 
-//        [Test]
-//        public void Update_Test()
-//        {
-//            PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
-//            bool correct;
-//            Purchase purchaseGotten = purchaseRepository.Read(2);
+            correct = this.purchaseRepository.Update(purchaseGotten);
 
-//            purchaseGotten.Cuantity = 9;
-//            purchaseGotten.Prize = 85;
+            Purchase purchaseCompare = this.purchaseRepository.Read(2);
 
-//            correct = purchaseRepository.Update(purchaseGotten);
+            Assert.AreEqual(true, correct);
+            Assert.AreEqual(purchaseCompare.Cuantity, purchaseGotten.Cuantity);
+            Assert.AreEqual(purchaseCompare.Prize, purchaseGotten.Prize);
 
-//            Purchase purchaseCompare = purchaseRepository.Read(2);
+        }
 
-//            Assert.AreEqual(true, correct);
-//            Assert.AreEqual(purchaseCompare.Cuantity, purchaseGotten.Cuantity);
-//            Assert.AreEqual(purchaseCompare.Prize, purchaseGotten.Prize);
+        [Test]
+        public void Delete_Test()
+        {
+            bool correct;
+            Purchase purchaseGotten = this.purchaseRepository.Read(1);
 
-//        }
+            correct = this.purchaseRepository.Delete(purchaseGotten);
 
-//        [Test]
-//        public void Delete_Test()
-//        {
-//            PurchaseRepository purchaseRepository = new PurchaseRepository(dbContext, exceptionController);
-//            bool correct;
-//            Purchase purchaseGotten = purchaseRepository.Read(1);
+            Assert.AreEqual(true, correct);
 
-//            correct = purchaseRepository.Delete(purchaseGotten);
-
-//            Assert.AreEqual(true, correct);
-
-//        }
-//    }
-//}
+        }
+    }
+}

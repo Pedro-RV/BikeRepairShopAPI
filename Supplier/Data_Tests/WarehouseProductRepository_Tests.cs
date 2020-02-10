@@ -1,110 +1,103 @@
-﻿//using NUnit.Framework;
-//using Supplier_Data;
-//using Supplier_Data.Context;
-//using Supplier_Entities.EntityModel;
-//using Supplier_Helper.ExceptionController;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using Autofac;
+using NUnit.Framework;
+using Supplier_Data;
+using Supplier_Data.Context;
+using Supplier_Data.Interfaces;
+using Supplier_Entities.EntityModel;
+using Supplier_Helper.ExceptionController;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-//namespace Data_Tests
-//{
-//    class WarehouseProductRepository_Tests
-//    {
-//        private SupplierContext dbContext;
-//        private ExceptionController exceptionController;
+namespace Data_Tests
+{
+    [TestFixture]
+    class WarehouseProductRepository_Tests
+    {
+        private IWarehouseProductRepository warehouseProductRepository;
 
-//        public WarehouseProductRepository_Tests()
-//        {
-//            SupplierContextProvider.InitializeSupplierContext();
-//            dbContext = SupplierContextProvider.GetSupplierContext();
-//            exceptionController = new ExceptionController();
-//        }
+        [TestFixtureSetUp]
+        public void Init()
+        {
+            var container = ContainerConfig.Configure();
+            var scope = container.BeginLifetimeScope();
 
-//        [TestFixtureSetUp]
-//        public void Init()
-//        {
-//            Warehouse warehouse = new Warehouse("Calle Ebro", 120);
-//            ProductState productStateOne = new ProductState("No disponible");
-//            ProductState productStateTwo = new ProductState("Disponible");
-//            ProductState productStateThree = new ProductState("Sin existencias");
-//            Product product = new Product("Pelota", 20, 5, true);
+            this.warehouseProductRepository = scope.Resolve<IWarehouseProductRepository>();
 
-//            WarehouseProduct WarehouseProductOne = new WarehouseProduct(product, warehouse, productStateOne);
-//            WarehouseProduct WarehouseProductTwo = new WarehouseProduct(product, warehouse, productStateTwo);
-//            WarehouseProduct WarehouseProductThree = new WarehouseProduct(product, warehouse, productStateThree);
+            Warehouse warehouse = new Warehouse("Calle Ebro", 120);
+            ProductState productStateOne = new ProductState("No disponible");
+            ProductState productStateTwo = new ProductState("Disponible");
+            ProductState productStateThree = new ProductState("Sin existencias");
+            Product product = new Product("Pelota", 20, 5, true);
 
-//            WarehouseProductRepository WarehouseProductRepository = new WarehouseProductRepository(dbContext, exceptionController);
+            WarehouseProduct warehouseProductOne = new WarehouseProduct(product, warehouse, productStateOne);
+            WarehouseProduct warehouseProductTwo = new WarehouseProduct(product, warehouse, productStateTwo);
+            WarehouseProduct warehouseProductThree = new WarehouseProduct(product, warehouse, productStateThree);
 
-//            WarehouseProductRepository.Insert(WarehouseProductOne);
-//            WarehouseProductRepository.Insert(WarehouseProductTwo);
-//            WarehouseProductRepository.Insert(WarehouseProductThree);
-//        }
+            this.warehouseProductRepository.Insert(warehouseProductOne);
+            this.warehouseProductRepository.Insert(warehouseProductTwo);
+            this.warehouseProductRepository.Insert(warehouseProductThree);
+        }
 
-//        [Test]
-//        public void Insert_Test()
-//        {
-//            Warehouse warehouse = new Warehouse("Calle Tajo", 300);
-//            ProductState productState = new ProductState("No disponible");
-//            Product product = new Product("Teclado", 60, 20, true);
-//            WarehouseProduct WarehouseProductAdd = new WarehouseProduct(product, warehouse, productState);
+        [Test]
+        public void Insert_Test()
+        {
+            Warehouse warehouse = new Warehouse("Calle Tajo", 300);
+            ProductState productState = new ProductState("No disponible");
+            Product product = new Product("Teclado", 60, 20, true);
+            WarehouseProduct warehouseProductAdd = new WarehouseProduct(product, warehouse, productState);
 
-//            bool correct;
-//            WarehouseProductRepository WarehouseProductRepository = new WarehouseProductRepository(dbContext, exceptionController);
+            bool correct;
 
-//            correct = WarehouseProductRepository.Insert(WarehouseProductAdd);
+            correct = this.warehouseProductRepository.Insert(warehouseProductAdd);
 
-//            WarehouseProduct WarehouseProductGotten = WarehouseProductRepository.Read(4);
+            WarehouseProduct warehouseProductGotten = this.warehouseProductRepository.Read(4);
 
-//            Assert.AreEqual(true, correct);
-//            Assert.AreEqual(WarehouseProductGotten.Warehouse, WarehouseProductAdd.Warehouse);
-//            Assert.AreEqual(WarehouseProductGotten.ProductState, WarehouseProductAdd.ProductState);
-//            Assert.AreEqual(WarehouseProductGotten.Product, WarehouseProductAdd.Product);
+            Assert.AreEqual(true, correct);
+            Assert.AreEqual(warehouseProductGotten.Warehouse, warehouseProductAdd.Warehouse);
+            Assert.AreEqual(warehouseProductGotten.ProductState, warehouseProductAdd.ProductState);
+            Assert.AreEqual(warehouseProductGotten.Product, warehouseProductAdd.Product);
 
-//        }
+        }
 
-//        [Test]
-//        public void Read_Test()
-//        {
-//            WarehouseProductRepository WarehouseProductRepository = new WarehouseProductRepository(dbContext, exceptionController);
+        [Test]
+        public void Read_Test()
+        {
+            WarehouseProduct warehouseProductGotten = this.warehouseProductRepository.Read(3);
 
-//            WarehouseProduct WarehouseProductGotten = WarehouseProductRepository.Read(3);
+            Assert.AreEqual(warehouseProductGotten.ProductState.ProductStateDescription, "Sin existencias");
 
-//            Assert.AreEqual(WarehouseProductGotten.ProductState.ProductStateDescription, "Sin existencias");
+        }
 
-//        }
+        [Test]
+        public void Update_Test()
+        {
+            bool correct;
+            WarehouseProduct warehouseProductGotten = this.warehouseProductRepository.Read(2);
 
-//        [Test]
-//        public void Update_Test()
-//        {
-//            WarehouseProductRepository WarehouseProductRepository = new WarehouseProductRepository(dbContext, exceptionController);
-//            bool correct;
-//            WarehouseProduct WarehouseProductGotten = WarehouseProductRepository.Read(2);
+            warehouseProductGotten.Product.ProductDescription = "Caja";
 
-//            WarehouseProductGotten.Product.ProductDescription = "Caja";
+            correct = this.warehouseProductRepository.Update(warehouseProductGotten);
 
-//            correct = WarehouseProductRepository.Update(WarehouseProductGotten);
+            WarehouseProduct warehouseProductCompare = this.warehouseProductRepository.Read(2);
 
-//            WarehouseProduct WarehouseProductCompare = WarehouseProductRepository.Read(2);
+            Assert.AreEqual(true, correct);
+            Assert.AreEqual(warehouseProductCompare.Product, warehouseProductGotten.Product);
 
-//            Assert.AreEqual(true, correct);
-//            Assert.AreEqual(WarehouseProductCompare.Product, WarehouseProductGotten.Product);
+        }
 
-//        }
+        [Test]
+        public void Delete_Test()
+        {
+            bool correct;
+            WarehouseProduct warehouseProductGotten = this.warehouseProductRepository.Read(1);
 
-//        [Test]
-//        public void Delete_Test()
-//        {
-//            WarehouseProductRepository WarehouseProductRepository = new WarehouseProductRepository(dbContext, exceptionController);
-//            bool correct;
-//            WarehouseProduct WarehouseProductGotten = WarehouseProductRepository.Read(1);
+            correct = this.warehouseProductRepository.Delete(warehouseProductGotten);
 
-//            correct = WarehouseProductRepository.Delete(WarehouseProductGotten);
+            Assert.AreEqual(true, correct);
 
-//            Assert.AreEqual(true, correct);
-
-//        }
-//    }
-//}
+        }
+    }
+}
