@@ -2,22 +2,31 @@
 using Supplier_Bussiness.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
+using Supplier_Helper.Authentication;
+using Supplier_Helper.ExceptionController;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 
 namespace Supplier_Service.Controllers
 {
-    public class WarehouseAdminController : ApiController
+    public class WarehouseAdminController : BaseController
     {
         private IWarehouseAdminBussiness warehouseAdminBussiness;
+        private IExceptionController exceptionController;
+        private IAuthenticationProvider authenticationProvider;
 
-        public WarehouseAdminController(IWarehouseAdminBussiness warehouseAdminBussiness)
+        public WarehouseAdminController(IWarehouseAdminBussiness warehouseAdminBussiness,
+            IExceptionController exceptionController,
+            IAuthenticationProvider authenticationProvider)
         {
             this.warehouseAdminBussiness = warehouseAdminBussiness;
+            this.exceptionController = exceptionController;
+            this.authenticationProvider = authenticationProvider;
 
         }
 
@@ -26,9 +35,34 @@ namespace Supplier_Service.Controllers
         [Route("api/warehouseAdmin/WarehouseAdminDataList")]
         public List<WarehouseAdminData> WarehouseAdminDataList(string warehouseAddress)
         {
-            List<WarehouseAdminData> request = this.warehouseAdminBussiness.WarehouseAdminDataList(warehouseAddress);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            return request;
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                List<WarehouseAdminData> result = this.warehouseAdminBussiness.WarehouseAdminDataList(warehouseAddress);
+
+                return result;
+
+            }
+            catch (SupplierException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+            }
         }
 
         // GET
@@ -36,9 +70,34 @@ namespace Supplier_Service.Controllers
         [Route("api/warehouseAdmin/GetWarehouseAdmin/{warehouseAdminId}")]
         public WarehouseAdmin GetWarehouseAdmin(int warehouseAdminId)
         {
-            WarehouseAdmin request = this.warehouseAdminBussiness.ReadWarehouseAdmin(warehouseAdminId);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            return request;
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                WarehouseAdmin result = this.warehouseAdminBussiness.ReadWarehouseAdmin(warehouseAdminId);
+
+                return result;
+
+            }
+            catch (SupplierException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+            }
         }
 
         // POST
@@ -46,15 +105,40 @@ namespace Supplier_Service.Controllers
         [Route("api/warehouseAdmin/InsertWarehouseAdmin")]
         public string InsertWarehouseAdmin(WarehouseAdminSpecific warehouseAdminSpecific)
         {
-            bool introduced_well = this.warehouseAdminBussiness.InsertWarehouseAdmin(warehouseAdminSpecific);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            if (introduced_well == true)
-            {
-                return "WarehouseAdmin introduced satisfactorily.";
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                bool introduced_well = this.warehouseAdminBussiness.InsertWarehouseAdmin(warehouseAdminSpecific);
+
+                if (introduced_well == true)
+                {
+                    return "Action completed satisfactorily.";
+                }
+                else
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ActionNotCompleted);
+                }
+
             }
-            else
+            catch (SupplierException)
             {
-                return "Error !!! WarehouseAdmin could not be introduced.";
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
         }
@@ -64,15 +148,40 @@ namespace Supplier_Service.Controllers
         [Route("api/warehouseAdmin/UpdateWarehouseAdmin")]
         public string UpdateWarehouseAdmin(WarehouseAdminSpecific update)
         {
-            bool updated_well = this.warehouseAdminBussiness.UpdateWarehouseAdmin(update);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            if (updated_well == true)
-            {
-                return "WarehouseAdmin updated satisfactorily.";
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                bool updated_well = this.warehouseAdminBussiness.UpdateWarehouseAdmin(update);
+
+                if (updated_well == true)
+                {
+                    return "Action completed satisfactorily.";
+                }
+                else
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ActionNotCompleted);
+                }
+
             }
-            else
+            catch (SupplierException)
             {
-                return "Error !!! WarehouseAdmin could not be updated.";
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
         }
@@ -82,15 +191,40 @@ namespace Supplier_Service.Controllers
         [Route("api/warehouseAdmin/DeleteWarehouseAdmin/{warehouseAdminId}")]
         public string DeleteWarehouseAdmin(int warehouseAdminId)
         {
-            bool deleted_well = this.warehouseAdminBussiness.DeleteWarehouseAdmin(warehouseAdminId);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            if (deleted_well == true)
-            {
-                return "WarehouseAdmin deleted satisfactorily.";
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                bool deleted_well = this.warehouseAdminBussiness.DeleteWarehouseAdmin(warehouseAdminId);
+
+                if (deleted_well == true)
+                {
+                    return "Action completed satisfactorily.";
+                }
+                else
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ActionNotCompleted);
+                }
+
             }
-            else
+            catch (SupplierException)
             {
-                return "Error !!! WarehouseAdmin could not be deleted.";
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
         }

@@ -1,4 +1,6 @@
-﻿using Supplier_Service.Controllers;
+﻿using Autofac.Extras.FakeItEasy;
+using FakeItEasy;
+using Supplier_Service.Controllers;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -8,102 +10,119 @@ using System.Threading.Tasks;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
 using Autofac;
+using Moq;
+using System.Net.Http.Headers;
+using Supplier_Helper.Authentication;
+using Supplier_Bussiness.Interfaces;
+using Supplier_Data.Interfaces;
 
 namespace Service_Tests
 {
     [TestFixture]
     class EmployeeController_Tests
     {
-        private EmployeeController employeeController;
-
-        [TestFixtureSetUp]
-        public void Init()
-        {
-            var container = ContainerConfig.Configure();
-            var scope = container.BeginLifetimeScope();
-
-            this.employeeController = scope.Resolve<EmployeeController>();
-
-            this.employeeController.InsertEmployee(new EmployeeSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
-            this.employeeController.InsertEmployee(new EmployeeSpecific("Rodolfo", "Suarez", "88", "rodolf@correo", "Avnd Institucion", "123", "321"));
-            this.employeeController.InsertEmployee(new EmployeeSpecific("Marco", "Polo", "99", "marco@correo", "Avnd Marco Polo", "000", "000"));
-
-        }
-
         [Test]
         public void AAEmployeesList_Test()
         {
-            List<Employee> currentEmployee = this.employeeController.EmployeesList();
+            using (var fake = new AutoFake())
+            {
+                List<Employee> mockLista = new List<Employee>();
+                mockLista.Add(new Employee()
+                {                   
+                    EmployeeName = "Jacinto",
+                    Surname = "Sierra",
+                    EmployeeAddress = "Calle falsa, 123",
+                    EmployeeId = 666
+                });
 
-            Assert.AreEqual(currentEmployee[0].EmployeeName, "Jacinto");
-            Assert.AreEqual(currentEmployee[1].EmployeeName, "Rodolfo");
-            Assert.AreEqual(currentEmployee[2].EmployeeName, "Marco");
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IEmployeeBussiness>().EmployeesList()).Returns(mockLista);
 
+                var mockService = fake.Resolve<EmployeeController>();
+
+                List<Employee> lista = mockService.EmployeesList();
+            }
         }
 
         [Test]
         public void InsertEmployee_Test()
         {
-            string message = this.employeeController.InsertEmployee(new EmployeeSpecific("antonio", "carrasco", "22", "carrasco@correo", "calle malagon", "56", "87"));
+            using (var fake = new AutoFake())
+            {
 
-            Employee employeeGotten = this.employeeController.GetEmployee(4);
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IEmployeeBussiness>().InsertEmployee(A<EmployeeSpecific>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "Employee introduced satisfactorily.");
-            Assert.AreEqual(employeeGotten.EmployeeName, "antonio");
-            Assert.AreEqual(employeeGotten.Surname, "carrasco");
-            Assert.AreEqual(employeeGotten.DNI, "22");
-            Assert.AreEqual(employeeGotten.Email, "carrasco@correo");
-            Assert.AreEqual(employeeGotten.EmployeeAddress, "calle malagon");
-            Assert.AreEqual(employeeGotten.CP, "56");
-            Assert.AreEqual(employeeGotten.MobileNum, "87");
+                var mockService = fake.Resolve<EmployeeController>();
 
+                string message = mockService.InsertEmployee(new EmployeeSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void GetEmployee_Test()
         {
-            Employee employeeGotten = this.employeeController.GetEmployee(1);
+            using (var fake = new AutoFake())
+            {
+                Employee mockEmployee = new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
 
-            Assert.AreEqual(employeeGotten.EmployeeName, "Jacinto");
-            Assert.AreEqual(employeeGotten.Email, "sierra@correo");
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IEmployeeBussiness>().ReadEmployee(A<int>.Ignored)).Returns(mockEmployee);
 
+                var mockService = fake.Resolve<EmployeeController>();
+
+                Employee employee = mockService.GetEmployee(1);
+            }
         }
 
         [Test]
         public void GetEmployeeDNI_Test()
         {
-            Employee employeeGotten = this.employeeController.GetEmployeeDNI("77");
+            using (var fake = new AutoFake())
+            {
+                Employee mockEmployee = new Employee("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
 
-            Assert.AreEqual(employeeGotten.EmployeeName, "Jacinto");
-            Assert.AreEqual(employeeGotten.Email, "sierra@correo");
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IEmployeeBussiness>().ReadEmployeeDNI(A<string>.Ignored)).Returns(mockEmployee);
 
+                var mockService = fake.Resolve<EmployeeController>();
+
+                Employee employee = mockService.GetEmployeeDNI("77");
+            }
         }
 
         [Test]
         public void UpdateEmployee_Test()
         {
-            EmployeeSpecific change = new EmployeeSpecific();
-            change.EmployeeId = 2;
-            change.EmployeeName = "Domingo";
-            change.MobileNum = "621";
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IEmployeeBussiness>().UpdateEmployee(A<EmployeeSpecific>.Ignored)).Returns(true);
 
-            string message = this.employeeController.UpdateEmployee(change);
+                var mockService = fake.Resolve<EmployeeController>();
 
-            Employee employeeCompare = this.employeeController.GetEmployee(2);
+                string message = mockService.UpdateEmployee(new EmployeeSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
 
-            Assert.AreEqual(message, "Employee updated satisfactorily.");
-            Assert.AreEqual(employeeCompare.EmployeeName, "Domingo");
-            Assert.AreEqual(employeeCompare.MobileNum, "621");
-
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void DeleteEmployee_Test()
         {
-            string message = this.employeeController.DeleteEmployee(3);
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IEmployeeBussiness>().DeleteEmployee(A<int>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "Employee deleted satisfactorily.");
+                var mockService = fake.Resolve<EmployeeController>();
 
+                string message = mockService.DeleteEmployee(1);
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
     }
 }

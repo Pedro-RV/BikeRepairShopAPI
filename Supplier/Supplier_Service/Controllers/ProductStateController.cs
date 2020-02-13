@@ -2,22 +2,31 @@
 using Supplier_Bussiness.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
+using Supplier_Helper.Authentication;
+using Supplier_Helper.ExceptionController;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 
 namespace Supplier_Service.Controllers
 {
-    public class ProductStateController : ApiController
+    public class ProductStateController : BaseController
     {
         private IProductStateBussiness productStateBussiness;
+        private IExceptionController exceptionController;
+        private IAuthenticationProvider authenticationProvider;
 
-        public ProductStateController(IProductStateBussiness productStateBussiness)
+        public ProductStateController(IProductStateBussiness productStateBussiness,
+            IExceptionController exceptionController,
+            IAuthenticationProvider authenticationProvider)
         {
             this.productStateBussiness = productStateBussiness;
+            this.exceptionController = exceptionController;
+            this.authenticationProvider = authenticationProvider;
 
         }
 
@@ -26,9 +35,34 @@ namespace Supplier_Service.Controllers
         [Route("api/productState/GetProductState/{productStateId}")]
         public ProductState GetProductState(int productStateId)
         {
-            ProductState request = this.productStateBussiness.ReadProductState(productStateId);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            return request;
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                ProductState result = this.productStateBussiness.ReadProductState(productStateId);
+
+                return result;
+
+            }
+            catch (SupplierException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+            }
         }
 
         // POST
@@ -36,15 +70,40 @@ namespace Supplier_Service.Controllers
         [Route("api/productState/InsertProductState")]
         public string InsertProductState(ProductStateSpecific productStateSpecific)
         {
-            bool introduced_well = this.productStateBussiness.InsertProductState(productStateSpecific);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            if (introduced_well == true)
-            {
-                return "ProductState introduced satisfactorily.";
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                bool introduced_well = this.productStateBussiness.InsertProductState(productStateSpecific);
+
+                if (introduced_well == true)
+                {
+                    return "Action completed satisfactorily.";
+                }
+                else
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ActionNotCompleted);
+                }
+
             }
-            else
+            catch (SupplierException)
             {
-                return "Error !!! ProductState could not be introduced.";
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
         }
@@ -54,15 +113,40 @@ namespace Supplier_Service.Controllers
         [Route("api/productState/UpdateProductState")]
         public string UpdateProductState(ProductStateSpecific update)
         {
-            bool updated_well = this.productStateBussiness.UpdateProductState(update);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            if (updated_well == true)
-            {
-                return "ProductState updated satisfactorily.";
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                bool updated_well = this.productStateBussiness.UpdateProductState(update);
+
+                if (updated_well == true)
+                {
+                    return "Action completed satisfactorily.";
+                }
+                else
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ActionNotCompleted);
+                }
+
             }
-            else
+            catch (SupplierException)
             {
-                return "Error !!! ProductState could not be updated.";
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
         }
@@ -72,15 +156,40 @@ namespace Supplier_Service.Controllers
         [Route("api/productState/DeleteProductState/{productStateId}")]
         public string DeleteProductState(int productStateId)
         {
-            bool deleted_well = this.productStateBussiness.DeleteProductState(productStateId);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            if (deleted_well == true)
-            {
-                return "ProductState deleted satisfactorily.";
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                bool deleted_well = this.productStateBussiness.DeleteProductState(productStateId);
+
+                if (deleted_well == true)
+                {
+                    return "Action completed satisfactorily.";
+                }
+                else
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ActionNotCompleted);
+                }
+
             }
-            else
+            catch (SupplierException)
             {
-                return "Error !!! ProductState could not be deleted.";
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
         }

@@ -31,7 +31,7 @@ namespace Supplier_Service
                 .AsImplementedInterfaces();
 
             builder.RegisterAssemblyTypes(Assembly.Load(nameof(Supplier_Helper)))
-                .Where(t => t.Name.EndsWith("Controller"))
+                .Where(t => t.Name.EndsWith("Controller") || t.Name.EndsWith("Provider"))
                 .AsImplementedInterfaces();
 
             return builder.Build();

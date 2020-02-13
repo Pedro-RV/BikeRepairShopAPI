@@ -8,89 +8,103 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FakeItEasy;
+using Autofac.Extras.FakeItEasy;
+using Supplier_Helper.Authentication;
+using System.Net.Http.Headers;
+using Supplier_Bussiness.Interfaces;
 
 namespace Service_Tests
 {
     [TestFixture]
     class ProductController_Tests
     {
-        private ProductController productController;
-
-        [TestFixtureSetUp]
-        public void Init()
-        {
-            var container = ContainerConfig.Configure();
-            var scope = container.BeginLifetimeScope();
-
-            this.productController = scope.Resolve<ProductController>();
-
-            this.productController.InsertProduct(new ProductSpecific("Pelota", 20, 5, true));
-            this.productController.InsertProduct(new ProductSpecific("Peine", 4, 10, true));
-            this.productController.InsertProduct(new ProductSpecific("Zapatillas Adidas", 80, 15, true));
-
-        }
-
         [Test]
         public void AAProductsList_Test()
         {
-            List<Product> currentProduct = this.productController.ProductsList();
+            using (var fake = new AutoFake())
+            {
+                List<Product> mockLista = new List<Product>();
+                mockLista.Add(new Product()
+                {
+                    ProductDescription = "Cascos MPOW 2005",
+                    Prize = 22
+                });
 
-            Assert.AreEqual(currentProduct[0].ProductDescription, "Pelota");
-            Assert.AreEqual(currentProduct[1].ProductDescription, "Peine");
-            Assert.AreEqual(currentProduct[2].ProductDescription, "Zapatillas Adidas");
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IProductBussiness>().ProductsList()).Returns(mockLista);
 
+                var mockService = fake.Resolve<ProductController>();
+
+                List<Product> lista = mockService.ProductsList();
+            }
         }
 
         [Test]
         public void InsertProduct_Test()
         {
-            string message = this.productController.InsertProduct(new ProductSpecific("Teclado", 60, 20, true));
+            using (var fake = new AutoFake())
+            {
 
-            Product productGotten = this.productController.GetProduct(4);
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IProductBussiness>().InsertProduct(A<ProductSpecific>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "Product introduced satisfactorily.");
-            Assert.AreEqual(productGotten.ProductDescription, "Teclado");
-            Assert.AreEqual(productGotten.Prize, 60);
-            Assert.AreEqual(productGotten.Cuantity, 20);
+                var mockService = fake.Resolve<ProductController>();
 
+                string message = mockService.InsertProduct(new ProductSpecific("Teclado", 60, 20, true));
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void GetProduct_Test()
         {
-            Product productGotten = this.productController.GetProduct(1);
+            using (var fake = new AutoFake())
+            {
+                Product mockProduct = new Product("Pelota", 20, 5, true);
 
-            Assert.AreEqual(productGotten.ProductDescription, "Pelota");
-            Assert.AreEqual(productGotten.Prize, 20);
-            Assert.AreEqual(productGotten.Cuantity, 5);
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IProductBussiness>().ReadProduct(A<int>.Ignored)).Returns(mockProduct);
+
+                var mockService = fake.Resolve<ProductController>();
+
+                Product product = mockService.GetProduct(1);
+            }
 
         }
 
         [Test]
         public void UpdateProduct_Test()
         {
-            ProductSpecific change = new ProductSpecific();
-            change.ProductId = 2;
-            change.ProductDescription = "Secador";
-            change.Prize = 50;
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IProductBussiness>().UpdateProduct(A<ProductSpecific>.Ignored)).Returns(true);
 
-            string message = this.productController.UpdateProduct(change);
+                var mockService = fake.Resolve<ProductController>();
 
-            Product productGotten = this.productController.GetProduct(2);
+                string message = mockService.UpdateProduct(new ProductSpecific("Teclado", 60, 20, true));
 
-            Assert.AreEqual(message, "Product updated satisfactorily.");
-            Assert.AreEqual(productGotten.ProductDescription, "Secador");
-            Assert.AreEqual(productGotten.Prize, 50);
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
 
         }
 
         [Test]
         public void DeleteProduct_Test()
         {
-            string message = this.productController.DeleteProduct(3);
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IProductBussiness>().DeleteProduct(A<int>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "Product deleted satisfactorily.");
+                var mockService = fake.Resolve<ProductController>();
 
+                string message = mockService.DeleteProduct(1);
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
     }
 }

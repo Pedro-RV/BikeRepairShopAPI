@@ -17,6 +17,8 @@ namespace Supplier_Helper.ExceptionController
         private const string NullTelephoneNum = "The supply company must have a telephone number.";
         private const string NullWarehouseAddress = "The warehouse must have an address.";
         private const string MethodNotExist = "The method invoked does not exist.";
+        private const string AuthenticationError = "The user and/or pwd introduced are wrong.";
+        private const string ActionNotCompleted = "Error !!! Action could not be completed.";
 
 
         public string ObtainText(int exNum)
@@ -65,6 +67,16 @@ namespace Supplier_Helper.ExceptionController
             if (exNum == 9)
             {
                 ret = MethodNotExist;
+            }
+
+            if (exNum == 10)
+            {
+                ret = AuthenticationError;
+            }
+
+            if (exNum == 11)
+            {
+                ret = ActionNotCompleted;
             }
 
             return ret;

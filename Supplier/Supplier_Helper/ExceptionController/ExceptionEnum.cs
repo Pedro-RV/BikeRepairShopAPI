@@ -16,6 +16,8 @@ namespace Supplier_Helper.ExceptionController
         MistakenCuantity = 6,
         NullTelephoneNum = 7,
         NullWarehouseAddress = 8,
-        MethodNotExist = 9
+        MethodNotExist = 9,
+        AuthenticationError = 10,
+        ActionNotCompleted = 11
     }
 }

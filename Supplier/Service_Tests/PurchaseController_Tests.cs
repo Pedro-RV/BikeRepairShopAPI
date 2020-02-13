@@ -1,11 +1,16 @@
 ﻿using Autofac;
+using Autofac.Extras.FakeItEasy;
+using FakeItEasy;
 using NUnit.Framework;
+using Supplier_Bussiness.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
+using Supplier_Helper.Authentication;
 using Supplier_Service.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,116 +19,138 @@ namespace Service_Tests
     [TestFixture]
     class PurchaseController_Tests
     {
-        private PurchaseController purchaseController;
-        private EmployeeController employeeController;
-        private WarehouseController warehouseController;
-        private WarehouseAdminController warehouseAdminController;
-        private ProductStateController productStateController;
-        private ProductController productController;
-        private SupplyCompanyController supplyCompanyController;
-
-        [TestFixtureSetUp]
-        public void Init()
-        {
-            var container = ContainerConfig.Configure();
-            var scope = container.BeginLifetimeScope();
-
-            this.purchaseController = scope.Resolve<PurchaseController>();
-            this.employeeController = scope.Resolve<EmployeeController>();
-            this.warehouseController = scope.Resolve<WarehouseController>();
-            this.warehouseAdminController = scope.Resolve<WarehouseAdminController>();
-            this.productStateController = scope.Resolve<ProductStateController>();
-            this.productController = scope.Resolve<ProductController>();
-            this.supplyCompanyController = scope.Resolve<SupplyCompanyController>();
-
-            this.employeeController.InsertEmployee(new EmployeeSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
-            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
-            this.warehouseController.InsertWarehouse(new WarehouseSpecific("Calle Ebro", 120));
-            this.warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
-            this.productStateController.InsertProductState(new ProductStateSpecific("No disponible"));
-            this.productController.InsertProduct(new ProductSpecific("Pelota", 20, 5, true));
-            this.supplyCompanyController.InsertSupplyCompany(new SupplyCompanySpecific("Ruedas Hermanos Carrasco", "123"));
-            DateTime dateTime2 = new DateTime(2019, 05, 17, 13, 05, 00);
-
-            this.purchaseController.InsertPurchase(new PurchaseSpecific(dateTime2, 2, 30, 1, 1));
-            this.purchaseController.InsertPurchase(new PurchaseSpecific(dateTime2, 1, 10, 1, 1));
-            this.purchaseController.InsertPurchase(new PurchaseSpecific(dateTime2, 5, 120, 1, 1));
-            this.purchaseController.InsertPurchase(new PurchaseSpecific(dateTime2, 3, 80, 1, 1));
-
-        }
-
         [Test]
         public void AAPurchasesBiggerThanAPrizeList_Test()
         {
-            List<Purchase> currentPurchase = this.purchaseController.PurchasesBiggerThanAPrizeList(100);
+            using (var fake = new AutoFake())
+            {
+                DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
 
-            Assert.AreEqual(currentPurchase[0].Prize, 120);
+                List<Purchase> mockLista = new List<Purchase>();
+                mockLista.Add(new Purchase()
+                {
+                    PurchaseDate = dateTime,
+                    Cuantity = 4,
+                    Prize = 30
+                });
 
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IPurchaseBussiness>().PurchasesBiggerThanAPrizeList(A<int>.Ignored)).Returns(mockLista);
+
+                var mockService = fake.Resolve<PurchaseController>();
+
+                List<Purchase> lista = mockService.PurchasesBiggerThanAPrizeList(1);
+            }
+        }
+
+        [Test]
+        public void AAPurchaseDataList_Test()
+        {
+            using (var fake = new AutoFake())
+            {
+                DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
+
+                List<PurchaseData> mockLista = new List<PurchaseData>();
+                mockLista.Add(new PurchaseData()
+                {
+                    ProductDescription = "Tornillo 20mm",
+                    PurchaseDate = dateTime,
+                    Cuantity = 4,
+                    Prize = 30
+                });
+
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IPurchaseBussiness>().PurchaseDataList()).Returns(mockLista);
+
+                var mockService = fake.Resolve<PurchaseController>();
+
+                List<PurchaseData> lista = mockService.PurchaseDataList();
+            }
         }
 
         [Test]
         public void InsertPurchase_Test()
         {
-            DateTime dateTime = new DateTime(2019, 05, 17, 13, 05, 00);
+            using (var fake = new AutoFake())
+            {
 
-            string message = this.purchaseController.InsertPurchase(new PurchaseSpecific(dateTime, 10, 500, 1, 1));
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IPurchaseBussiness>().InsertPurchase(A<PurchaseSpecific>.Ignored)).Returns(true);
 
-            Purchase purchaseGotten = this.purchaseController.GetPurchase(5);
+                var mockService = fake.Resolve<PurchaseController>();
 
-            Assert.AreEqual(message, "Purchase introduced satisfactorily.");
-            Assert.AreEqual(purchaseGotten.PurchaseDate, dateTime);
-            Assert.AreEqual(purchaseGotten.Cuantity, 10);
-            Assert.AreEqual(purchaseGotten.Prize, 500);
+                DateTime dateTime = new DateTime(2019, 05, 17, 13, 05, 00);
+                string message = mockService.InsertPurchase(new PurchaseSpecific(dateTime, 10, 500, 1, 1));
 
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void GetPurchase_Test()
         {
-            Purchase purchaseGotten = this.purchaseController.GetPurchase(1);
+            using (var fake = new AutoFake())
+            {
+                DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
+                Purchase mockPurchase = new Purchase(dateTime, 2, 30, new Product(), new SupplyCompany());
 
-            DateTime seeDateTime = new DateTime(2019, 05, 17, 13, 05, 00);
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IPurchaseBussiness>().ReadPurchase(A<int>.Ignored)).Returns(mockPurchase);
 
-            Assert.AreEqual(purchaseGotten.PurchaseDate, seeDateTime);
-            Assert.AreEqual(purchaseGotten.Cuantity, 2);
-            Assert.AreEqual(purchaseGotten.Prize, 30);
+                var mockService = fake.Resolve<PurchaseController>();
 
+                Purchase purchase = mockService.GetPurchase(1);
+            }
         }
 
         [Test]
         public void UpdatePurchase_Test()
         {
-            PurchaseSpecific change = new PurchaseSpecific();
-            change.PurchaseId = 2;
-            change.Cuantity = 9;
-            change.Prize = 85;
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IPurchaseBussiness>().UpdatePurchase(A<PurchaseSpecific>.Ignored)).Returns(true);
 
-            string message = this.purchaseController.UpdatePurchase(change);
+                var mockService = fake.Resolve<PurchaseController>();
 
-            Purchase purchaseGotten = this.purchaseController.GetPurchase(2);
+                DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
+                string message = mockService.UpdatePurchase(new PurchaseSpecific(dateTime, 10, 500, 1, 1));
 
-            Assert.AreEqual(message, "Purchase updated satisfactorily.");
-            Assert.AreEqual(purchaseGotten.Cuantity, 9);
-            Assert.AreEqual(purchaseGotten.Prize, 85);
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
 
         }
 
         [Test]
         public void DeletePurchase_Test()
         {
-            string message = this.purchaseController.DeletePurchase(3);
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IPurchaseBussiness>().DeletePurchase(A<int>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "Purchase deleted satisfactorily.");
+                var mockService = fake.Resolve<PurchaseController>();
 
+                string message = mockService.DeletePurchase(1);
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void DeletePurchaseAndChangeProduct_Test()
         {
-            string message = this.purchaseController.DeletePurchaseAndChangeProduct(4);
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IPurchaseBussiness>().DeletePurchaseAndChangeProduct(A<int>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "Purchase deleted and Product changed satisfactorily.");
+                var mockService = fake.Resolve<PurchaseController>();
 
+                string message = mockService.DeletePurchaseAndChangeProduct(1);
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
     }
 }

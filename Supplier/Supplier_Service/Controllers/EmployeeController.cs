@@ -3,23 +3,31 @@ using Supplier_Bussiness;
 using Supplier_Bussiness.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
+using Supplier_Helper.Authentication;
+using Supplier_Helper.ExceptionController;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Net.Http.Headers;
 
 namespace Supplier_Service.Controllers
 {
-    public class EmployeeController : ApiController
+    public class EmployeeController : BaseController
     {
-
         private IEmployeeBussiness employeeBussiness;
+        private IExceptionController exceptionController;
+        private IAuthenticationProvider authenticationProvider;
 
-        public EmployeeController(IEmployeeBussiness employeeBussiness)
+        public EmployeeController(IEmployeeBussiness employeeBussiness,
+            IExceptionController exceptionController,
+            IAuthenticationProvider authenticationProvider)
         {
             this.employeeBussiness = employeeBussiness;
+            this.exceptionController = exceptionController;
+            this.authenticationProvider = authenticationProvider;
 
         }
 
@@ -28,19 +36,71 @@ namespace Supplier_Service.Controllers
         [Route("api/employee/EmployeesList")]
         public List<Employee> EmployeesList()
         {
-            List<Employee> request = this.employeeBussiness.EmployeesList();
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            return request;
-        }
+                if(request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                List<Employee> result = this.employeeBussiness.EmployeesList();
+
+                return result;
+
+            }
+            catch (SupplierException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+            }
+
+        }                 
 
         // GET
         [HttpGet]
         [Route("api/employee/GetEmployee/{employeeId}")]
         public Employee GetEmployee(int employeeId)
         {
-            Employee request = this.employeeBussiness.ReadEmployee(employeeId);
+            try 
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            return request;
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                { 
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                Employee result = this.employeeBussiness.ReadEmployee(employeeId);
+
+                return result;
+
+            }
+            catch (SupplierException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+            }
+            
         }
 
         // GET
@@ -48,9 +108,34 @@ namespace Supplier_Service.Controllers
         [Route("api/employee/GetEmployeeDNI/{dni}")]
         public Employee GetEmployeeDNI(string dni)
         {
-            Employee request = this.employeeBussiness.ReadEmployeeDNI(dni);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            return request;
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                Employee result = this.employeeBussiness.ReadEmployeeDNI(dni);
+
+                return result;
+
+            }
+            catch (SupplierException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+            }
         }
 
         // POST
@@ -58,17 +143,41 @@ namespace Supplier_Service.Controllers
         [Route("api/employee/InsertEmployee")]
         public string InsertEmployee(EmployeeSpecific employeeSpecific)
         {
-            bool introduced_well = this.employeeBussiness.InsertEmployee(employeeSpecific);
-
-            if (introduced_well == true)
+            try
             {
-                return "Employee introduced satisfactorily.";
-            }
-            else
-            {
-                return "Error !!! Employee could not be introduced.";
-            }
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
+                if(request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                bool introduced_well = this.employeeBussiness.InsertEmployee(employeeSpecific);
+
+                if (introduced_well == true)
+                {
+                    return "Action completed satisfactorily.";
+                }
+                else
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ActionNotCompleted);
+                }
+
+            }
+            catch (SupplierException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+            }
         }
 
         // PUT
@@ -76,17 +185,41 @@ namespace Supplier_Service.Controllers
         [Route("api/employee/UpdateEmployee")]
         public string UpdateEmployee(EmployeeSpecific update)
         {
-            bool updated_well = this.employeeBussiness.UpdateEmployee(update);
-
-            if (updated_well == true)
+            try
             {
-                return "Employee updated satisfactorily.";
-            }
-            else
-            {
-                return "Error !!! Employee could not be updated.";
-            }
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                bool updated_well = this.employeeBussiness.UpdateEmployee(update);
+
+                if (updated_well == true)
+                {
+                    return "Action completed satisfactorily.";
+                }
+                else
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ActionNotCompleted);
+                }
+
+            }
+            catch (SupplierException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+            }
         }
 
         // DELETE
@@ -94,17 +227,41 @@ namespace Supplier_Service.Controllers
         [Route("api/employee/DeleteEmployee/{employeeId}")]
         public string DeleteEmployee(int employeeId)
         {
-            bool deleted_well = this.employeeBussiness.DeleteEmployee(employeeId);
-
-            if (deleted_well == true)
+            try
             {
-                return "Employee deleted satisfactorily.";
-            }
-            else
-            {
-                return "Error !!! Employee could not be deleted.";
-            }
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                bool deleted_well = this.employeeBussiness.DeleteEmployee(employeeId);
+
+                if (deleted_well == true)
+                {
+                    return "Action completed satisfactorily.";
+                }
+                else
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ActionNotCompleted);
+                }
+
+            }
+            catch (SupplierException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+            }
         }
     }
 }

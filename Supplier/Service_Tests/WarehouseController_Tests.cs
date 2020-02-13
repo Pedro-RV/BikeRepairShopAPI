@@ -1,11 +1,16 @@
 ﻿using Autofac;
+using Autofac.Extras.FakeItEasy;
+using FakeItEasy;
 using NUnit.Framework;
+using Supplier_Bussiness.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
+using Supplier_Helper.Authentication;
 using Supplier_Service.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,81 +19,91 @@ namespace Service_Tests
     [TestFixture]
     class WarehouseController_Tests
     {
-        private WarehouseController warehouseController;
-
-        [TestFixtureSetUp]
-        public void Init()
-        {
-            var container = ContainerConfig.Configure();
-            var scope = container.BeginLifetimeScope();
-
-            this.warehouseController = scope.Resolve<WarehouseController>();
-
-            this.warehouseController.InsertWarehouse(new WarehouseSpecific("Calle Ebro", 120));
-            this.warehouseController.InsertWarehouse(new WarehouseSpecific("Calle Guadalquivir", 200));
-            this.warehouseController.InsertWarehouse(new WarehouseSpecific("Calle Genil", 180));
-            this.warehouseController.InsertWarehouse(new WarehouseSpecific("Avenida Pajaro Carpintero", 150));
-
-        }
-
         [Test]
         public void AAWarehousesBiggerThanAnExtension_Test()
         {
-            List<Warehouse> currentWarehouse = this.warehouseController.WarehousesBiggerThanAnExtensionList(170);
+            using (var fake = new AutoFake())
+            {
+                List<Warehouse> mockLista = new List<Warehouse>();
+                mockLista.Add(new Warehouse()
+                {
+                    WarehouseAddress = "Calle Ebro",
+                    Extension = 120
+                });
 
-            Assert.AreEqual(currentWarehouse[0].WarehouseAddress, "Calle Guadalquivir");
-            Assert.AreEqual(currentWarehouse[1].WarehouseAddress, "Calle Genil");
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IWarehouseBussiness>().WarehousesBiggerThanAnExtensionList(A<int>.Ignored)).Returns(mockLista);
 
+                var mockService = fake.Resolve<WarehouseController>();
+
+                List<Warehouse> lista = mockService.WarehousesBiggerThanAnExtensionList(1);
+            }
         }
 
         [Test]
         public void InsertWarehouse_Test()
         {
-            string message = this.warehouseController.InsertWarehouse(new WarehouseSpecific("Calle Tajo", 300));
+            using (var fake = new AutoFake())
+            {
 
-            Warehouse warehouseGotten = this.warehouseController.GetWarehouse(5);
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IWarehouseBussiness>().InsertWarehouse(A<WarehouseSpecific>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "Warehouse introduced satisfactorily.");
-            Assert.AreEqual(warehouseGotten.WarehouseAddress, "Calle Tajo");
-            Assert.AreEqual(warehouseGotten.Extension, 300);
+                var mockService = fake.Resolve<WarehouseController>();
 
+                string message = mockService.InsertWarehouse(new WarehouseSpecific("Calle Tajo", 300));
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void GetWarehouse_Test()
         {
-            Warehouse warehouseGotten = this.warehouseController.GetWarehouse(1);
+            using (var fake = new AutoFake())
+            {
+                Warehouse mockEmployee = new Warehouse("Calle Ebro", 120);
 
-            Assert.AreEqual(warehouseGotten.WarehouseAddress, "Calle Ebro");
-            Assert.AreEqual(warehouseGotten.Extension, 120);
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IWarehouseBussiness>().ReadWarehouse(A<int>.Ignored)).Returns(mockEmployee);
+
+                var mockService = fake.Resolve<WarehouseController>();
+
+                Warehouse warehouse = mockService.GetWarehouse(1);
+            }
 
         }
 
         [Test]
         public void UpdateWarehouse_Test()
         {
-            WarehouseSpecific change = new WarehouseSpecific();
-            change.WarehouseId = 2;
-            change.WarehouseAddress = "Calle Nilo";
-            change.Extension = 1000;
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IWarehouseBussiness>().UpdateWarehouse(A<WarehouseSpecific>.Ignored)).Returns(true);
 
-            string message = this.warehouseController.UpdateWarehouse(change);
+                var mockService = fake.Resolve<WarehouseController>();
 
-            Warehouse warehouseGotten = this.warehouseController.GetWarehouse(2);
+                string message = mockService.UpdateWarehouse(new WarehouseSpecific("Calle Tajo", 300));
 
-            Assert.AreEqual(message, "Warehouse updated satisfactorily.");
-            Assert.AreEqual(warehouseGotten.WarehouseAddress, "Calle Nilo");
-            Assert.AreEqual(warehouseGotten.Extension, 1000);
-
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void DeleteWarehouse_Test()
         {
-            string message = this.warehouseController.DeleteWarehouse(3);
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IWarehouseBussiness>().DeleteWarehouse(A<int>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "Warehouse deleted satisfactorily.");
+                var mockService = fake.Resolve<WarehouseController>();
 
+                string message = mockService.DeleteWarehouse(1);
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
     }
 }

@@ -1,11 +1,16 @@
 ﻿using Autofac;
+using Autofac.Extras.FakeItEasy;
+using FakeItEasy;
 using NUnit.Framework;
+using Supplier_Bussiness.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
+using Supplier_Helper.Authentication;
 using Supplier_Service.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,66 +19,69 @@ namespace Service_Tests
     [TestFixture]
     class ProductStateController_Tests
     {
-        private ProductStateController productStateController;
-
-        [TestFixtureSetUp]
-        public void Init()
-        {
-            var container = ContainerConfig.Configure();
-            var scope = container.BeginLifetimeScope();
-
-            this.productStateController = scope.Resolve<ProductStateController>();
-
-            this.productStateController.InsertProductState(new ProductStateSpecific("No disponible"));
-            this.productStateController.InsertProductState(new ProductStateSpecific("Sin existencias"));
-            this.productStateController.InsertProductState(new ProductStateSpecific("Con existencias"));
-
-        }
-
         [Test]
         public void InsertProductState_Test()
         {
-            string message = this.productStateController.InsertProductState(new ProductStateSpecific("Fuera de venta"));
+            using (var fake = new AutoFake())
+            {
 
-            ProductState productStateGotten = this.productStateController.GetProductState(4);
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IProductStateBussiness>().InsertProductState(A<ProductStateSpecific>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "ProductState introduced satisfactorily.");
-            Assert.AreEqual(productStateGotten.ProductStateDescription, "Fuera de venta");
+                var mockService = fake.Resolve<ProductStateController>();
 
+                string message = mockService.InsertProductState(new ProductStateSpecific("No disponible"));
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void GetProductState_Test()
         {
-            ProductState productStateGotten = this.productStateController.GetProductState(1);
+            using (var fake = new AutoFake())
+            {
+                ProductState mockProductState = new ProductState("No disponible");
 
-            Assert.AreEqual(productStateGotten.ProductStateDescription, "No disponible");
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IProductStateBussiness>().ReadProductState(A<int>.Ignored)).Returns(mockProductState);
 
+                var mockService = fake.Resolve<ProductStateController>();
+
+                ProductState productState = mockService.GetProductState(1);
+            }
         }
 
         [Test]
         public void UpdateProductState_Test()
         {
-            ProductStateSpecific change = new ProductStateSpecific();
-            change.ProductStateId = 2;
-            change.ProductStateDescription = "Agotado";
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IProductStateBussiness>().UpdateProductState(A<ProductStateSpecific>.Ignored)).Returns(true);
 
-            string message = this.productStateController.UpdateProductState(change);
+                var mockService = fake.Resolve<ProductStateController>();
 
-            ProductState productStateGotten = this.productStateController.GetProductState(2);
+                string message = mockService.UpdateProductState(new ProductStateSpecific("No Disponible"));
 
-            Assert.AreEqual(message, "ProductState updated satisfactorily.");
-            Assert.AreEqual(productStateGotten.ProductStateDescription, "Agotado");
-
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void DeleteProductState_Test()
         {
-            string message = this.productStateController.DeleteProductState(3);
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IProductStateBussiness>().DeleteProductState(A<int>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "ProductState deleted satisfactorily.");
+                var mockService = fake.Resolve<ProductStateController>();
 
+                string message = mockService.DeleteProductState(1);
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
     }
 }

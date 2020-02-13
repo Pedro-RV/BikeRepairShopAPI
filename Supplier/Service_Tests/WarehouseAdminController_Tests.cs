@@ -1,11 +1,16 @@
 ﻿using Autofac;
+using Autofac.Extras.FakeItEasy;
+using FakeItEasy;
 using NUnit.Framework;
+using Supplier_Bussiness.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
+using Supplier_Helper.Authentication;
 using Supplier_Service.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,80 +19,72 @@ namespace Service_Tests
     [TestFixture]
     class WarehouseAdminController_Tests
     {
-        private EmployeeController employeeController;
-        private WarehouseController warehouseController;
-        private WarehouseAdminController warehouseAdminController;
-
-        [TestFixtureSetUp]
-        public void Init()
-        {
-            var container = ContainerConfig.Configure();
-            var scope = container.BeginLifetimeScope();
-
-            this.employeeController = scope.Resolve<EmployeeController>();
-            this.warehouseController = scope.Resolve<WarehouseController>();
-            this.warehouseAdminController = scope.Resolve<WarehouseAdminController>();
-
-            this.employeeController.InsertEmployee(new EmployeeSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
-            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
-            this.warehouseController.InsertWarehouse(new WarehouseSpecific("Calle Ebro", 120));
-
-            this.warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
-            this.warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
-            this.warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
-
-        }
-
         [Test]
         public void InsertWarehouseAdmin_Test()
         {
-            DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
+            using (var fake = new AutoFake())
+            {
 
-            string message = this.warehouseAdminController.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IWarehouseAdminBussiness>().InsertWarehouseAdmin(A<WarehouseAdminSpecific>.Ignored)).Returns(true);
 
-            WarehouseAdmin warehouseAdminGotten = this.warehouseAdminController.GetWarehouseAdmin(4);
+                var mockService = fake.Resolve<WarehouseAdminController>();
 
-            Assert.AreEqual(message, "WarehouseAdmin introduced satisfactorily.");
-            Assert.AreEqual(warehouseAdminGotten.StartDate, dateTime);
+                DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
+                string message = mockService.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
 
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void GetWarehouseAdmin_Test()
         {
-            WarehouseAdmin warehouseAdminGotten = this.warehouseAdminController.GetWarehouseAdmin(1);
+            using (var fake = new AutoFake())
+            {
+                DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
+                WarehouseAdmin mockWarehouseAdmin = new WarehouseAdmin(dateTime, new Employee(), new Warehouse());
 
-            DateTime seeDateTime = new DateTime(2019, 12, 03, 9, 38, 00);
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IWarehouseAdminBussiness>().ReadWarehouseAdmin(A<int>.Ignored)).Returns(mockWarehouseAdmin);
 
-            Assert.AreEqual(warehouseAdminGotten.StartDate, seeDateTime);
+                var mockService = fake.Resolve<WarehouseAdminController>();
 
+                WarehouseAdmin warehouseAdmin = mockService.GetWarehouseAdmin(1);
+            }
         }
 
         [Test]
         public void UpdateWarehouseAdmin_Test()
         {
-            DateTime modify = new DateTime(2019, 10, 03, 10, 51, 00);
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IWarehouseAdminBussiness>().UpdateWarehouseAdmin(A<WarehouseAdminSpecific>.Ignored)).Returns(true);
 
-            WarehouseAdminSpecific change = new WarehouseAdminSpecific();
-            change.WarehouseAdminId = 2;
-            change.StartDate = modify;
+                var mockService = fake.Resolve<WarehouseAdminController>();
 
-            string message = this.warehouseAdminController.UpdateWarehouseAdmin(change);
+                DateTime dateTime = new DateTime(2019, 12, 03, 9, 38, 00);
+                string message = mockService.UpdateWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
 
-            WarehouseAdmin warehouseAdminCompare = this.warehouseAdminController.GetWarehouseAdmin(2);
-
-            Assert.AreEqual(message, "WarehouseAdmin updated satisfactorily.");
-            Assert.AreEqual(warehouseAdminCompare.StartDate, modify);
-
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void DeleteWarehouseAdmin_Test()
         {
-            string message = this.warehouseAdminController.DeleteWarehouseAdmin(3);
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IWarehouseAdminBussiness>().DeleteWarehouseAdmin(A<int>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "WarehouseAdmin deleted satisfactorily.");
+                var mockService = fake.Resolve<WarehouseAdminController>();
 
+                string message = mockService.DeleteWarehouseAdmin(1);
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
     }
 }

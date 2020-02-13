@@ -70,3 +70,13 @@ C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Autofac.Integration.WebApi.dl
 C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Autofac.Integration.Mvc.xml
 C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Autofac.Integration.WebApi.pdb
 C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Autofac.Integration.WebApi.xml
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Castle.Core.dll
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Moq.dll
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Castle.Core.xml
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Moq.xml
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Autofac.Extras.FakeItEasy.dll
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\FakeItEasy.dll
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Autofac.Extras.FakeItEasy.pdb
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Autofac.Extras.FakeItEasy.xml
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\FakeItEasy.pdb
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\FakeItEasy.xml

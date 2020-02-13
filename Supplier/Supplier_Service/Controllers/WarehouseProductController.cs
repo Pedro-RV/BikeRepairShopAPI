@@ -2,22 +2,31 @@
 using Supplier_Bussiness.Interfaces;
 using Supplier_Entities.EntityModel;
 using Supplier_Entities.Specific;
+using Supplier_Helper.Authentication;
+using Supplier_Helper.ExceptionController;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 
 namespace Supplier_Service.Controllers
 {
-    public class WarehouseProductController : ApiController
+    public class WarehouseProductController : BaseController
     {
         private IWarehouseProductBussiness warehouseProductBussiness;
+        private IExceptionController exceptionController;
+        private IAuthenticationProvider authenticationProvider;
 
-        public WarehouseProductController(IWarehouseProductBussiness warehouseProductBussiness)
+        public WarehouseProductController(IWarehouseProductBussiness warehouseProductBussiness,
+            IExceptionController exceptionController,
+            IAuthenticationProvider authenticationProvider)
         {
             this.warehouseProductBussiness = warehouseProductBussiness;
+            this.exceptionController = exceptionController;
+            this.authenticationProvider = authenticationProvider;
 
         }
 
@@ -26,9 +35,34 @@ namespace Supplier_Service.Controllers
         [Route("api/WarehouseProduct/GetWarehouseProduct/{WarehouseProductId}")]
         public WarehouseProduct GetWarehouseProduct(int WarehouseProductId)
         {
-            WarehouseProduct request = this.warehouseProductBussiness.ReadWarehouseProduct(WarehouseProductId);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            return request;
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                WarehouseProduct result = this.warehouseProductBussiness.ReadWarehouseProduct(WarehouseProductId);
+
+                return result;
+
+            }
+            catch (SupplierException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+            }
         }
 
         // POST
@@ -36,15 +70,40 @@ namespace Supplier_Service.Controllers
         [Route("api/WarehouseProduct/InsertWarehouseProduct")]
         public string InsertWarehouseProduct(WarehouseProductSpecific WarehouseProductSpecific)
         {
-            bool introduced_well = this.warehouseProductBussiness.InsertWarehouseProduct(WarehouseProductSpecific);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            if (introduced_well == true)
-            {
-                return "WarehouseProduct introduced satisfactorily.";
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                bool introduced_well = this.warehouseProductBussiness.InsertWarehouseProduct(WarehouseProductSpecific);
+
+                if (introduced_well == true)
+                {
+                    return "Action completed satisfactorily.";
+                }
+                else
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ActionNotCompleted);
+                }
+
             }
-            else
+            catch (SupplierException)
             {
-                return "Error !!! WarehouseProduct could not be introduced.";
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
         }
@@ -54,15 +113,40 @@ namespace Supplier_Service.Controllers
         [Route("api/WarehouseProduct/UpdateWarehouseProduct")]
         public string UpdateWarehouseProduct(WarehouseProductSpecific update)
         {
-            bool updated_well = this.warehouseProductBussiness.UpdateWarehouseProduct(update);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            if (updated_well == true)
-            {
-                return "WarehouseProduct updated satisfactorily.";
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                bool updated_well = this.warehouseProductBussiness.UpdateWarehouseProduct(update);
+
+                if (updated_well == true)
+                {
+                    return "Action completed satisfactorily.";
+                }
+                else
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ActionNotCompleted);
+                }
+
             }
-            else
+            catch (SupplierException)
             {
-                return "Error !!! WarehouseProduct could not be updated.";
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
         }
@@ -72,15 +156,40 @@ namespace Supplier_Service.Controllers
         [Route("api/WarehouseProduct/DeleteWarehouseProduct/{WarehouseProductId}")]
         public string DeleteWarehouseProduct(int WarehouseProductId)
         {
-            bool deleted_well = this.warehouseProductBussiness.DeleteWarehouseProduct(WarehouseProductId);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            if (deleted_well == true)
-            {
-                return "WarehouseProduct deleted satisfactorily.";
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                bool deleted_well = this.warehouseProductBussiness.DeleteWarehouseProduct(WarehouseProductId);
+
+                if (deleted_well == true)
+                {
+                    return "Action completed satisfactorily.";
+                }
+                else
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ActionNotCompleted);
+                }
+
             }
-            else
+            catch (SupplierException)
             {
-                return "Error !!! WarehouseProduct could not be deleted.";
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
         }
