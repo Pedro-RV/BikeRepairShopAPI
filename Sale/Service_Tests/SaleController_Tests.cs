@@ -1,11 +1,16 @@
 ﻿using Autofac;
+using Autofac.Extras.FakeItEasy;
+using FakeItEasy;
 using NUnit.Framework;
+using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
+using Sale_Helper.Authentication;
 using Sale_Service.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,84 +18,70 @@ namespace Service_Tests
 {
     [TestFixture]
     class SaleController_Tests
-    {
-        private SaleController saleController;
-        private ProductController productController;
-        private ProductTypeController productTypeController;
-        private BillController billController;
-        private PaymentMethodController paymentMethodController;
-        private ClientController clientController;
-
-        [TestFixtureSetUp]
-        public void Init()
-        {
-            var container = ContainerConfig.Configure();
-            var scope = container.BeginLifetimeScope();
-
-            this.saleController = scope.Resolve<SaleController>();
-            this.billController = scope.Resolve<BillController>();
-            this.paymentMethodController = scope.Resolve<PaymentMethodController>();
-            this.productController = scope.Resolve<ProductController>();
-            this.productTypeController = scope.Resolve<ProductTypeController>();
-            this.clientController = scope.Resolve<ClientController>();
-
-            this.clientController.InsertClient(new ClientSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
-            this.productTypeController.InsertProductType(new ProductTypeSpecific("Ruedas"));
-            this.productController.InsertProduct(new ProductSpecific("Ruedas Michelin", 50, 50, 1));
-            this.paymentMethodController.InsertPaymentMethod(new PaymentMethodSpecific("Contrarrembolso"));
-            DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
-            this.billController.InsertBill(new BillSpecific(dateTime, 1));
-
-            this.saleController.InsertSale(new SaleSpecific(5, 1, 1, 1));
-            this.saleController.InsertSale(new SaleSpecific(15, 1, 1, 1));
-            this.saleController.InsertSale(new SaleSpecific(20, 1, 1, 1));
-
-        }
-
+    {     
         [Test]
         public void InsertSale_Test()
         {
-            string message = this.saleController.InsertSale(new SaleSpecific(50, 1, 1, 1));
+            using (var fake = new AutoFake())
+            {
 
-            Sale saleGotten = this.saleController.GetSale(4);
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<ISaleBussiness>().InsertSale(A<SaleSpecific>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "Sale introduced satisfactorily.");
-            Assert.AreEqual(saleGotten.Cuantity, 50);
+                var mockService = fake.Resolve<SaleController>();
 
+                string message = mockService.InsertSale(new SaleSpecific(50, 1, 1, 1));
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void GetSale_Test()
         {
-            Sale saleGotten = this.saleController.GetSale(1);
+            using (var fake = new AutoFake())
+            {
+                Sale mockSale = new Sale(50, new Client(), new Product(), new Bill());
 
-            Assert.AreEqual(saleGotten.Cuantity, 5);
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<ISaleBussiness>().ReadSale(A<int>.Ignored)).Returns(mockSale);
 
+                var mockService = fake.Resolve<SaleController>();
+
+                Sale sale = mockService.GetSale(1);
+            }
         }
 
         [Test]
         public void UpdateSale_Test()
         {
-            SaleSpecific change = new SaleSpecific();
-            change.SaleId = 2;
-            change.Cuantity = 22;
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<ISaleBussiness>().UpdateSale(A<SaleSpecific>.Ignored)).Returns(true);
 
-            string message = this.saleController.UpdateSale(change);
+                var mockService = fake.Resolve<SaleController>();
 
-            Sale saleCompare = this.saleController.GetSale(2);
+                string message = mockService.UpdateSale(new SaleSpecific(50, 1, 1, 1));
 
-            Assert.AreEqual(message, "Sale updated satisfactorily.");
-            Assert.AreEqual(saleCompare.Cuantity, change.Cuantity);
-
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void DeleteSale_Test()
         {
-            string message = this.saleController.DeleteSale(3);
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<ISaleBussiness>().DeleteSale(A<int>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "Sale deleted satisfactorily.");
+                var mockService = fake.Resolve<SaleController>();
 
+                string message = mockService.DeleteSale(1);
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
     }
 }

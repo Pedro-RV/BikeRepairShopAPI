@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Moq;
 using NUnit.Framework;
 using Supplier_Data;
 using Supplier_Data.Context;

@@ -1,11 +1,16 @@
 ﻿using Autofac;
+using Autofac.Extras.FakeItEasy;
+using FakeItEasy;
 using NUnit.Framework;
+using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
+using Sale_Helper.Authentication;
 using Sale_Service.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,66 +19,69 @@ namespace Service_Tests
     [TestFixture]
     class PaymentMethodController_Tests
     {
-        private PaymentMethodController paymentMethodController;
-
-        [TestFixtureSetUp]
-        public void Init()
-        {
-            var container = ContainerConfig.Configure();
-            var scope = container.BeginLifetimeScope();
-
-            this.paymentMethodController = scope.Resolve<PaymentMethodController>();
-
-            this.paymentMethodController.InsertPaymentMethod(new PaymentMethodSpecific("Contrarrembolso"));
-            this.paymentMethodController.InsertPaymentMethod(new PaymentMethodSpecific("Paypal"));
-            this.paymentMethodController.InsertPaymentMethod(new PaymentMethodSpecific("VISA"));
-
-        }
-
         [Test]
         public void InsertPaymentMethod_Test()
         {
-            string message = this.paymentMethodController.InsertPaymentMethod(new PaymentMethodSpecific("Cheque"));
+            using (var fake = new AutoFake())
+            {
 
-            PaymentMethod paymentMethodGotten = this.paymentMethodController.GetPaymentMethod(4);
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IPaymentMethodBussiness>().InsertPaymentMethod(A<PaymentMethodSpecific>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "PaymentMethod introduced satisfactorily.");
-            Assert.AreEqual(paymentMethodGotten.PaymentMethodDescription, "Cheque");
+                var mockService = fake.Resolve<PaymentMethodController>();
 
+                string message = mockService.InsertPaymentMethod(new PaymentMethodSpecific("Cheque"));
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void GetPaymentMethod_Test()
         {
-            PaymentMethod paymentMethodGotten = this.paymentMethodController.GetPaymentMethod(1);
+            using (var fake = new AutoFake())
+            {
+                PaymentMethod mockPaymentMethod = new PaymentMethod("Cheque");
 
-            Assert.AreEqual(paymentMethodGotten.PaymentMethodDescription, "Contrarrembolso");
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IPaymentMethodBussiness>().ReadPaymentMethod(A<int>.Ignored)).Returns(mockPaymentMethod);
 
+                var mockService = fake.Resolve<PaymentMethodController>();
+
+                PaymentMethod paymentMethod = mockService.GetPaymentMethod(1);
+            }
         }
 
         [Test]
         public void UpdatePaymentMethod_Test()
         {
-            PaymentMethodSpecific change = new PaymentMethodSpecific();
-            change.PaymentMethodId = 2;
-            change.PaymentMethodDescription = "Cupon";
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IPaymentMethodBussiness>().UpdatePaymentMethod(A<PaymentMethodSpecific>.Ignored)).Returns(true);
 
-            string message = this.paymentMethodController.UpdatePaymentMethod(change);
+                var mockService = fake.Resolve<PaymentMethodController>();
 
-            PaymentMethod paymentMethodCompare = this.paymentMethodController.GetPaymentMethod(2);
+                string message = mockService.UpdatePaymentMethod(new PaymentMethodSpecific("Cheque"));
 
-            Assert.AreEqual(message, "PaymentMethod updated satisfactorily.");
-            Assert.AreEqual(paymentMethodCompare.PaymentMethodDescription, change.PaymentMethodDescription);
-
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void DeletePaymentMethod_Test()
         {
-            string message = this.paymentMethodController.DeletePaymentMethod(3);
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IPaymentMethodBussiness>().DeletePaymentMethod(A<int>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "PaymentMethod deleted satisfactorily.");
+                var mockService = fake.Resolve<PaymentMethodController>();
 
+                string message = mockService.DeletePaymentMethod(1);
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
     }
 }

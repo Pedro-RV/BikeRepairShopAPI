@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentication\AuthenticationProvider.cs" />
+    <Compile Include="Authentication\IAuthenticationProvider.cs" />
     <Compile Include="ExceptionController\ExceptionController.cs" />
     <Compile Include="ExceptionController\ExceptionEnum.cs" />
     <Compile Include="ExceptionController\ExceptionEnumText.cs" />

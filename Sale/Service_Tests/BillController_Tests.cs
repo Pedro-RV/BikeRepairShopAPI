@@ -1,11 +1,16 @@
 ﻿using Autofac;
+using Autofac.Extras.FakeItEasy;
+using FakeItEasy;
 using NUnit.Framework;
+using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
+using Sale_Helper.Authentication;
 using Sale_Service.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,79 +19,72 @@ namespace Service_Tests
     [TestFixture]
     class BillController_Tests
     {
-        private BillController billController;
-        private PaymentMethodController paymentMethodController;
-
-        [TestFixtureSetUp]
-        public void Init()
-        {
-            var container = ContainerConfig.Configure();
-            var scope = container.BeginLifetimeScope();
-
-            this.billController = scope.Resolve<BillController>();
-            this.paymentMethodController = scope.Resolve<PaymentMethodController>();
-
-            this.paymentMethodController.InsertPaymentMethod(new PaymentMethodSpecific("Contrarrembolso"));
-            this.paymentMethodController.InsertPaymentMethod(new PaymentMethodSpecific("Paypal"));
-            this.paymentMethodController.InsertPaymentMethod(new PaymentMethodSpecific("VISA"));
-            this.paymentMethodController.InsertPaymentMethod(new PaymentMethodSpecific("Cupon"));
-            DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
-
-            this.billController.InsertBill(new BillSpecific(dateTime, 1));
-            this.billController.InsertBill(new BillSpecific(dateTime, 2));
-            this.billController.InsertBill(new BillSpecific(dateTime, 3));
-
-        }
-
         [Test]
         public void InsertBill_Test()
         {
-            DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
+            using (var fake = new AutoFake())
+            {
 
-            string message = this.billController.InsertBill(new BillSpecific(dateTime, 4));
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IBillBussiness>().InsertBill(A<BillSpecific>.Ignored)).Returns(true);
 
-            Bill billGotten = this.billController.GetBill(4);
+                var mockService = fake.Resolve<BillController>();
 
-            Assert.AreEqual(message, "Bill introduced satisfactorily.");
-            Assert.AreEqual(billGotten.BillDate, dateTime);
+                DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
+                string message = mockService.InsertBill(new BillSpecific(dateTime, 4));
 
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void GetBill_Test()
         {
-            Bill billGotten = this.billController.GetBill(1);
+            using (var fake = new AutoFake())
+            {
+                DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
+                Bill mockBill = new Bill(dateTime, new PaymentMethod());
 
-            DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IBillBussiness>().ReadBill(A<int>.Ignored)).Returns(mockBill);
 
-            Assert.AreEqual(billGotten.BillDate, dateTime);
+                var mockService = fake.Resolve<BillController>();
 
+                Bill bill = mockService.GetBill(1);
+            }
         }
 
         [Test]
         public void UpdateBill_Test()
         {
-            DateTime dateTime = new DateTime(2020, 01, 06, 14, 12, 00);
-            BillSpecific change = new BillSpecific();
-            change.BillId = 2;
-            change.BillDate = dateTime;
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IBillBussiness>().UpdateBill(A<BillSpecific>.Ignored)).Returns(true);
 
-            string message = this.billController.UpdateBill(change);
+                var mockService = fake.Resolve<BillController>();
 
-            Bill billCompare = this.billController.GetBill(2);
+                DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
+                string message = mockService.UpdateBill(new BillSpecific(dateTime, 4));
 
-            Assert.AreEqual(message, "Bill updated satisfactorily.");
-            Assert.AreEqual(billCompare.BillDate, change.BillDate);
-
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void DeleteBill_Test()
         {
-            string message = this.billController.DeleteBill(3);
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IBillBussiness>().DeleteBill(A<int>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "Bill deleted satisfactorily.");
+                var mockService = fake.Resolve<BillController>();
 
+                string message = mockService.DeleteBill(1);
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
     }
 }

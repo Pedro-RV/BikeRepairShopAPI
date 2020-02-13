@@ -17,6 +17,8 @@ namespace Sale_Helper.ExceptionController
         NullPaymentMethodDescription = 7,
         NullProductTypeDescription = 8,
         NullTelephoneNum = 9,
-        MethodNotExist = 10
+        MethodNotExist = 10,
+        AuthenticationError = 11,
+        ActionNotCompleted = 12
     }
 }

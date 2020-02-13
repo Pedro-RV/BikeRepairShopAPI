@@ -2,22 +2,31 @@
 using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
+using Sale_Helper.Authentication;
+using Sale_Helper.ExceptionController;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 
 namespace Sale_Service.Controllers
 {
-    public class BillController : ApiController
+    public class BillController : BaseController
     {
         private IBillBussiness billBussiness;
+        private IExceptionController exceptionController;
+        private IAuthenticationProvider authenticationProvider;
 
-        public BillController(IBillBussiness billBussiness)
+        public BillController(IBillBussiness billBussiness,
+            IExceptionController exceptionController,
+            IAuthenticationProvider authenticationProvider)
         {
             this.billBussiness = billBussiness;
+            this.exceptionController = exceptionController;
+            this.authenticationProvider = authenticationProvider;
 
         }
 
@@ -26,9 +35,34 @@ namespace Sale_Service.Controllers
         [Route("api/bill/GetBill/{billId}")]
         public Bill GetBill(int billId)
         {
-            Bill request = this.billBussiness.ReadBill(billId);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            return request;
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                Bill result = this.billBussiness.ReadBill(billId);
+
+                return result;
+
+            }
+            catch (SaleException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+            }
         }
 
         // POST
@@ -36,15 +70,40 @@ namespace Sale_Service.Controllers
         [Route("api/bill/InsertBill")]
         public string InsertBill(BillSpecific billSpecific)
         {
-            bool introduced_well = this.billBussiness.InsertBill(billSpecific);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            if (introduced_well == true)
-            {
-                return "Bill introduced satisfactorily.";
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                bool introduced_well = this.billBussiness.InsertBill(billSpecific);
+
+                if (introduced_well == true)
+                {
+                    return "Action completed satisfactorily.";
+                }
+                else
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ActionNotCompleted);
+                }
+
             }
-            else
+            catch (SaleException)
             {
-                return "Error !!! Bill could not be introduced.";
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
         }
@@ -54,15 +113,40 @@ namespace Sale_Service.Controllers
         [Route("api/bill/UpdateBill")]
         public string UpdateBill(BillSpecific update)
         {
-            bool updated_well = this.billBussiness.UpdateBill(update);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            if (updated_well == true)
-            {
-                return "Bill updated satisfactorily.";
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                bool updated_well = this.billBussiness.UpdateBill(update);
+
+                if (updated_well == true)
+                {
+                    return "Action completed satisfactorily.";
+                }
+                else
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ActionNotCompleted);
+                }
+
             }
-            else
+            catch (SaleException)
             {
-                return "Error !!! Bill could not be updated.";
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
         }
@@ -72,15 +156,40 @@ namespace Sale_Service.Controllers
         [Route("api/bill/DeleteBill/{billId}")]
         public string DeleteBill(int billId)
         {
-            bool deleted_well = this.billBussiness.DeleteBill(billId);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            if (deleted_well == true)
-            {
-                return "Bill deleted satisfactorily.";
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                bool deleted_well = this.billBussiness.DeleteBill(billId);
+
+                if (deleted_well == true)
+                {
+                    return "Action completed satisfactorily.";
+                }
+                else
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ActionNotCompleted);
+                }
+
             }
-            else
+            catch (SaleException)
             {
-                return "Error !!! Bill could not be deleted.";
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
         }

@@ -1,11 +1,16 @@
 ﻿using Autofac;
+using Autofac.Extras.FakeItEasy;
+using FakeItEasy;
 using NUnit.Framework;
+using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
+using Sale_Helper.Authentication;
 using Sale_Service.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,76 +19,69 @@ namespace Service_Tests
     [TestFixture]
     class ProductController_Tests
     {
-        private ProductController productController;
-        private ProductTypeController productTypeController;      
-
-        [TestFixtureSetUp]
-        public void Init()
-        {
-            var container = ContainerConfig.Configure();
-            var scope = container.BeginLifetimeScope();
-
-            this.productController = scope.Resolve<ProductController>();
-            this.productTypeController = scope.Resolve<ProductTypeController>();
-
-            this.productTypeController.InsertProductType(new ProductTypeSpecific("Ruedas"));
-
-            this.productController.InsertProduct(new ProductSpecific("Ruedas Michelin", 50, 50, 1));
-            this.productController.InsertProduct(new ProductSpecific("Ruedas Tractor", 200, 25, 1));
-            this.productController.InsertProduct(new ProductSpecific("Ruedas Grua", 350, 20, 1));
-
-        }
-
         [Test]
         public void InsertProduct_Test()
         {
-            string message = this.productController.InsertProduct(new ProductSpecific("Ruedas Armilla", 45, 60, 1));
+            using (var fake = new AutoFake())
+            {
 
-            Product productGotten = this.productController.GetProduct(4);
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IProductBussiness>().InsertProduct(A<ProductSpecific>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "Product introduced satisfactorily.");
-            Assert.AreEqual(productGotten.ProductDescription, "Ruedas Armilla");
-            Assert.AreEqual(productGotten.Prize, 45);
-            Assert.AreEqual(productGotten.Cuantity, 60);
+                var mockService = fake.Resolve<ProductController>();
 
+                string message = mockService.InsertProduct(new ProductSpecific("Ruedas Armilla", 45, 60, 1));
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void GetProduct_Test()
         {
-            Product productGotten = this.productController.GetProduct(1);
+            using (var fake = new AutoFake())
+            {
+                Product mockProduct = new Product("Ruedas Armilla", 45, 60, new ProductType());
 
-            Assert.AreEqual(productGotten.ProductDescription, "Ruedas Michelin");
-            Assert.AreEqual(productGotten.Prize, 50);
-            Assert.AreEqual(productGotten.Cuantity, 50);
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IProductBussiness>().ReadProduct(A<int>.Ignored)).Returns(mockProduct);
 
+                var mockService = fake.Resolve<ProductController>();
+
+                Product product = mockService.GetProduct(1);
+            }
         }
 
         [Test]
         public void UpdateProduct_Test()
         {
-            ProductSpecific change = new ProductSpecific();
-            change.ProductId = 2;
-            change.ProductDescription = "Ruedas China";
-            change.Prize = 25;
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IProductBussiness>().UpdateProduct(A<ProductSpecific>.Ignored)).Returns(true);
 
-            string message = this.productController.UpdateProduct(change);
+                var mockService = fake.Resolve<ProductController>();
 
-            Product productCompare = this.productController.GetProduct(2);
+                string message = mockService.UpdateProduct(new ProductSpecific("Ruedas Armilla", 45, 60, 1));
 
-            Assert.AreEqual(message, "Product updated satisfactorily.");
-            Assert.AreEqual(productCompare.ProductDescription, change.ProductDescription);
-            Assert.AreEqual(productCompare.Prize, change.Prize);
-
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void DeleteProduct_Test()
         {
-            string message = this.productController.DeleteProduct(3);
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IProductBussiness>().DeleteProduct(A<int>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "Product deleted satisfactorily.");
+                var mockService = fake.Resolve<ProductController>();
 
+                string message = mockService.DeleteProduct(1);
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
     }
 }

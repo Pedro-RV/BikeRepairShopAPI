@@ -117,3 +117,9 @@ C:\REPO\becaPedro\Supplier\Data_Tests\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dl
 C:\REPO\becaPedro\Supplier\Data_Tests\bin\Debug\Autofac.pdb
 C:\REPO\becaPedro\Supplier\Data_Tests\bin\Debug\Autofac.xml
 C:\REPO\becaPedro\Supplier\Data_Tests\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\REPO\becaPedro\Supplier\Data_Tests\bin\Debug\Autofac.Extras.FakeItEasy.dll
+C:\REPO\becaPedro\Supplier\Data_Tests\bin\Debug\FakeItEasy.dll
+C:\REPO\becaPedro\Supplier\Data_Tests\bin\Debug\Autofac.Extras.FakeItEasy.pdb
+C:\REPO\becaPedro\Supplier\Data_Tests\bin\Debug\Autofac.Extras.FakeItEasy.xml
+C:\REPO\becaPedro\Supplier\Data_Tests\bin\Debug\FakeItEasy.pdb
+C:\REPO\becaPedro\Supplier\Data_Tests\bin\Debug\FakeItEasy.xml

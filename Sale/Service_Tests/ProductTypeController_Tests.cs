@@ -1,11 +1,16 @@
 ﻿using Autofac;
+using Autofac.Extras.FakeItEasy;
+using FakeItEasy;
 using NUnit.Framework;
+using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
+using Sale_Helper.Authentication;
 using Sale_Service.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,66 +19,69 @@ namespace Service_Tests
     [TestFixture]
     class ProductTypeController_Tests
     {
-        private ProductTypeController productTypeController;
-
-        [TestFixtureSetUp]
-        public void Init()
-        {
-            var container = ContainerConfig.Configure();
-            var scope = container.BeginLifetimeScope();
-
-            this.productTypeController = scope.Resolve<ProductTypeController>();
-
-            this.productTypeController.InsertProductType(new ProductTypeSpecific("Ruedas"));
-            this.productTypeController.InsertProductType(new ProductTypeSpecific("Ventiladores"));
-            this.productTypeController.InsertProductType(new ProductTypeSpecific("Frenos"));
-
-        }
-
         [Test]
         public void InsertProductType_Test()
         {
-            string message = this.productTypeController.InsertProductType(new ProductTypeSpecific("Llantas"));
+            using (var fake = new AutoFake())
+            {
 
-            ProductType productTypeGotten = this.productTypeController.GetProductType(4);
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IProductTypeBussiness>().InsertProductType(A<ProductTypeSpecific>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "ProductType introduced satisfactorily.");
-            Assert.AreEqual(productTypeGotten.ProductTypeDescription, "Llantas");
+                var mockService = fake.Resolve<ProductTypeController>();
 
+                string message = mockService.InsertProductType(new ProductTypeSpecific("Llantas"));
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void GetProductType_Test()
         {
-            ProductType productTypeGotten = this.productTypeController.GetProductType(1);
+            using (var fake = new AutoFake())
+            {
+                ProductType mockProductType = new ProductType("Llantas");
 
-            Assert.AreEqual(productTypeGotten.ProductTypeDescription, "Ruedas");
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IProductTypeBussiness>().ReadProductType(A<int>.Ignored)).Returns(mockProductType);
 
+                var mockService = fake.Resolve<ProductTypeController>();
+
+                ProductType productType = mockService.GetProductType(1);
+            }
         }
 
         [Test]
         public void UpdateProductType_Test()
         {
-            ProductTypeSpecific change = new ProductTypeSpecific();
-            change.ProductTypeId = 2;
-            change.ProductTypeDescription = "Herramientas";
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IProductTypeBussiness>().UpdateProductType(A<ProductTypeSpecific>.Ignored)).Returns(true);
 
-            string message = this.productTypeController.UpdateProductType(change);
+                var mockService = fake.Resolve<ProductTypeController>();
 
-            ProductType productTypeCompare = this.productTypeController.GetProductType(2);
+                string message = mockService.UpdateProductType(new ProductTypeSpecific("Llantas"));
 
-            Assert.AreEqual(message, "ProductType updated satisfactorily.");
-            Assert.AreEqual(productTypeCompare.ProductTypeDescription, change.ProductTypeDescription);
-
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void DeleteProductType_Test()
         {
-            string message = this.productTypeController.DeleteProductType(3);
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IProductTypeBussiness>().DeleteProductType(A<int>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "ProductType deleted satisfactorily.");
+                var mockService = fake.Resolve<ProductTypeController>();
 
+                string message = mockService.DeleteProductType(1);
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
     }
 }

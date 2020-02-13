@@ -2,22 +2,31 @@
 using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
+using Sale_Helper.Authentication;
+using Sale_Helper.ExceptionController;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 
 namespace Sale_Service.Controllers
 {
-    public class PaymentMethodController : ApiController
+    public class PaymentMethodController : BaseController
     {
         private IPaymentMethodBussiness paymentMethodBussiness;
+        private IExceptionController exceptionController;
+        private IAuthenticationProvider authenticationProvider;
 
-        public PaymentMethodController(IPaymentMethodBussiness paymentMethodBussiness)
+        public PaymentMethodController(IPaymentMethodBussiness paymentMethodBussiness,
+            IExceptionController exceptionController,
+            IAuthenticationProvider authenticationProvider)
         {
             this.paymentMethodBussiness = paymentMethodBussiness;
+            this.exceptionController = exceptionController;
+            this.authenticationProvider = authenticationProvider;
 
         }
 
@@ -26,9 +35,34 @@ namespace Sale_Service.Controllers
         [Route("api/paymentMethod/GetPaymentMethod/{paymentMethodId}")]
         public PaymentMethod GetPaymentMethod(int paymentMethodId)
         {
-            PaymentMethod request = this.paymentMethodBussiness.ReadPaymentMethod(paymentMethodId);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            return request;
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                PaymentMethod result = this.paymentMethodBussiness.ReadPaymentMethod(paymentMethodId);
+
+                return result;
+
+            }
+            catch (SaleException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+            }
         }
 
         // POST
@@ -36,15 +70,40 @@ namespace Sale_Service.Controllers
         [Route("api/paymentMethod/InsertPaymentMethod")]
         public string InsertPaymentMethod(PaymentMethodSpecific paymentMethodSpecific)
         {
-            bool introduced_well = this.paymentMethodBussiness.InsertPaymentMethod(paymentMethodSpecific);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            if (introduced_well == true)
-            {
-                return "PaymentMethod introduced satisfactorily.";
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                bool introduced_well = this.paymentMethodBussiness.InsertPaymentMethod(paymentMethodSpecific);
+
+                if (introduced_well == true)
+                {
+                    return "Action completed satisfactorily.";
+                }
+                else
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ActionNotCompleted);
+                }
+
             }
-            else
+            catch (SaleException)
             {
-                return "Error !!! PaymentMethod could not be introduced.";
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
         }
@@ -54,15 +113,40 @@ namespace Sale_Service.Controllers
         [Route("api/paymentMethod/UpdatePaymentMethod")]
         public string UpdatePaymentMethod(PaymentMethodSpecific update)
         {
-            bool updated_well = this.paymentMethodBussiness.UpdatePaymentMethod(update);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            if (updated_well == true)
-            {
-                return "PaymentMethod updated satisfactorily.";
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                bool updated_well = this.paymentMethodBussiness.UpdatePaymentMethod(update);
+
+                if (updated_well == true)
+                {
+                    return "Action completed satisfactorily.";
+                }
+                else
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ActionNotCompleted);
+                }
+
             }
-            else
+            catch (SaleException)
             {
-                return "Error !!! PaymentMethod could not be updated.";
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
         }
@@ -72,15 +156,40 @@ namespace Sale_Service.Controllers
         [Route("api/paymentMethod/DeletePaymentMethod/{paymentMethodId}")]
         public string DeletePaymentMethod(int paymentMethodId)
         {
-            bool deleted_well = this.paymentMethodBussiness.DeletePaymentMethod(paymentMethodId);
+            try
+            {
+                var request = Request;
+                HttpRequestHeaders headers = null;
 
-            if (deleted_well == true)
-            {
-                return "PaymentMethod deleted satisfactorily.";
+                if (request != null)
+                {
+                    headers = request.Headers;
+                }
+
+                if (!this.authenticationProvider.CheckAuthentication(headers))
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
+                }
+
+                bool deleted_well = this.paymentMethodBussiness.DeletePaymentMethod(paymentMethodId);
+
+                if (deleted_well == true)
+                {
+                    return "Action completed satisfactorily.";
+                }
+                else
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ActionNotCompleted);
+                }
+
             }
-            else
+            catch (SaleException)
             {
-                return "Error !!! PaymentMethod could not be deleted.";
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
             }
 
         }

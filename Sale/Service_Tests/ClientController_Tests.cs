@@ -1,11 +1,16 @@
 ﻿using Autofac;
+using Autofac.Extras.FakeItEasy;
+using FakeItEasy;
 using NUnit.Framework;
+using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
+using Sale_Helper.Authentication;
 using Sale_Service.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,74 +19,69 @@ namespace Service_Tests
     [TestFixture]
     class ClientController_Tests
     {
-        private ClientController clientController;
-
-        [TestFixtureSetUp]
-        public void Init()
-        {
-            var container = ContainerConfig.Configure();
-            var scope = container.BeginLifetimeScope();
-
-            this.clientController = scope.Resolve<ClientController>();
-
-            this.clientController.InsertClient(new ClientSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
-            this.clientController.InsertClient(new ClientSpecific("Rodolfo", "Suarez", "88", "rodolf@correo", "Avnd Institucion", "123", "321"));
-            this.clientController.InsertClient(new ClientSpecific("Marco", "Polo", "99", "marco@correo", "Avnd Marco Polo", "000", "000"));
-
-        }
-
         [Test]
         public void InsertClient_Test()
         {
-            string message = this.clientController.InsertClient(new ClientSpecific("antonio", "carrasco", "22", "carrasco@correo", "calle malagon", "56", "87"));
+            using (var fake = new AutoFake())
+            {
 
-            Client clientGotten = this.clientController.GetClient(4);
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IClientBussiness>().InsertClient(A<ClientSpecific>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "Client introduced satisfactorily.");
-            Assert.AreEqual(clientGotten.ClientName, "antonio");
-            Assert.AreEqual(clientGotten.Surname, "carrasco");
-            Assert.AreEqual(clientGotten.DNI, "22");
-            Assert.AreEqual(clientGotten.Email, "carrasco@correo");
-            Assert.AreEqual(clientGotten.ClientAddress, "calle malagon");
-            Assert.AreEqual(clientGotten.CP, "56");
-            Assert.AreEqual(clientGotten.MobileNum, "87");
+                var mockService = fake.Resolve<ClientController>();
 
+                string message = mockService.InsertClient(new ClientSpecific("antonio", "carrasco", "22", "carrasco@correo", "calle malagon", "56", "87"));
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }           
         }
 
         [Test]
         public void GetClient_Test()
         {
-            Client clientGotten = this.clientController.GetClient(1);
+            using (var fake = new AutoFake())
+            {
+                Client mockClient = new Client("antonio", "carrasco", "22", "carrasco@correo", "calle malagon", "56", "87");
 
-            Assert.AreEqual(clientGotten.ClientName, "Jacinto");
-            Assert.AreEqual(clientGotten.Email, "sierra@correo");
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IClientBussiness>().ReadClient(A<int>.Ignored)).Returns(mockClient);
 
+                var mockService = fake.Resolve<ClientController>();
+
+                Client client = mockService.GetClient(1);
+            }
         }
 
         [Test]
         public void UpdateClient_Test()
         {
-            ClientSpecific change = new ClientSpecific();
-            change.ClientId = 2;
-            change.ClientName = "Domingo";
-            change.MobileNum = "621";
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IClientBussiness>().UpdateClient(A<ClientSpecific>.Ignored)).Returns(true);
 
-            string message = this.clientController.UpdateClient(change);
+                var mockService = fake.Resolve<ClientController>();
 
-            Client clientCompare = this.clientController.GetClient(2);
+                string message = mockService.UpdateClient(new ClientSpecific("antonio", "carrasco", "22", "carrasco@correo", "calle malagon", "56", "87"));
 
-            Assert.AreEqual(message, "Client updated satisfactorily.");
-            Assert.AreEqual(clientCompare.ClientName, change.ClientName);
-            Assert.AreEqual(clientCompare.MobileNum, change.MobileNum);
-
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
         [Test]
         public void DeleteClient_Test()
         {
-            string message = this.clientController.DeleteClient(3);
+            using (var fake = new AutoFake())
+            {
+                A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<IClientBussiness>().DeleteClient(A<int>.Ignored)).Returns(true);
 
-            Assert.AreEqual(message, "Client deleted satisfactorily.");
+                var mockService = fake.Resolve<ClientController>();
+
+                string message = mockService.DeleteClient(1);
+
+                Assert.AreEqual(message, "Action completed satisfactorily.");
+            }
         }
 
     }
