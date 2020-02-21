@@ -16,8 +16,6 @@ namespace Bussiness_Tests
     class SaleBussiness_Tests
     {
         private ISaleBussiness saleBussiness;
-        private IProductBussiness productBussiness;
-        private IProductTypeBussiness productTypeBussiness;
         private IClientBussiness clientBussiness;
         private IPaymentMethodBussiness paymentMethodBussiness;
         private IBillBussiness billBussiness;
@@ -29,16 +27,12 @@ namespace Bussiness_Tests
             var scope = container.BeginLifetimeScope();
 
             this.saleBussiness = scope.Resolve<ISaleBussiness>();
-            this.productBussiness = scope.Resolve<IProductBussiness>();
-            this.productTypeBussiness = scope.Resolve<IProductTypeBussiness>();
             this.clientBussiness = scope.Resolve<IClientBussiness>();
             this.paymentMethodBussiness = scope.Resolve<IPaymentMethodBussiness>();
             this.billBussiness = scope.Resolve<IBillBussiness>();
 
 
             this.clientBussiness.InsertClient(new ClientSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
-            this.productTypeBussiness.InsertProductType(new ProductTypeSpecific("Ruedas"));
-            this.productBussiness.InsertProduct(new ProductSpecific("Ruedas Michelin", 50, 50, 1));
             this.paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("Contrarrembolso"));
             DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
             this.billBussiness.InsertBill(new BillSpecific(dateTime, 1));

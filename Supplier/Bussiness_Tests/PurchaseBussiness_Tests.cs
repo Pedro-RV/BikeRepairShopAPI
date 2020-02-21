@@ -19,6 +19,7 @@ namespace Bussiness_Tests
         private IWarehouseBussiness warehouseBussiness;
         private IProductStateBussiness productStateBussiness;
         private IProductBussiness productBussiness;
+        private IProductTypeBussiness productTypeBussiness;
         private IEmployeeBussiness employeeBussiness;
         private IWarehouseAdminBussiness warehouseAdminBussiness;
         private ISupplyCompanyBussiness supplyCompanyBussiness;
@@ -33,6 +34,7 @@ namespace Bussiness_Tests
             this.warehouseBussiness = scope.Resolve<IWarehouseBussiness>();
             this.productStateBussiness = scope.Resolve<IProductStateBussiness>();
             this.productBussiness = scope.Resolve<IProductBussiness>();
+            this.productTypeBussiness = scope.Resolve<IProductTypeBussiness>();
             this.employeeBussiness = scope.Resolve<IEmployeeBussiness>();
             this.warehouseAdminBussiness = scope.Resolve<IWarehouseAdminBussiness>();
             this.supplyCompanyBussiness = scope.Resolve<ISupplyCompanyBussiness>();
@@ -42,7 +44,8 @@ namespace Bussiness_Tests
             this.warehouseBussiness.InsertWarehouse(new WarehouseSpecific("Calle Ebro", 120));
             this.warehouseAdminBussiness.InsertWarehouseAdmin(new WarehouseAdminSpecific(dateTime, 1, 1));
             this.productStateBussiness.InsertProductState(new ProductStateSpecific("No disponible"));
-            this.productBussiness.InsertProduct(new ProductSpecific("Pelota", 20, 5, true));
+            this.productTypeBussiness.InsertProductType(new ProductTypeSpecific("Ruedas"));
+            this.productBussiness.InsertProduct(new ProductSpecific("Pelota", 20, 5, true, 1));
             this.supplyCompanyBussiness.InsertSupplyCompany(new SupplyCompanySpecific("Ruedas Hermanos Carrasco", "123"));
             DateTime dateTime2 = new DateTime(2019, 05, 17, 13, 05, 00);
 

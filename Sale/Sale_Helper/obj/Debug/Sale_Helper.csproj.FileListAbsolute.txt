@@ -9,3 +9,4 @@ C:\REPO\becaPedro\Sale\Sale_Helper\bin\Debug\Sale_Helper.exe
 C:\REPO\becaPedro\Sale\Sale_Helper\bin\Debug\Sale_Helper.pdb
 C:\REPO\becaPedro\Sale\Sale_Helper\obj\Debug\Sale_Helper.exe
 C:\REPO\becaPedro\Sale\Sale_Helper\obj\Debug\Sale_Helper.pdb
+C:\REPO\becaPedro\Sale\Sale_Helper\obj\Debug\Sale_Helper.csprojAssemblyReference.cache

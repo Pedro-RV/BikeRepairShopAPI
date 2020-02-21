@@ -26,16 +26,14 @@ namespace Data_Tests
 
             this.saleRepository = scope.Resolve<ISaleRepository>();
 
-            Client client = new Client("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
-            ProductType productType = new ProductType("Ruedas");
-            Product product = new Product("Ruedas Michelin", 50, 50, productType);
+            Client client = new Client("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");            
             PaymentMethod paymentMethod = new PaymentMethod("Contrarrembolso");
             DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
             Bill bill = new Bill(dateTime, paymentMethod);
 
-            Sale saleOne = new Sale(5, client, product, bill);
-            Sale saleTwo = new Sale(15, client, product, bill);
-            Sale saleThree = new Sale(20, client, product, bill);
+            Sale saleOne = new Sale(5, 1, client, bill);
+            Sale saleTwo = new Sale(15, 1, client, bill);
+            Sale saleThree = new Sale(20, 1, client, bill);
 
             this.saleRepository.Insert(saleOne);
             this.saleRepository.Insert(saleTwo);
@@ -46,13 +44,11 @@ namespace Data_Tests
         public void Insert_Test()
         {
             Client client = new Client("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
-            ProductType productType = new ProductType("Ruedas");
-            Product product = new Product("Ruedas Michelin", 50, 50, productType);
             PaymentMethod paymentMethod = new PaymentMethod("Contrarrembolso");
             DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
             Bill bill = new Bill(dateTime, paymentMethod);
 
-            Sale saleAdd = new Sale(50, client, product, bill);
+            Sale saleAdd = new Sale(50, 1, client, bill);
             bool correct;
 
             correct = this.saleRepository.Insert(saleAdd);
@@ -62,7 +58,6 @@ namespace Data_Tests
             Assert.AreEqual(true, correct);
             Assert.AreEqual(saleGotten.Cuantity, saleAdd.Cuantity);
             Assert.AreEqual(saleGotten.Client, saleAdd.Client);
-            Assert.AreEqual(saleGotten.Product, saleAdd.Product);
             Assert.AreEqual(saleGotten.Bill, saleAdd.Bill);
 
         }

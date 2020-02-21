@@ -51,7 +51,7 @@ namespace Service_Tests
 
                 var mockService = fake.Resolve<ProductController>();
 
-                string message = mockService.InsertProduct(new ProductSpecific("Teclado", 60, 20, true));
+                string message = mockService.InsertProduct(new ProductSpecific("Teclado", 60, 20, true, 1));
 
                 Assert.AreEqual(message, "Action completed satisfactorily.");
             }
@@ -62,7 +62,7 @@ namespace Service_Tests
         {
             using (var fake = new AutoFake())
             {
-                Product mockProduct = new Product("Pelota", 20, 5, true);
+                Product mockProduct = new Product("Pelota", 20, 5, true, new ProductType());
 
                 A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
                 A.CallTo(() => fake.Resolve<IProductBussiness>().ReadProduct(A<int>.Ignored)).Returns(mockProduct);
@@ -84,7 +84,7 @@ namespace Service_Tests
 
                 var mockService = fake.Resolve<ProductController>();
 
-                string message = mockService.UpdateProduct(new ProductSpecific("Teclado", 60, 20, true));
+                string message = mockService.UpdateProduct(new ProductSpecific("Teclado", 60, 20, true, 1));
 
                 Assert.AreEqual(message, "Action completed satisfactorily.");
             }

@@ -30,7 +30,8 @@ namespace Data_Tests
             ProductState productStateOne = new ProductState("No disponible");
             ProductState productStateTwo = new ProductState("Disponible");
             ProductState productStateThree = new ProductState("Sin existencias");
-            Product product = new Product("Pelota", 20, 5, true);
+            ProductType productType = new ProductType("Ruedas");
+            Product product = new Product("Pelota", 20, 5, true, productType);
 
             WarehouseProduct warehouseProductOne = new WarehouseProduct(product, warehouse, productStateOne);
             WarehouseProduct warehouseProductTwo = new WarehouseProduct(product, warehouse, productStateTwo);
@@ -46,7 +47,8 @@ namespace Data_Tests
         {
             Warehouse warehouse = new Warehouse("Calle Tajo", 300);
             ProductState productState = new ProductState("No disponible");
-            Product product = new Product("Teclado", 60, 20, true);
+            ProductType productType = new ProductType("Ruedas");
+            Product product = new Product("Teclado", 60, 20, true, productType);
             WarehouseProduct warehouseProductAdd = new WarehouseProduct(product, warehouse, productState);
 
             bool correct;

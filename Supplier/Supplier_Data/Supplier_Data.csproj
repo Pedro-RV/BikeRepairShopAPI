@@ -58,7 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IEmployeeRepository.cs" />
-    <Compile Include="Interfaces\IProductInfoRepository.cs" />
+    <Compile Include="Interfaces\IProductTypeRepository.cs" />
+    <Compile Include="Interfaces\IWarehouseProductRepository.cs" />
     <Compile Include="Interfaces\IProductRepository.cs" />
     <Compile Include="Context\SupplierContextProvider.cs" />
     <Compile Include="Interfaces\IProductStateRepository.cs" />
@@ -89,7 +90,12 @@
     <Compile Include="Migrations\202001271257240_Quinta.designer.cs">
       <DependentUpon>202001271257240_Quinta.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002211102199_Sexta.cs" />
+    <Compile Include="Migrations\202002211102199_Sexta.designer.cs">
+      <DependentUpon>202002211102199_Sexta.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="ProductTypeRepository.cs" />
     <Compile Include="WarehouseProductRepository.cs" />
     <Compile Include="ProductRepository.cs" />
     <Compile Include="ProductStateRepository.cs" />
@@ -131,6 +137,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001271257240_Quinta.resx">
       <DependentUpon>202001271257240_Quinta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002211102199_Sexta.resx">
+      <DependentUpon>202002211102199_Sexta.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

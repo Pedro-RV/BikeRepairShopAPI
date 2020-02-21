@@ -27,12 +27,10 @@ namespace Data_Tests
             this.shippingRepository = scope.Resolve<IShippingRepository>();
 
             Client client = new Client("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
-            ProductType productType = new ProductType("Ruedas");
-            Product product = new Product("Ruedas Michelin", 50, 50, productType);
             PaymentMethod paymentMethod = new PaymentMethod("Contrarrembolso");
             DateTime dateTime = new DateTime(2019, 12, 03, 15, 12, 00);
             Bill bill = new Bill(dateTime, paymentMethod);
-            Sale sale = new Sale(5, client, product, bill);
+            Sale sale = new Sale(5, 1, client, bill);
             TransportCompany transportCompany = new TransportCompany("Envi", "911");
             DateTime dateTimeDeparture = new DateTime(2019, 12, 04, 9, 38, 00);
             DateTime dateTimePacking = new DateTime(2019, 12, 04, 9, 00, 00);
@@ -48,12 +46,10 @@ namespace Data_Tests
         public void Insert_Test()
         {
             Client client = new Client("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23");
-            ProductType productType = new ProductType("Ruedas");
-            Product product = new Product("Ruedas Michelin", 50, 50, productType);
             PaymentMethod paymentMethod = new PaymentMethod("Contrarrembolso");
             DateTime dateTime = new DateTime(2019, 12, 03, 15, 12, 00);
             Bill bill = new Bill(dateTime, paymentMethod);
-            Sale sale = new Sale(5, client, product, bill);
+            Sale sale = new Sale(5, 1, client, bill);
             TransportCompany transportCompany = new TransportCompany("Envi", "911");
             DateTime dateTimeDeparture = new DateTime(2019, 12, 04, 9, 38, 00);
             DateTime dateTimePacking = new DateTime(2019, 12, 04, 9, 00, 00);

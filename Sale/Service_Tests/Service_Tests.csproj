@@ -108,8 +108,6 @@
     <Compile Include="BillController_Tests.cs" />
     <Compile Include="ClientController_Tests.cs" />
     <Compile Include="PaymentMethodController_Tests.cs" />
-    <Compile Include="ProductController_Tests.cs" />
-    <Compile Include="ProductTypeController_Tests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaleController_Tests.cs" />

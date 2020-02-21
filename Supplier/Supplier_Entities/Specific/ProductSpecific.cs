@@ -16,17 +16,21 @@ namespace Supplier_Entities.Specific
 
         }
 
-        public ProductSpecific(string ProductDescription, double Prize, int Cuantity, bool ActiveFlag)
+        public ProductSpecific(string ProductDescription, double Prize, int Cuantity, bool ActiveFlag, int ProductTypeId)
         {
             this.ProductDescription = ProductDescription;
             this.Prize = Prize;
             this.Cuantity = Cuantity;
             this.ActiveFlag = ActiveFlag;
+            this.ProductTypeId = ProductTypeId;
 
         }
 
         [DataMember(Name = "productId")]
         public int ProductId { get; set; }
+
+        [DataMember(Name = "productTypeId")]
+        public int ProductTypeId { get; set; }
 
         [DataMember(Name = "productDescription")]
         [MaxLength(500)]

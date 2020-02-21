@@ -15,10 +15,9 @@ namespace Sale_Helper.ExceptionController
         MistakenPrize = 5,
         MistakenCuantity = 6,
         NullPaymentMethodDescription = 7,
-        NullProductTypeDescription = 8,
-        NullTelephoneNum = 9,
-        MethodNotExist = 10,
-        AuthenticationError = 11,
-        ActionNotCompleted = 12
+        NullTelephoneNum = 8,
+        MethodNotExist = 9,
+        AuthenticationError = 10,
+        ActionNotCompleted = 11
     }
 }

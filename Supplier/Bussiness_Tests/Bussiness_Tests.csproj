@@ -96,6 +96,7 @@
     <Compile Include="ContainerConfig.cs" />
     <Compile Include="EmployeeBussiness_Tests.cs" />
     <Compile Include="ProductBussiness_Tests.cs" />
+    <Compile Include="ProductTypeBussiness_Tests.cs" />
     <Compile Include="WarehouseProductBussiness_Tests.cs" />
     <Compile Include="ProductStateBussiness_Tests.cs" />
     <Compile Include="Program.cs" />

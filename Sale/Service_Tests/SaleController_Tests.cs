@@ -41,7 +41,7 @@ namespace Service_Tests
         {
             using (var fake = new AutoFake())
             {
-                Sale mockSale = new Sale(50, new Client(), new Product(), new Bill());
+                Sale mockSale = new Sale(50, 1, new Client(), new Bill());
 
                 A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
                 A.CallTo(() => fake.Resolve<ISaleBussiness>().ReadSale(A<int>.Ignored)).Returns(mockSale);

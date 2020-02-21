@@ -19,6 +19,7 @@ namespace Bussiness_Tests
         private IWarehouseBussiness warehouseBussiness;
         private IProductStateBussiness productStateBussiness;
         private IProductBussiness productBussiness;
+        private IProductTypeBussiness productTypeBussiness;
 
         [TestFixtureSetUp]
         public void Init()
@@ -30,13 +31,15 @@ namespace Bussiness_Tests
             this.warehouseBussiness = scope.Resolve<IWarehouseBussiness>();
             this.productStateBussiness = scope.Resolve<IProductStateBussiness>();
             this.productBussiness = scope.Resolve<IProductBussiness>();
+            this.productTypeBussiness = scope.Resolve<IProductTypeBussiness>();
 
             this.warehouseBussiness.InsertWarehouse(new WarehouseSpecific("Calle Ebro", 120));
             this.productStateBussiness.InsertProductState(new ProductStateSpecific("No disponible"));
             this.productStateBussiness.InsertProductState(new ProductStateSpecific("Disponible"));
             this.productStateBussiness.InsertProductState(new ProductStateSpecific("Sin existencias"));
             this.productStateBussiness.InsertProductState(new ProductStateSpecific("Suspendido"));
-            this.productBussiness.InsertProduct(new ProductSpecific("Pelota", 20, 5, true));
+            this.productTypeBussiness.InsertProductType(new ProductTypeSpecific("Ruedas"));
+            this.productBussiness.InsertProduct(new ProductSpecific("Pelota", 20, 5, true, 1));
 
             this.warehouseProductBussiness.InsertWarehouseProduct(new WarehouseProductSpecific(1, 1, 1));
             this.warehouseProductBussiness.InsertWarehouseProduct(new WarehouseProductSpecific(1, 1, 2));

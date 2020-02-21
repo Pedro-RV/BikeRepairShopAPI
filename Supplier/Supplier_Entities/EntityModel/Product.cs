@@ -12,13 +12,23 @@ namespace Supplier_Entities.EntityModel
 
         }
 
-        public Product(string ProductDescription, double Prize, int Cuantity, bool ActiveFlag)
+        public Product(string ProductDescription, double Prize, int Cuantity, bool ActiveFlag, ProductType ProductType)
         {
             this.ProductDescription = ProductDescription;
             this.Prize = Prize;
             this.Cuantity = Cuantity;
             this.ActiveFlag = ActiveFlag;
 
+            this.ProductType = ProductType;
+
+            if (ProductType != null)
+            {
+                this.ProductTypeId = ProductType.ProductTypeId;
+            }
+            else
+            {
+                this.ProductTypeId = 0;
+            }
         }
 
         #region Properties
@@ -26,9 +36,7 @@ namespace Supplier_Entities.EntityModel
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProductId { get; set; }
 
-        public int WarehouseId { get; set; }
-
-        public int ProductStateId { get; set; }
+        public int ProductTypeId { get; set; }
 
         [MaxLength(500)]
         public string ProductDescription { get; set; }
@@ -41,5 +49,10 @@ namespace Supplier_Entities.EntityModel
 
         #endregion
 
+        #region Foreing keys
+
+        public ProductType ProductType { get; set; }
+
+        #endregion
     }
 }

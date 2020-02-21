@@ -15,11 +15,11 @@ namespace Sale_Entities.Specific
 
         }
 
-        public SaleSpecific(int Cuantity, int ClientId, int ProductId, int BillId)
+        public SaleSpecific(int Cuantity, int SupplierProductId, int ClientId, int BillId)
         {
             this.Cuantity = Cuantity;
-            this.ClientId = ClientId;
-            this.ProductId = ProductId;
+            this.SupplierProductId = SupplierProductId;
+            this.ClientId = ClientId;           
             this.BillId = BillId;
 
         }
@@ -28,13 +28,13 @@ namespace Sale_Entities.Specific
         public int SaleId { get; set; }
 
         [DataMember(Name = "clientId")]
-        public int ClientId { get; set; }
-
-        [DataMember(Name = "productId")]
-        public int ProductId { get; set; }
+        public int ClientId { get; set; }       
 
         [DataMember(Name = "billId")]
         public int BillId { get; set; }
+
+        [DataMember(Name = "supplierProductId")]
+        public int SupplierProductId { get; set; }
 
         [DataMember(Name = "cuantity")]
         public int Cuantity { get; set; }

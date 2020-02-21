@@ -10,9 +10,10 @@ namespace Data_Tests
         [Test]
         public void Clean()
         {
-            //SupplierContextProvider.InitializeSupplierContext();
-            //SupplierContextProvider.GetSupplierContext().Database.Delete();
-            //SupplierContextProvider.GetSupplierContext().Database.Create();
+            //SupplierContextProvider supplierContextProvider = new SupplierContextProvider();
+            //supplierContextProvider.InitializeSupplierContext();
+            //supplierContextProvider.GetSupplierContext().Database.Delete();
+            //supplierContextProvider.GetSupplierContext().Database.Create();
 
             string path = Path.GetFullPath("/Users/pjrodriguez/");
             string sourceFile = path + "New_Supplier_Database/Supplier_Data.Context.SupplierContext.mdf";

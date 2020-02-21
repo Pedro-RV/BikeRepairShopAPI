@@ -26,9 +26,10 @@ namespace Data_Tests
 
             this.productRepository = scope.Resolve<IProductRepository>();
 
-            Product productOne = new Product("Pelota", 20, 5, true);
-            Product productTwo = new Product("Peine", 4, 10, true);
-            Product productThree = new Product("Zapatillas Adidas", 80, 15, true);
+            ProductType productType = new ProductType("Ruedas");
+            Product productOne = new Product("Pelota", 20, 5, true, productType);
+            Product productTwo = new Product("Peine", 4, 10, true, productType);
+            Product productThree = new Product("Zapatillas Adidas", 80, 15, true, productType);
 
             this.productRepository.Insert(productOne);
             this.productRepository.Insert(productTwo);
@@ -38,8 +39,8 @@ namespace Data_Tests
         [Test]
         public void Insert_Test()
         {
-            Product productAdd = new Product("Teclado", 60, 20, true);
-
+            ProductType productType = new ProductType("Ruedas");
+            Product productAdd = new Product("Ruedas Armilla", 45, 60, true, productType);
             bool correct;
 
             correct = this.productRepository.Insert(productAdd);
@@ -50,6 +51,7 @@ namespace Data_Tests
             Assert.AreEqual(productGotten.ProductDescription, productAdd.ProductDescription);
             Assert.AreEqual(productGotten.Prize, productAdd.Prize);
             Assert.AreEqual(productGotten.Cuantity, productAdd.Cuantity);
+            Assert.AreEqual(productGotten.ActiveFlag, productAdd.ActiveFlag);
 
         }
 

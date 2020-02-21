@@ -26,7 +26,8 @@ namespace Data_Tests
 
             this.purchaseRepository = scope.Resolve<IPurchaseRepository>();
 
-            Product product = new Product("Pelota", 20, 15, true);
+            ProductType productType = new ProductType("Ruedas");
+            Product product = new Product("Pelota", 20, 15, true, productType);
             SupplyCompany supplyCompany = new SupplyCompany("Ruedas Hermanos Carrasco", "123");
 
             DateTime dateTime2 = new DateTime(2019, 12, 03, 9, 38, 00);
@@ -43,7 +44,8 @@ namespace Data_Tests
         [Test]
         public void Insert_Test()
         {
-            Product product = new Product("Pelota", 20, 15, true);
+            ProductType productType = new ProductType("Ruedas");
+            Product product = new Product("Pelota", 20, 15, true, productType);
             SupplyCompany supplyCompany = new SupplyCompany("Ruedas Hermanos Carrasco", "123");
             DateTime dateTime2 = new DateTime(2019, 12, 03, 9, 38, 00);
             Purchase purchaseAdd = new Purchase(dateTime2, 10, 500, product, supplyCompany);

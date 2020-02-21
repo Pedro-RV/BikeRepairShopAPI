@@ -15,9 +15,10 @@ namespace Data_Tests
         [Test]
         public void Clean()
         {
-            //SaleContextProvider.InitializeSaleContext();
-            //SaleContextProvider.GetSaleContext().Database.Delete();
-            //SaleContextProvider.GetSaleContext().Database.Create();
+            //SaleContextProvider saleContextProvider = new SaleContextProvider();
+            //saleContextProvider.InitializeSaleContext();
+            //saleContextProvider.GetSaleContext().Database.Delete();
+            //saleContextProvider.GetSaleContext().Database.Create();
 
             string path = Path.GetFullPath("/Users/pjrodriguez/");
             string sourceFile = path + "New_Sale_Database/Sale_Data.Context.SaleContext.mdf";

@@ -86,6 +86,7 @@
     <Compile Include="AACleanDatabase.cs" />
     <Compile Include="ContainerConfig.cs" />
     <Compile Include="EmployeeRepository_Tests.cs" />
+    <Compile Include="ProductTypeRepository_Tests.cs" />
     <Compile Include="WarehouseProductRepository_Tests.cs" />
     <Compile Include="ProductRepository_Tests.cs" />
     <Compile Include="ProductStateRepository_Tests.cs" />

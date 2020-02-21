@@ -92,8 +92,6 @@
     <Compile Include="ClientRepository_Tests.cs" />
     <Compile Include="ContainerConfig.cs" />
     <Compile Include="PaymentMethodRepository_Tests.cs" />
-    <Compile Include="ProductRepository_Tests.cs" />
-    <Compile Include="ProductTypeRepository_Tests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaleRepository_Tests.cs" />

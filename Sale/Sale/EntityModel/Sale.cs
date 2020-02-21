@@ -11,30 +11,22 @@ namespace Sale_Entities.EntityModel
 
         }
 
-        public Sale(int Cuantity, Client Client, Product Product, Bill Bill)
+        public Sale(int Cuantity, int SupplierProductId, Client Client, Bill Bill)
         {
-            this.Cuantity = Cuantity;
+            this.Cuantity = Cuantity;            
+
+            this.SupplierProductId = SupplierProductId;
+
             this.Client = Client;
 
-            if(Client != null)
+            if (Client != null)
             {
                 this.ClientId = Client.ClientId;
             }
             else
             {
                 this.ClientId = 0;
-            }
-            
-            this.Product = Product;
-
-            if (Product != null)
-            {
-                this.ProductId = Product.ProductId;
-            }
-            else
-            {
-                this.ProductId = 0;
-            }
+            }            
             
             this.Bill = Bill;
 
@@ -52,13 +44,13 @@ namespace Sale_Entities.EntityModel
         #region Properties
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int SaleId { get; set; }
+        public int SaleId { get; set; }       
 
         public int ClientId { get; set; }
 
-        public int ProductId { get; set; }
-
         public int BillId { get; set; }
+
+        public int SupplierProductId { get; set; }
 
         public int Cuantity { get; set; }
 
@@ -67,8 +59,6 @@ namespace Sale_Entities.EntityModel
         #region Foreing keys
 
         public Client Client { get; set; }
-
-        public Product Product { get; set; }
         
         public Bill Bill { get; set; }
 

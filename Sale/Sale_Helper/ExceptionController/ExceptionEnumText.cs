@@ -15,7 +15,6 @@ namespace Sale_Helper.ExceptionController
         private const string MistakenPrize = "The product's prize can not be 0 or lower.";
         private const string MistakenCuantity = "The cuantity can not be lower than 0.";
         private const string NullPaymentMethodDescription = "The payment method must have a description.";
-        private const string NullProductTypeDescription = "The product type must have a description.";
         private const string NullTelephoneNum = "The transport company must have a telephone number.";
         private const string MethodNotExist = "The method invoked does not exist.";
         private const string AuthenticationError = "The user and/or pwd introduced are wrong.";
@@ -59,29 +58,24 @@ namespace Sale_Helper.ExceptionController
             if (exNum == 7)
             {
                 ret = NullPaymentMethodDescription;
-            }
+            }            
 
             if (exNum == 8)
-            {
-                ret = NullProductTypeDescription;
-            }
-
-            if (exNum == 9)
             {
                 ret = NullTelephoneNum;
             }
 
-            if (exNum == 10)
+            if (exNum == 9)
             {
                 ret = MethodNotExist;
             }
 
-            if (exNum == 11)
+            if (exNum == 10)
             {
                 ret = AuthenticationError;
             }
 
-            if (exNum == 12)
+            if (exNum == 11)
             {
                 ret = ActionNotCompleted;
             }

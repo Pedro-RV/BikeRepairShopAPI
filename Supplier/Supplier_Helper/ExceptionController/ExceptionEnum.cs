@@ -18,6 +18,8 @@ namespace Supplier_Helper.ExceptionController
         NullWarehouseAddress = 8,
         MethodNotExist = 9,
         AuthenticationError = 10,
-        ActionNotCompleted = 11
+        ActionNotCompleted = 11,
+        NullProductTypeDescription = 12,
+
     }
 }

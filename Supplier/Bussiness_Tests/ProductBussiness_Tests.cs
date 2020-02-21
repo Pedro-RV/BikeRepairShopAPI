@@ -16,6 +16,7 @@ namespace Bussiness_Tests
     class ProductBussiness_Tests
     {
         private IProductBussiness productBussiness;
+        private IProductTypeBussiness productTypeBussiness;
 
         [TestFixtureSetUp]
         public void Init()
@@ -24,10 +25,13 @@ namespace Bussiness_Tests
             var scope = container.BeginLifetimeScope();
 
             this.productBussiness = scope.Resolve<IProductBussiness>();
+            this.productTypeBussiness = scope.Resolve<IProductTypeBussiness>();
 
-            this.productBussiness.InsertProduct(new ProductSpecific("Pelota", 20, 5, true));
-            this.productBussiness.InsertProduct(new ProductSpecific("Peine", 4, 10, true));
-            this.productBussiness.InsertProduct(new ProductSpecific("Zapatillas Adidas", 80, 15, true));
+            this.productTypeBussiness.InsertProductType(new ProductTypeSpecific("Ruedas"));
+
+            this.productBussiness.InsertProduct(new ProductSpecific("Pelota", 20, 5, true, 1));
+            this.productBussiness.InsertProduct(new ProductSpecific("Peine", 4, 10, true, 1));
+            this.productBussiness.InsertProduct(new ProductSpecific("Zapatillas Adidas", 80, 15, true, 1));
 
         }
 
@@ -47,7 +51,7 @@ namespace Bussiness_Tests
         {
             bool correct;
 
-            correct = this.productBussiness.InsertProduct(new ProductSpecific("Teclado", 60, 20, true));
+            correct = this.productBussiness.InsertProduct(new ProductSpecific("Teclado", 60, 20, true, 1));
 
             Product productGotten = this.productBussiness.ReadProduct(4);
 

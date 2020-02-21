@@ -54,14 +54,10 @@
     <Compile Include="Interfaces\IBillBussiness.cs" />
     <Compile Include="Interfaces\IClientBussiness.cs" />
     <Compile Include="Interfaces\IPaymentMethodBussiness.cs" />
-    <Compile Include="Interfaces\IProductBussiness.cs" />
-    <Compile Include="Interfaces\IProductTypeBussiness.cs" />
     <Compile Include="Interfaces\ISaleBussiness.cs" />
     <Compile Include="Interfaces\IShippingBussiness.cs" />
     <Compile Include="Interfaces\ITransportCompanyBussiness.cs" />
     <Compile Include="PaymentMethodBussiness.cs" />
-    <Compile Include="ProductBussiness.cs" />
-    <Compile Include="ProductTypeBussiness.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaleBussiness.cs" />

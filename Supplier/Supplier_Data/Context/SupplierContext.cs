@@ -10,6 +10,7 @@ namespace Supplier_Data.Context
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<WarehouseProduct> WarehouseProduct { get; set; }
         public virtual DbSet<ProductState> ProductState { get; set; }
+        public virtual DbSet<ProductType> ProductType { get; set; }
         public virtual DbSet<Purchase> Purchase { get; set; }
         public virtual DbSet<SupplyCompany> SupplyCompany { get; set; }
         public virtual DbSet<Warehouse> Warehouse { get; set; }

@@ -22,22 +22,18 @@ namespace Sale_Bussiness
 
         private IClientBussiness clientBussiness;
 
-        private IProductBussiness productBussiness;
-
         private IBillBussiness billBussiness;
 
         private IMapper mapper;
 
         public SaleBussiness(IExceptionController exceptionController,
             ISaleRepository saleRepository,
-            IClientBussiness clientBussiness,
-            IProductBussiness productBussiness,
+            IClientBussiness clientBussiness,           
             IBillBussiness billBussiness)
         {
             this.exceptionController = exceptionController;
             this.saleRepository = saleRepository;
             this.clientBussiness = clientBussiness;
-            this.productBussiness = productBussiness;
             this.billBussiness = billBussiness;
 
 
@@ -117,12 +113,12 @@ namespace Sale_Bussiness
                     current.Client = clientAttach;
                 }
 
-                if (update.ProductId != 0)
-                {
-                    current.ProductId = update.ProductId;
-                    Product productAttach = this.productBussiness.ReadProduct(current.ProductId);
-                    current.Product = productAttach;
-                }
+                //if (update.ProductId != 0)
+                //{
+                //    current.ProductId = update.ProductId;
+                //    Product productAttach = this.productBussiness.ReadProduct(current.ProductId);
+                //    current.Product = productAttach;
+                //}
 
                 if (update.BillId != 0)
                 {

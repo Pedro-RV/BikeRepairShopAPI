@@ -61,11 +61,13 @@
     <Compile Include="Interfaces\IProductBussiness.cs" />
     <Compile Include="Interfaces\IProductInfoBussiness.cs" />
     <Compile Include="Interfaces\IProductStateBussiness.cs" />
+    <Compile Include="Interfaces\IProductTypeBussiness.cs" />
     <Compile Include="Interfaces\IPurchaseBussiness.cs" />
     <Compile Include="Interfaces\ISupplyCompanyBussiness.cs" />
     <Compile Include="Interfaces\IWarehouseAdminBussiness.cs" />
     <Compile Include="Interfaces\IWarehouseBussiness.cs" />
     <Compile Include="ProductBussiness.cs" />
+    <Compile Include="ProductTypeBussiness.cs" />
     <Compile Include="WarehouseProductBussiness.cs" />
     <Compile Include="ProductStateBussiness.cs" />
     <Compile Include="Program.cs" />
