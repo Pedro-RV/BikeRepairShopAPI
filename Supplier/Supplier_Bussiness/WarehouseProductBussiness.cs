@@ -20,25 +20,13 @@ namespace Supplier_Bussiness
 
         private IWarehouseProductRepository warehouseProductRepository;
 
-        private IProductBussiness productBussiness;
-
-        private IProductStateBussiness productStateBussiness;
-
-        private IWarehouseBussiness warehouseBussiness;
-
         private IMapper mapper;
 
         public WarehouseProductBussiness(IExceptionController exceptionController,
-            IWarehouseProductRepository warehouseProductRepository,
-            IProductBussiness productBussiness,
-            IProductStateBussiness productStateBussiness,
-            IWarehouseBussiness warehouseBussiness)
+            IWarehouseProductRepository warehouseProductRepository)
         {
             this.exceptionController = exceptionController;
             this.warehouseProductRepository = warehouseProductRepository;
-            this.productBussiness = productBussiness;
-            this.productStateBussiness = productStateBussiness;
-            this.warehouseBussiness = warehouseBussiness;
 
 
             var config = new MapperConfiguration(cfg => {
@@ -56,24 +44,6 @@ namespace Supplier_Bussiness
             try
             {
                 WarehouseProduct warehouseProductAdd = mapper.Map<WarehouseProductSpecific, WarehouseProduct>(warehouseProductSpecific);
-
-                if (warehouseProductAdd.ProductId != 0)
-                {
-                    Product productAttach = this.productBussiness.ReadProduct(warehouseProductAdd.ProductId);
-                    warehouseProductAdd.Product = productAttach;
-                }
-
-                if (warehouseProductAdd.ProductStateId != 0)
-                {
-                    ProductState productStateAttach = this.productStateBussiness.ReadProductState(warehouseProductAdd.ProductStateId);
-                    warehouseProductAdd.ProductState = productStateAttach;
-                }
-
-                if (warehouseProductAdd.WarehouseId != 0)
-                {
-                    Warehouse warehouseAttach = this.warehouseBussiness.ReadWarehouse(warehouseProductAdd.WarehouseId);
-                    warehouseProductAdd.Warehouse = warehouseAttach;
-                }
 
                 ret = this.warehouseProductRepository.Insert(warehouseProductAdd);
 
@@ -127,26 +97,9 @@ namespace Supplier_Bussiness
             {
                 WarehouseProduct current = this.warehouseProductRepository.Read(update.WarehouseProductId);
 
-                if (update.ProductId != 0)
-                {
-                    current.ProductId = update.ProductId;
-                    Product productAttach = this.productBussiness.ReadProduct(current.ProductId);
-                    current.Product = productAttach;
-                }
-
-                if (update.ProductStateId != 0)
-                {
-                    current.ProductStateId = update.ProductStateId;
-                    ProductState productStateAttach = this.productStateBussiness.ReadProductState(current.ProductStateId);
-                    current.ProductState = productStateAttach;
-                }
-
-                if (update.WarehouseId != 0)
-                {
-                    current.WarehouseId = update.WarehouseId;
-                    Warehouse warehouseAttach = this.warehouseBussiness.ReadWarehouse(current.WarehouseId);
-                    current.Warehouse = warehouseAttach;
-                }
+                current.ProductId = update.ProductId != 0 ? update.ProductId : current.ProductId;
+                current.ProductStateId = update.ProductStateId != 0 ? update.ProductStateId : current.ProductStateId;
+                current.WarehouseId = update.WarehouseId != 0 ? update.WarehouseId : current.WarehouseId;
 
                 ret = this.warehouseProductRepository.Update(current);
 

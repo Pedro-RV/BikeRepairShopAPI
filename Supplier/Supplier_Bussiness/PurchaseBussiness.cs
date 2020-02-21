@@ -22,19 +22,15 @@ namespace Supplier_Bussiness
 
         private IProductBussiness productBussiness;
 
-        private ISupplyCompanyBussiness supplyCompanyBussiness;
-
         private IMapper mapper;
 
         public PurchaseBussiness(IExceptionController exceptionController,
             IPurchaseRepository purchaseRepository,
-            IProductBussiness productBussiness,
-            ISupplyCompanyBussiness supplyCompanyBussiness)
+            IProductBussiness productBussiness)
         {
             this.exceptionController = exceptionController;
             this.purchaseRepository = purchaseRepository;
             this.productBussiness = productBussiness;
-            this.supplyCompanyBussiness = supplyCompanyBussiness;
 
 
             var config = new MapperConfiguration(cfg => {
@@ -66,18 +62,6 @@ namespace Supplier_Bussiness
             try
             {
                 Purchase purchaseAdd = mapper.Map<PurchaseSpecific, Purchase>(purchaseSpecific);
-
-                if (purchaseAdd.SupplyCompanyId != 0)
-                {
-                    SupplyCompany supplyCompanyAttach = this.supplyCompanyBussiness.ReadSupplyCompany(purchaseAdd.SupplyCompanyId);
-                    purchaseAdd.SupplyCompany = supplyCompanyAttach;
-                }
-
-                if (purchaseAdd.ProductId != 0)
-                {
-                    Product productAttach = this.productBussiness.ReadProduct(purchaseAdd.ProductId);
-                    purchaseAdd.Product = productAttach;
-                }
 
                 ret = this.purchaseRepository.Insert(purchaseAdd);
 
@@ -134,20 +118,8 @@ namespace Supplier_Bussiness
                 current.PurchaseDate = update.PurchaseDate.Year != 1 ? update.PurchaseDate : current.PurchaseDate;
                 current.Cuantity = update.Cuantity != 0 ? update.Cuantity : current.Cuantity;
                 current.Prize = update.Prize != 0 ? update.Prize : current.Prize;
-
-                if (update.SupplyCompanyId != 0)
-                {
-                    current.SupplyCompanyId = update.SupplyCompanyId;
-                    SupplyCompany supplyCompanyAttach = this.supplyCompanyBussiness.ReadSupplyCompany(current.SupplyCompanyId);
-                    current.SupplyCompany = supplyCompanyAttach;
-                }
-
-                if (update.ProductId != 0)
-                {
-                    current.ProductId = update.ProductId;
-                    Product productAttach = this.productBussiness.ReadProduct(current.ProductId);
-                    current.Product = productAttach;
-                }
+                current.SupplyCompanyId = update.SupplyCompanyId != 0 ? update.SupplyCompanyId : current.SupplyCompanyId;
+                current.ProductId = update.ProductId != 0 ? update.ProductId : current.ProductId;
 
                 ret = this.purchaseRepository.Update(current);
 

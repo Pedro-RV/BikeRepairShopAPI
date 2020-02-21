@@ -20,21 +20,13 @@ namespace Sale_Bussiness
 
         private IShippingRepository shippingRepository;
 
-        private ISaleBussiness saleBussiness;
-
-        private ITransportCompanyBussiness transportCompanyBussiness;
-
         private IMapper mapper;
 
         public ShippingBussiness(IExceptionController exceptionController,
-            IShippingRepository shippingRepository,
-            ISaleBussiness saleBussiness,
-            ITransportCompanyBussiness transportCompanyBussiness)
+            IShippingRepository shippingRepository)
         {
             this.exceptionController = exceptionController;
             this.shippingRepository = shippingRepository;
-            this.saleBussiness = saleBussiness;
-            this.transportCompanyBussiness = transportCompanyBussiness;
 
 
             var config = new MapperConfiguration(cfg => {
@@ -106,20 +98,8 @@ namespace Sale_Bussiness
 
                 current.DepartureDate = update.DepartureDate.Year != 1 ? update.DepartureDate : current.DepartureDate;
                 current.PackingTime = update.PackingTime.Year != 1 ? update.PackingTime : current.PackingTime;
-
-                if (update.SaleId != 0)
-                {
-                    current.SaleId = update.SaleId;
-                    Sale saleAttach = this.saleBussiness.ReadSale(current.SaleId);
-                    current.Sale = saleAttach;
-                }
-
-                if (update.TransportCompanyId != 0)
-                {
-                    current.TransportCompanyId = update.TransportCompanyId;
-                    TransportCompany transportCompanyAttach = this.transportCompanyBussiness.ReadTransportCompany(current.TransportCompanyId);
-                    current.TransportCompany = transportCompanyAttach;
-                }
+                current.SaleId = update.SaleId != 0 ? update.SaleId : current.SaleId;
+                current.TransportCompanyId = update.TransportCompanyId != 0 ? update.TransportCompanyId : current.TransportCompanyId;
 
                 ret = this.shippingRepository.Update(current);
 

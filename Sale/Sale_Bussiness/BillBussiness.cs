@@ -20,17 +20,13 @@ namespace Sale_Bussiness
 
         private IBillRepository billRepository;
 
-        private IPaymentMethodBussiness paymentMethodBussiness;
-
         private IMapper mapper;
 
         public BillBussiness(IExceptionController exceptionController,
-            IBillRepository billRepository,
-            IPaymentMethodBussiness paymentMethodBussiness)
+            IBillRepository billRepository)
         {
             this.exceptionController = exceptionController;
             this.billRepository = billRepository;
-            this.paymentMethodBussiness = paymentMethodBussiness;
 
             var config = new MapperConfiguration(cfg => {
                 cfg.CreateMap<BillSpecific, Bill>();
@@ -100,13 +96,7 @@ namespace Sale_Bussiness
                 Bill current = this.billRepository.Read(update.BillId);
 
                 current.BillDate = update.BillDate.Year != 1 ? update.BillDate : current.BillDate;
-
-                if (update.PaymentMethodId != 0)
-                {
-                    current.PaymentMethodId = update.PaymentMethodId;
-                    PaymentMethod paymentMethodAttach = this.paymentMethodBussiness.ReadPaymentMethod(current.PaymentMethodId);
-                    current.PaymentMethod = paymentMethodAttach;
-                }
+                current.PaymentMethodId = update.PaymentMethodId != 0 ? update.PaymentMethodId : current.PaymentMethodId;
 
                 ret = this.billRepository.Update(current);
 

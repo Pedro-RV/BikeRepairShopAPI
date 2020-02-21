@@ -20,21 +20,13 @@ namespace Sale_Bussiness
 
         private ISaleRepository saleRepository;
 
-        private IClientBussiness clientBussiness;
-
-        private IBillBussiness billBussiness;
-
         private IMapper mapper;
 
         public SaleBussiness(IExceptionController exceptionController,
-            ISaleRepository saleRepository,
-            IClientBussiness clientBussiness,           
-            IBillBussiness billBussiness)
+            ISaleRepository saleRepository)
         {
             this.exceptionController = exceptionController;
             this.saleRepository = saleRepository;
-            this.clientBussiness = clientBussiness;
-            this.billBussiness = billBussiness;
 
 
             var config = new MapperConfiguration(cfg => {
@@ -105,27 +97,9 @@ namespace Sale_Bussiness
                 Sale current = this.saleRepository.Read(update.SaleId);
 
                 current.Cuantity = update.Cuantity != 0 ? update.Cuantity : current.Cuantity;
-
-                if (update.ClientId != 0)
-                {
-                    current.ClientId = update.ClientId;
-                    Client clientAttach = this.clientBussiness.ReadClient(current.ClientId);
-                    current.Client = clientAttach;
-                }
-
-                //if (update.ProductId != 0)
-                //{
-                //    current.ProductId = update.ProductId;
-                //    Product productAttach = this.productBussiness.ReadProduct(current.ProductId);
-                //    current.Product = productAttach;
-                //}
-
-                if (update.BillId != 0)
-                {
-                    current.BillId = update.BillId;
-                    Bill billAttach = this.billBussiness.ReadBill(current.BillId);
-                    current.Bill = billAttach;
-                }
+                current.SupplierProductId = update.SupplierProductId != 0 ? update.SupplierProductId : current.SupplierProductId;
+                current.ClientId = update.ClientId != 0 ? update.ClientId : current.ClientId;
+                current.BillId = update.BillId != 0 ? update.BillId : current.BillId;
 
                 ret = this.saleRepository.Update(current);
 

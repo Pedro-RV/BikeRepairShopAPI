@@ -20,21 +20,13 @@ namespace Supplier_Bussiness
 
         private IWarehouseAdminRepository warehouseAdminRepository;
 
-        private IEmployeeBussiness employeeBussiness;
-
-        private IWarehouseBussiness warehouseBussiness;
-
         private IMapper mapper;
 
         public WarehouseAdminBussiness(IExceptionController exceptionController,
-            IWarehouseAdminRepository warehouseAdminRepository,
-            IEmployeeBussiness employeeBussiness,
-            IWarehouseBussiness warehouseBussiness)
+            IWarehouseAdminRepository warehouseAdminRepository)
         {
             this.exceptionController = exceptionController;
             this.warehouseAdminRepository = warehouseAdminRepository;
-            this.employeeBussiness = employeeBussiness;
-            this.warehouseBussiness = warehouseBussiness;
 
 
             var config = new MapperConfiguration(cfg => {
@@ -61,19 +53,7 @@ namespace Supplier_Bussiness
 
             try
             {
-                WarehouseAdmin warehouseAdminAdd = mapper.Map<WarehouseAdminSpecific, WarehouseAdmin>(warehouseAdminSpecific);                
-
-                if (warehouseAdminAdd.EmployeeId != 0)
-                {
-                    Employee employeeAttach = this.employeeBussiness.ReadEmployee(warehouseAdminAdd.EmployeeId);
-                    warehouseAdminAdd.Employee = employeeAttach;
-                }
-
-                if (warehouseAdminAdd.WarehouseId != 0)
-                {
-                    Warehouse warehouseAttach = this.warehouseBussiness.ReadWarehouse(warehouseAdminAdd.WarehouseId);
-                    warehouseAdminAdd.Warehouse = warehouseAttach;
-                }
+                WarehouseAdmin warehouseAdminAdd = mapper.Map<WarehouseAdminSpecific, WarehouseAdmin>(warehouseAdminSpecific);
 
                 ret = this.warehouseAdminRepository.Insert(warehouseAdminAdd);
 
@@ -127,20 +107,9 @@ namespace Supplier_Bussiness
             {
                 WarehouseAdmin current = this.warehouseAdminRepository.Read(update.WarehouseAdminId);
 
-                current.StartDate = update.StartDate.Year != 1 ? update.StartDate : current.StartDate;               
-
-                if (update.EmployeeId != 0){
-                    current.EmployeeId = update.EmployeeId;
-                    Employee employeeAttach = this.employeeBussiness.ReadEmployee(current.EmployeeId);
-                    current.Employee = employeeAttach;
-                }
-
-                if (update.WarehouseId != 0)
-                {
-                    current.WarehouseId = update.WarehouseId;
-                    Warehouse warehouseAttach = this.warehouseBussiness.ReadWarehouse(current.WarehouseId);
-                    current.Warehouse = warehouseAttach;
-                }
+                current.StartDate = update.StartDate.Year != 1 ? update.StartDate : current.StartDate;
+                current.EmployeeId = update.EmployeeId != 0 ? update.EmployeeId : current.EmployeeId;
+                current.WarehouseId = update.WarehouseId != 0 ? update.WarehouseId : current.WarehouseId;
 
                 ret = this.warehouseAdminRepository.Update(current);
 

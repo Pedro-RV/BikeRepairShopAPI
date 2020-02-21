@@ -20,8 +20,6 @@ namespace Supplier_Bussiness
 
         private IProductRepository productRepository;
 
-        private IProductTypeBussiness productTypeBussiness;
-
         private IMapper mapper;
 
         public ProductBussiness(IExceptionController exceptionController,
@@ -109,13 +107,7 @@ namespace Supplier_Bussiness
                 current.Prize = update.Prize != 0 ? update.Prize : current.Prize;
                 current.Cuantity = update.Cuantity != 0 ? update.Cuantity : current.Cuantity;
                 current.ActiveFlag = update.ActiveFlag == true ? update.ActiveFlag : current.ActiveFlag;
-
-                if (update.ProductTypeId != 0)
-                {
-                    current.ProductTypeId = update.ProductTypeId;
-                    ProductType productTypeAttach = this.productTypeBussiness.ReadProductType(current.ProductTypeId);
-                    current.ProductType = productTypeAttach;
-                }
+                current.ProductTypeId = update.ProductTypeId != 0 ? update.ProductTypeId : current.ProductTypeId;
 
                 ret = this.productRepository.Update(current);
 
