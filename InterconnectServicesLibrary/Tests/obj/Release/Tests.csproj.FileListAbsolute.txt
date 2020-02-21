@@ -1,0 +1,13 @@
+C:\REPO\becaPedro\InterconnectServicesLibrary\Tests\bin\Release\Tests.exe.config
+C:\REPO\becaPedro\InterconnectServicesLibrary\Tests\bin\Release\Tests.exe
+C:\REPO\becaPedro\InterconnectServicesLibrary\Tests\bin\Release\Tests.pdb
+C:\REPO\becaPedro\InterconnectServicesLibrary\Tests\bin\Release\InterconnectServicesLibrary.dll
+C:\REPO\becaPedro\InterconnectServicesLibrary\Tests\bin\Release\System.Net.Http.Formatting.dll
+C:\REPO\becaPedro\InterconnectServicesLibrary\Tests\bin\Release\Newtonsoft.Json.dll
+C:\REPO\becaPedro\InterconnectServicesLibrary\Tests\bin\Release\InterconnectServicesLibrary.pdb
+C:\REPO\becaPedro\InterconnectServicesLibrary\Tests\bin\Release\System.Net.Http.Formatting.xml
+C:\REPO\becaPedro\InterconnectServicesLibrary\Tests\bin\Release\Newtonsoft.Json.xml
+C:\REPO\becaPedro\InterconnectServicesLibrary\Tests\obj\Release\Tests.csprojAssemblyReference.cache
+C:\REPO\becaPedro\InterconnectServicesLibrary\Tests\obj\Release\Tests.csproj.CopyComplete
+C:\REPO\becaPedro\InterconnectServicesLibrary\Tests\obj\Release\Tests.exe
+C:\REPO\becaPedro\InterconnectServicesLibrary\Tests\obj\Release\Tests.pdb

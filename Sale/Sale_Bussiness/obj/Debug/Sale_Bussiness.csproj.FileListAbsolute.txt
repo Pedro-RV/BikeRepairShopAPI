@@ -19,3 +19,4 @@ C:\REPO\becaPedro\Sale\Sale_Bussiness\obj\Debug\Sale_Bussiness.csprojAssemblyRef
 C:\REPO\becaPedro\Sale\Sale_Bussiness\obj\Debug\Sale_Bussiness.csproj.CopyComplete
 C:\REPO\becaPedro\Sale\Sale_Bussiness\obj\Debug\Sale_Bussiness.exe
 C:\REPO\becaPedro\Sale\Sale_Bussiness\obj\Debug\Sale_Bussiness.pdb
+C:\REPO\becaPedro\Sale\Sale_Bussiness\bin\Debug\InterconnectServicesLibrary.dll

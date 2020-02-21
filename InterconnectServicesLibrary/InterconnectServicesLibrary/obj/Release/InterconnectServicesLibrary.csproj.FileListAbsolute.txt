@@ -1,0 +1,10 @@
+C:\REPO\becaPedro\InterconnectServicesLibrary\InterconnectServicesLibrary\bin\Release\InterconnectServicesLibrary.dll
+C:\REPO\becaPedro\InterconnectServicesLibrary\InterconnectServicesLibrary\bin\Release\InterconnectServicesLibrary.pdb
+C:\REPO\becaPedro\InterconnectServicesLibrary\InterconnectServicesLibrary\bin\Release\Newtonsoft.Json.dll
+C:\REPO\becaPedro\InterconnectServicesLibrary\InterconnectServicesLibrary\bin\Release\System.Net.Http.Formatting.dll
+C:\REPO\becaPedro\InterconnectServicesLibrary\InterconnectServicesLibrary\bin\Release\Newtonsoft.Json.xml
+C:\REPO\becaPedro\InterconnectServicesLibrary\InterconnectServicesLibrary\bin\Release\System.Net.Http.Formatting.xml
+C:\REPO\becaPedro\InterconnectServicesLibrary\InterconnectServicesLibrary\obj\Release\InterconnectServicesLibrary.csprojAssemblyReference.cache
+C:\REPO\becaPedro\InterconnectServicesLibrary\InterconnectServicesLibrary\obj\Release\InterconnectServicesLibrary.csproj.CopyComplete
+C:\REPO\becaPedro\InterconnectServicesLibrary\InterconnectServicesLibrary\obj\Release\InterconnectServicesLibrary.dll
+C:\REPO\becaPedro\InterconnectServicesLibrary\InterconnectServicesLibrary\obj\Release\InterconnectServicesLibrary.pdb
