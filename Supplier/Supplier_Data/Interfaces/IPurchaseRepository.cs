@@ -1,5 +1,5 @@
 ﻿using Supplier_Entities.EntityModel;
-using Supplier_Entities.Specific;
+using InterconnectServicesLibrary.Entities.SupplierSpecific;
 using System;
 using System.Collections.Generic;
 using System.Linq;

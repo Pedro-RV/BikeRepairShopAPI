@@ -19,6 +19,7 @@ namespace Sale_Helper.ExceptionController
         private const string MethodNotExist = "The method invoked does not exist.";
         private const string AuthenticationError = "The user and/or pwd introduced are wrong.";
         private const string ActionNotCompleted = "Error !!! Action could not be completed.";
+        private const string ProductNotActive = "The product is not active. It can not be sold.";
 
 
         public string ObtainText(int exNum)
@@ -78,6 +79,11 @@ namespace Sale_Helper.ExceptionController
             if (exNum == 11)
             {
                 ret = ActionNotCompleted;
+            }
+
+            if (exNum == 12)
+            {
+                ret = ProductNotActive;
             }
 
             return ret;

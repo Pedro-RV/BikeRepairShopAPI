@@ -35,11 +35,13 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Services" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +50,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\SupplierSpecific\EmployeeSpecific.cs" />
+    <Compile Include="Entities\SupplierSpecific\ProductSpecific.cs" />
+    <Compile Include="Entities\SupplierSpecific\ProductStateSpecific.cs" />
+    <Compile Include="Entities\SupplierSpecific\ProductTypeSpecific.cs" />
+    <Compile Include="Entities\SupplierSpecific\PurchaseData.cs" />
+    <Compile Include="Entities\SupplierSpecific\PurchaseSpecific.cs" />
+    <Compile Include="Entities\SupplierSpecific\SupplyCompanySpecific.cs" />
+    <Compile Include="Entities\SupplierSpecific\WarehouseAdminData.cs" />
+    <Compile Include="Entities\SupplierSpecific\WarehouseAdminSpecific.cs" />
+    <Compile Include="Entities\SupplierSpecific\WarehouseProductSpecific.cs" />
+    <Compile Include="Entities\SupplierSpecific\WarehouseSpecific.cs" />
     <Compile Include="InterconnectServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

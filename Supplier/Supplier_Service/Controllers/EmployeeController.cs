@@ -2,7 +2,6 @@
 using Supplier_Bussiness;
 using Supplier_Bussiness.Interfaces;
 using Supplier_Entities.EntityModel;
-using Supplier_Entities.Specific;
 using Supplier_Helper.Authentication;
 using Supplier_Helper.ExceptionController;
 using System;
@@ -12,6 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Net.Http.Headers;
+using InterconnectServicesLibrary.Entities.SupplierSpecific;
 
 namespace Supplier_Service.Controllers
 {

@@ -6,7 +6,7 @@ using Supplier_Data.Interfaces;
 using System;
 using Supplier_Helper.ExceptionController;
 using System.Collections.Generic;
-using Supplier_Entities.Specific;
+using InterconnectServicesLibrary.Entities.SupplierSpecific;
 
 namespace Supplier_Data
 {

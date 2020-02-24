@@ -6,7 +6,6 @@ using Supplier_Data.Interfaces;
 using System;
 using Supplier_Helper.ExceptionController;
 using System.Collections.Generic;
-using Supplier_Entities.Specific;
 using Dapper;
 using System.Data.SqlClient;
 using System.Data;

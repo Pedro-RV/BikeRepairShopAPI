@@ -41,3 +41,4 @@ C:\REPO\becaPedro\Supplier\Supplier_Bussiness\obj\Debug\Supplier_Bussiness.pdb
 C:\REPO\becaPedro\Supplier\Supplier_Bussiness\bin\Debug\AutoMapper.dll
 C:\REPO\becaPedro\Supplier\Supplier_Bussiness\bin\Debug\AutoMapper.pdb
 C:\REPO\becaPedro\Supplier\Supplier_Bussiness\bin\Debug\AutoMapper.xml
+C:\REPO\becaPedro\Supplier\Supplier_Bussiness\bin\Debug\InterconnectServicesLibrary.dll

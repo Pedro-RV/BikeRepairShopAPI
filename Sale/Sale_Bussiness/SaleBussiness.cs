@@ -1,16 +1,14 @@
 ﻿using AutoMapper;
 using Sale_Bussiness.Interfaces;
-using Sale_Data;
-using Sale_Data.Context;
 using Sale_Data.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using Sale_Helper.ExceptionController;
 using System;
+using InterconnectServicesLibrary;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using InterconnectServicesLibrary.Entities.SupplierSpecific;
+using Newtonsoft.Json;
 
 namespace Sale_Bussiness
 {
@@ -38,13 +36,26 @@ namespace Sale_Bussiness
 
         public bool InsertSale(SaleSpecific saleSpecific)
         {
-            bool ret;
+            bool ret = false;
 
             try
             {
                 Sale saleAdd = mapper.Map<SaleSpecific, Sale>(saleSpecific);
 
-                ret = this.saleRepository.Insert(saleAdd);
+                string url = "https://localhost:44315/api/product/GetProduct/";
+                Dictionary<string, string> queryParams = new Dictionary<string, string>();
+
+                ProductSpecific result = JsonConvert.DeserializeObject<ProductSpecific>(InterconnectServices.SendGet<object>(url, queryParams, saleAdd.SupplierProductId).ToString());
+
+                if (result.ActiveFlag == true)
+                {
+                    ret = this.saleRepository.Insert(saleAdd);
+                }
+                else
+                {
+                    throw this.exceptionController.CreateMyException(ExceptionEnum.ProductNotActive);
+
+                }
             }
             catch (SaleException)
             {

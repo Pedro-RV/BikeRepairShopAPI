@@ -122,3 +122,4 @@ C:\REPO\becaPedro\Supplier\Supplier_Service\bin\Autofac.Integration.WebApi.dll
 C:\REPO\becaPedro\Supplier\Supplier_Service\bin\Autofac.Integration.Mvc.xml
 C:\REPO\becaPedro\Supplier\Supplier_Service\bin\Autofac.Integration.WebApi.pdb
 C:\REPO\becaPedro\Supplier\Supplier_Service\bin\Autofac.Integration.WebApi.xml
+C:\REPO\becaPedro\Supplier\Supplier_Service\bin\InterconnectServicesLibrary.dll

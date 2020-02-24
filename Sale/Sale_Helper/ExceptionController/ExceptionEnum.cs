@@ -18,6 +18,7 @@ namespace Sale_Helper.ExceptionController
         NullTelephoneNum = 8,
         MethodNotExist = 9,
         AuthenticationError = 10,
-        ActionNotCompleted = 11
+        ActionNotCompleted = 11,
+        ProductNotActive = 12
     }
 }

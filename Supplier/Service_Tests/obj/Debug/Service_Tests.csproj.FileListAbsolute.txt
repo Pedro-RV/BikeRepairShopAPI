@@ -80,3 +80,4 @@ C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Autofac.Extras.FakeItEasy.pdb
 C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\Autofac.Extras.FakeItEasy.xml
 C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\FakeItEasy.pdb
 C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\FakeItEasy.xml
+C:\REPO\becaPedro\Supplier\Service_Tests\bin\Debug\InterconnectServicesLibrary.dll

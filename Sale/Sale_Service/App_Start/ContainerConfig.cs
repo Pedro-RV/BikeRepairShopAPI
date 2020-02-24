@@ -24,7 +24,7 @@ namespace Sale_Service.App_Start
                 .AsImplementedInterfaces();
 
             builder.RegisterAssemblyTypes(Assembly.Load(nameof(Sale_Helper)))
-                .Where(t => t.Name.EndsWith("Controller"))
+                .Where(t => t.Name.EndsWith("Controller") || t.Name.EndsWith("Provider"))
                 .AsImplementedInterfaces();
 
             return builder.Build();

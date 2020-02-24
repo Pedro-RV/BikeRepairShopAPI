@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Supplier_Entities.Specific
+
+namespace InterconnectServicesLibrary.Entities.SupplierSpecific
 {
     [DataContract]
     public class EmployeeSpecific

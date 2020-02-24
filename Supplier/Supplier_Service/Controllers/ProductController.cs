@@ -1,7 +1,7 @@
 ﻿using Supplier_Bussiness;
 using Supplier_Bussiness.Interfaces;
 using Supplier_Entities.EntityModel;
-using Supplier_Entities.Specific;
+using InterconnectServicesLibrary.Entities.SupplierSpecific;
 using Supplier_Helper.Authentication;
 using Supplier_Helper.ExceptionController;
 using System;
@@ -105,8 +105,8 @@ namespace Supplier_Service.Controllers
         [Route("api/product/InsertProduct")]
         public string InsertProduct(ProductSpecific productSpecific)
         {
-            try
-            {
+            //try
+            //{
                 var request = Request;
                 HttpRequestHeaders headers = null;
 
@@ -131,15 +131,15 @@ namespace Supplier_Service.Controllers
                     throw this.exceptionController.CreateMyException(ExceptionEnum.ActionNotCompleted);
                 }
 
-            }
-            catch (SupplierException)
-            {
-                throw;
-            }
-            catch (Exception)
-            {
-                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
-            }
+            //}
+            //catch (SupplierException)
+            //{
+            //    throw;
+            //}
+            //catch (Exception)
+            //{
+            //    throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+            //}
 
         }
 

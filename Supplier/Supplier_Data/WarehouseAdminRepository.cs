@@ -5,7 +5,7 @@ using System.Data.Entity;
 using Supplier_Data.Interfaces;
 using System;
 using Supplier_Helper.ExceptionController;
-using Supplier_Entities.Specific;
+using InterconnectServicesLibrary.Entities.SupplierSpecific;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Configuration;

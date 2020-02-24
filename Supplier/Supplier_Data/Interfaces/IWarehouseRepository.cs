@@ -1,5 +1,4 @@
 ﻿using Supplier_Entities.EntityModel;
-using Supplier_Entities.Specific;
 using System;
 using System.Collections.Generic;
 using System.Linq;

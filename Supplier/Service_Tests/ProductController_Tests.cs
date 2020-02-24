@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using NUnit.Framework;
 using Supplier_Entities.EntityModel;
-using Supplier_Entities.Specific;
+using InterconnectServicesLibrary.Entities.SupplierSpecific;
 using Supplier_Service.Controllers;
 using System;
 using System.Collections.Generic;

@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using InterconnectServicesLibrary.Entities.SupplierSpecific;
 using Supplier_Bussiness.Interfaces;
 using Supplier_Data;
 using Supplier_Data.Context;
 using Supplier_Data.Interfaces;
 using Supplier_Entities.EntityModel;
-using Supplier_Entities.Specific;
 using Supplier_Helper.ExceptionController;
 using System;
 using System.Collections.Generic;

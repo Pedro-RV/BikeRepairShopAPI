@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Supplier_Entities.Specific
+namespace InterconnectServicesLibrary.Entities.SupplierSpecific
 {
     public class WarehouseProductSpecific
     {
@@ -18,7 +18,7 @@ namespace Supplier_Entities.Specific
         {
             this.ProductId = ProductId;
             this.WarehouseId = WarehouseId;
-            this.ProductStateId = ProductStateId;            
+            this.ProductStateId = ProductStateId;
 
         }
 
@@ -32,7 +32,7 @@ namespace Supplier_Entities.Specific
         public int WarehouseId { get; set; }
 
         [DataMember(Name = "productStateId")]
-        public int ProductStateId { get; set; }       
+        public int ProductStateId { get; set; }
 
     }
 }

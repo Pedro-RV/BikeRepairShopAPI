@@ -19,8 +19,8 @@ namespace Tests
             modify.EmployeeId = 11;
             modify.EmployeeName = "Braulio";
 
-            //object result = InterconnectServices.SendGet<object>(url, queryParams, 9);
-
+            object result = InterconnectServices.SendGet<object>(url, queryParams, 9);
+            
             //string result = InterconnectServices.SendPost(url, queryParams, null, insert);
 
             //string result = InterconnectServices.SendPut(url, queryParams, null, modify);

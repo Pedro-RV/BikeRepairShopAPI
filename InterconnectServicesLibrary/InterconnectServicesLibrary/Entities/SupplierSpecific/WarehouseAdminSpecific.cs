@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Supplier_Entities.Specific
+namespace InterconnectServicesLibrary.Entities.SupplierSpecific
 {
     [DataContract]
     public class WarehouseAdminSpecific
