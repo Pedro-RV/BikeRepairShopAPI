@@ -36,8 +36,8 @@ namespace Supplier_Data
         {
             bool ret = false;
 
-            //try
-            //{
+            try
+            {
                 if (add == null)
                 {
                     throw this.exceptionController.CreateMyException(ExceptionEnum.NullObject);
@@ -52,15 +52,15 @@ namespace Supplier_Data
                 this.dbContext.SaveChanges();
                 ret = true;
 
-            //}
-            //catch (SupplierException)
-            //{
-            //    throw;
-            //}
-            //catch (Exception)
-            //{
-            //    throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
-            //}
+            }
+            catch (SupplierException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+            }
 
             return ret;
         }

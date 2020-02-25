@@ -31,9 +31,9 @@ namespace Data_Tests
             DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
             Bill bill = new Bill(dateTime, paymentMethod);
 
-            Sale saleOne = new Sale(5, 1, client, bill);
-            Sale saleTwo = new Sale(15, 1, client, bill);
-            Sale saleThree = new Sale(20, 1, client, bill);
+            Sale saleOne = new Sale(5, 3, 1, client, bill);
+            Sale saleTwo = new Sale(15, 2, 1, client, bill);
+            Sale saleThree = new Sale(20, 3, 1, client, bill);
 
             this.saleRepository.Insert(saleOne);
             this.saleRepository.Insert(saleTwo);
@@ -48,7 +48,7 @@ namespace Data_Tests
             DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
             Bill bill = new Bill(dateTime, paymentMethod);
 
-            Sale saleAdd = new Sale(50, 1, client, bill);
+            Sale saleAdd = new Sale(50, 2, 1, client, bill);
             bool correct;
 
             correct = this.saleRepository.Insert(saleAdd);
@@ -56,7 +56,8 @@ namespace Data_Tests
             Sale saleGotten = this.saleRepository.Read(4);
 
             Assert.AreEqual(true, correct);
-            Assert.AreEqual(saleGotten.Cuantity, saleAdd.Cuantity);
+            Assert.AreEqual(saleGotten.CuantityToPay, saleAdd.CuantityToPay);
+            Assert.AreEqual(saleGotten.ProductCuantity, saleAdd.ProductCuantity);
             Assert.AreEqual(saleGotten.Client, saleAdd.Client);
             Assert.AreEqual(saleGotten.Bill, saleAdd.Bill);
 
@@ -67,7 +68,7 @@ namespace Data_Tests
         {
             Sale saleGotten = this.saleRepository.Read(1);
 
-            Assert.AreEqual(saleGotten.Cuantity, 5);
+            Assert.AreEqual(saleGotten.CuantityToPay, 5);
 
         }
 
@@ -77,14 +78,14 @@ namespace Data_Tests
             bool correct;
             Sale saleGotten = this.saleRepository.Read(2);
 
-            saleGotten.Cuantity = 22;
+            saleGotten.CuantityToPay = 22;
 
             correct = this.saleRepository.Update(saleGotten);
 
             Sale saleCompare = this.saleRepository.Read(2);
 
             Assert.AreEqual(true, correct);
-            Assert.AreEqual(saleCompare.Cuantity, saleGotten.Cuantity);
+            Assert.AreEqual(saleCompare.CuantityToPay, saleGotten.CuantityToPay);
 
         }
 

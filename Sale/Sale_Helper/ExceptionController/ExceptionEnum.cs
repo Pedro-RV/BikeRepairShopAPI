@@ -19,6 +19,7 @@ namespace Sale_Helper.ExceptionController
         MethodNotExist = 9,
         AuthenticationError = 10,
         ActionNotCompleted = 11,
-        ProductNotActive = 12
+        ProductNotActive = 12,
+        ProductCuantityExceeded = 13
     }
 }

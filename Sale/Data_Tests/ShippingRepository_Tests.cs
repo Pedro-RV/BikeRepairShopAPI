@@ -30,7 +30,7 @@ namespace Data_Tests
             PaymentMethod paymentMethod = new PaymentMethod("Contrarrembolso");
             DateTime dateTime = new DateTime(2019, 12, 03, 15, 12, 00);
             Bill bill = new Bill(dateTime, paymentMethod);
-            Sale sale = new Sale(5, 1, client, bill);
+            Sale sale = new Sale(5, 2, 1, client, bill);
             TransportCompany transportCompany = new TransportCompany("Envi", "911");
             DateTime dateTimeDeparture = new DateTime(2019, 12, 04, 9, 38, 00);
             DateTime dateTimePacking = new DateTime(2019, 12, 04, 9, 00, 00);
@@ -49,7 +49,7 @@ namespace Data_Tests
             PaymentMethod paymentMethod = new PaymentMethod("Contrarrembolso");
             DateTime dateTime = new DateTime(2019, 12, 03, 15, 12, 00);
             Bill bill = new Bill(dateTime, paymentMethod);
-            Sale sale = new Sale(5, 1, client, bill);
+            Sale sale = new Sale(5, 2, 1, client, bill);
             TransportCompany transportCompany = new TransportCompany("Envi", "911");
             DateTime dateTimeDeparture = new DateTime(2019, 12, 04, 9, 38, 00);
             DateTime dateTimePacking = new DateTime(2019, 12, 04, 9, 00, 00);

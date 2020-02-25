@@ -4,6 +4,7 @@ using Sale_Bussiness;
 using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
+using Sale_Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,13 +34,13 @@ namespace Bussiness_Tests
 
 
             this.clientBussiness.InsertClient(new ClientSpecific("Jacinto", "Sierra", "77", "sierra@correo", "Calle Poeta", "34", "23"));
-            this.paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("Contrarrembolso"));
+            this.paymentMethodBussiness.InsertPaymentMethod(new PaymentMethodSpecific("VISA"));
             DateTime dateTime = new DateTime(2020, 01, 05, 15, 12, 00);
             this.billBussiness.InsertBill(new BillSpecific(dateTime, 1));
 
-            this.saleBussiness.InsertSale(new SaleSpecific(5, 1, 1, 1));
-            this.saleBussiness.InsertSale(new SaleSpecific(15, 1, 1, 1));
-            this.saleBussiness.InsertSale(new SaleSpecific(20, 1, 1, 1));
+            this.saleBussiness.InsertSale(new SaleSpecific(5, 2, 1, 1, 1), PaymentMethodEnum.VISA);
+            this.saleBussiness.InsertSale(new SaleSpecific(15, 3, 1, 1, 1), PaymentMethodEnum.VISA);
+            this.saleBussiness.InsertSale(new SaleSpecific(20, 3, 1, 1, 1), PaymentMethodEnum.VISA);
 
         }
 
@@ -48,12 +49,13 @@ namespace Bussiness_Tests
         {
             bool correct;
 
-            correct = this.saleBussiness.InsertSale(new SaleSpecific(50, 1, 1, 1));
+            correct = this.saleBussiness.InsertSale(new SaleSpecific(50, 2, 1, 1, 1), PaymentMethodEnum.VISA);
 
             Sale saleGotten = this.saleBussiness.ReadSale(4);
 
             Assert.AreEqual(true, correct);
-            Assert.AreEqual(saleGotten.Cuantity, 50);
+            Assert.AreEqual(saleGotten.CuantityToPay, 50);
+            Assert.AreEqual(saleGotten.ProductCuantity, 2);
 
         }
 
@@ -62,7 +64,7 @@ namespace Bussiness_Tests
         {
             Sale saleGotten = this.saleBussiness.ReadSale(1);
 
-            Assert.AreEqual(saleGotten.Cuantity, 5);
+            Assert.AreEqual(saleGotten.CuantityToPay, 5);
 
         }
 
@@ -73,14 +75,14 @@ namespace Bussiness_Tests
 
             SaleSpecific change = new SaleSpecific();
             change.SaleId = 2;
-            change.Cuantity = 22;
+            change.CuantityToPay = 22;
 
             correct = this.saleBussiness.UpdateSale(change);
 
             Sale saleCompare = this.saleBussiness.ReadSale(2);
 
             Assert.AreEqual(true, correct);
-            Assert.AreEqual(saleCompare.Cuantity, change.Cuantity);
+            Assert.AreEqual(saleCompare.CuantityToPay, change.CuantityToPay);
 
         }
 

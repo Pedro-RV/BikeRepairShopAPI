@@ -22,3 +22,6 @@ C:\REPO\becaPedro\Sale\Sale_Bussiness\obj\Debug\Sale_Bussiness.pdb
 C:\REPO\becaPedro\Sale\Sale_Bussiness\bin\Debug\InterconnectServicesLibrary.dll
 C:\REPO\becaPedro\Sale\Sale_Bussiness\bin\Debug\Newtonsoft.Json.dll
 C:\REPO\becaPedro\Sale\Sale_Bussiness\bin\Debug\Newtonsoft.Json.xml
+C:\REPO\becaPedro\Sale\Sale_Bussiness\bin\Debug\Sale_Enums.exe
+C:\REPO\becaPedro\Sale\Sale_Bussiness\bin\Debug\Sale_Enums.pdb
+C:\REPO\becaPedro\Sale\Sale_Bussiness\bin\Debug\Sale_Enums.exe.config

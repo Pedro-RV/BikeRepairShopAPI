@@ -31,6 +31,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sale_Service", "Sale_Servic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service_Tests", "Service_Tests\Service_Tests.csproj", "{FD8D7DE1-4B4A-41B3-8232-C8D989302698}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Enums", "Enums", "{4B854761-9A70-4DAB-AE1D-5D0F00AEB18A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sale_Enums", "Sale_Enums\Sale_Enums.csproj", "{EEB90ECE-7475-4E9B-A491-5055C7867154}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +73,10 @@ Global
 		{FD8D7DE1-4B4A-41B3-8232-C8D989302698}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD8D7DE1-4B4A-41B3-8232-C8D989302698}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD8D7DE1-4B4A-41B3-8232-C8D989302698}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEB90ECE-7475-4E9B-A491-5055C7867154}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEB90ECE-7475-4E9B-A491-5055C7867154}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEB90ECE-7475-4E9B-A491-5055C7867154}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEB90ECE-7475-4E9B-A491-5055C7867154}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +90,7 @@ Global
 		{84C79294-2994-4F60-B615-29AF6D083536} = {AAFCF4BE-8598-4496-8A1F-F1E8FC809D61}
 		{0BCF0F01-65ED-4E28-AEB1-87CB5DBE0370} = {490A9A53-F3EE-43DC-9BB9-84988BE5FD87}
 		{FD8D7DE1-4B4A-41B3-8232-C8D989302698} = {AAFCF4BE-8598-4496-8A1F-F1E8FC809D61}
+		{EEB90ECE-7475-4E9B-A491-5055C7867154} = {4B854761-9A70-4DAB-AE1D-5D0F00AEB18A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {887C5678-0563-48CC-87F2-B4DFAB2B0397}

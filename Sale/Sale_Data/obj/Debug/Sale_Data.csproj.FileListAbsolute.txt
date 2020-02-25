@@ -40,3 +40,5 @@ C:\REPO\becaPedro\Sale\Sale_Data\bin\Debug\EntityFramework.SqlServer.xml
 C:\REPO\becaPedro\Sale\Sale_Data\obj\Debug\Sale_Data.csproj.CopyComplete
 C:\REPO\becaPedro\Sale\Sale_Data\obj\Debug\Sale_Data.Migrations.Tercera.resources
 C:\REPO\becaPedro\Sale\Sale_Data\obj\Debug\Sale_Data.Migrations.Cuarta.resources
+C:\REPO\becaPedro\Sale\Sale_Data\obj\Debug\Sale_Data.Migrations.Quinta.resources
+C:\REPO\becaPedro\Sale\Sale_Data\obj\Debug\Sale_Data.Migrations.Sexta.resources

@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
+using Sale_Enums;
 using Sale_Helper.Authentication;
 using Sale_Service.Controllers;
 using System;
@@ -26,11 +27,11 @@ namespace Service_Tests
             {
 
                 A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
-                A.CallTo(() => fake.Resolve<ISaleBussiness>().InsertSale(A<SaleSpecific>.Ignored)).Returns(true);
+                A.CallTo(() => fake.Resolve<ISaleBussiness>().InsertSale(A<SaleSpecific>.Ignored, PaymentMethodEnum.VISA)).Returns(true);
 
                 var mockService = fake.Resolve<SaleController>();
 
-                string message = mockService.InsertSale(new SaleSpecific(50, 1, 1, 1));
+                string message = mockService.InsertSale(new SaleSpecific(50, 2, 1, 1, 1), 1);
 
                 Assert.AreEqual(message, "Action completed satisfactorily.");
             }
@@ -41,7 +42,7 @@ namespace Service_Tests
         {
             using (var fake = new AutoFake())
             {
-                Sale mockSale = new Sale(50, 1, new Client(), new Bill());
+                Sale mockSale = new Sale(50, 2, 1, new Client(), new Bill());
 
                 A.CallTo(() => fake.Resolve<IAuthenticationProvider>().CheckAuthentication(A<HttpRequestHeaders>.Ignored)).Returns(true);
                 A.CallTo(() => fake.Resolve<ISaleBussiness>().ReadSale(A<int>.Ignored)).Returns(mockSale);
@@ -62,7 +63,7 @@ namespace Service_Tests
 
                 var mockService = fake.Resolve<SaleController>();
 
-                string message = mockService.UpdateSale(new SaleSpecific(50, 1, 1, 1));
+                string message = mockService.UpdateSale(new SaleSpecific(50, 2, 1, 1, 1));
 
                 Assert.AreEqual(message, "Action completed satisfactorily.");
             }

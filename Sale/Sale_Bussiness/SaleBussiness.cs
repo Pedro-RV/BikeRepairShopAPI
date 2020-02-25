@@ -9,6 +9,7 @@ using InterconnectServicesLibrary;
 using System.Collections.Generic;
 using InterconnectServicesLibrary.Entities.SupplierSpecific;
 using Newtonsoft.Json;
+using Sale_Enums;
 
 namespace Sale_Bussiness
 {
@@ -18,13 +19,17 @@ namespace Sale_Bussiness
 
         private ISaleRepository saleRepository;
 
+        private IBillRepository billRepository;
+
         private IMapper mapper;
 
         public SaleBussiness(IExceptionController exceptionController,
-            ISaleRepository saleRepository)
+            ISaleRepository saleRepository,
+            IBillRepository billRepository)
         {
             this.exceptionController = exceptionController;
             this.saleRepository = saleRepository;
+            this.billRepository = billRepository;
 
 
             var config = new MapperConfiguration(cfg => {
@@ -34,22 +39,48 @@ namespace Sale_Bussiness
             mapper = config.CreateMapper();
         }
 
-        public bool InsertSale(SaleSpecific saleSpecific)
+        public bool InsertSale(SaleSpecific saleSpecific, PaymentMethodEnum paymentMethodEnum)
         {
-            bool ret = false;
+            bool ret;
 
             try
             {
                 Sale saleAdd = mapper.Map<SaleSpecific, Sale>(saleSpecific);
 
-                string url = "https://localhost:44315/api/product/GetProduct/";
+                string urlGet = "https://localhost:44315/api/product/GetProduct/";
                 Dictionary<string, string> queryParams = new Dictionary<string, string>();
 
-                ProductSpecific result = JsonConvert.DeserializeObject<ProductSpecific>(InterconnectServices.SendGet<object>(url, queryParams, saleAdd.SupplierProductId).ToString());
+                ProductSpecific productSpecific = JsonConvert.DeserializeObject<ProductSpecific>(
+                    InterconnectServices.SendGet<object>(urlGet, queryParams, saleAdd.SupplierProductId).ToString());
 
-                if (result.ActiveFlag == true)
+                if (productSpecific.ActiveFlag == true)
                 {
-                    ret = this.saleRepository.Insert(saleAdd);
+                    saleAdd.CuantityToPay = productSpecific.Prize * saleAdd.ProductCuantity;
+
+                    productSpecific.Cuantity -= saleAdd.ProductCuantity;
+
+                    if(productSpecific.Cuantity >= 0)
+                    {
+                        string urlPut = "https://localhost:44315/api/product/UpdateProduct";
+
+                        InterconnectServices.SendPut(urlPut, queryParams, null, productSpecific);
+
+                        Bill billAdd = new Bill()
+                        {
+                            PaymentMethodId = (int)paymentMethodEnum,
+                            BillDate = DateTime.UtcNow
+                        };
+
+                        this.billRepository.Insert(billAdd);
+
+                        saleAdd.BillId = billAdd.BillId;
+
+                        ret = this.saleRepository.Insert(saleAdd);
+                    }
+                    else
+                    {
+                        throw this.exceptionController.CreateMyException(ExceptionEnum.ProductCuantityExceeded);
+                    }                    
                 }
                 else
                 {
@@ -107,7 +138,8 @@ namespace Sale_Bussiness
             {
                 Sale current = this.saleRepository.Read(update.SaleId);
 
-                current.Cuantity = update.Cuantity != 0 ? update.Cuantity : current.Cuantity;
+                current.CuantityToPay = update.CuantityToPay != 0 ? update.CuantityToPay : current.CuantityToPay;
+                current.ProductCuantity = update.ProductCuantity != 0 ? update.ProductCuantity : current.ProductCuantity;
                 current.SupplierProductId = update.SupplierProductId != 0 ? update.SupplierProductId : current.SupplierProductId;
                 current.ClientId = update.ClientId != 0 ? update.ClientId : current.ClientId;
                 current.BillId = update.BillId != 0 ? update.BillId : current.BillId;

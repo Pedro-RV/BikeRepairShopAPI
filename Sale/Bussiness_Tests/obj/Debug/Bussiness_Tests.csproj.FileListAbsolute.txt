@@ -35,3 +35,9 @@ C:\REPO\becaPedro\Sale\Bussiness_Tests\bin\Debug\Autofac.xml
 C:\REPO\becaPedro\Sale\Bussiness_Tests\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
 C:\REPO\becaPedro\Sale\Bussiness_Tests\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\REPO\becaPedro\Sale\Bussiness_Tests\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\REPO\becaPedro\Sale\Bussiness_Tests\bin\Debug\Sale_Enums.exe
+C:\REPO\becaPedro\Sale\Bussiness_Tests\bin\Debug\InterconnectServicesLibrary.dll
+C:\REPO\becaPedro\Sale\Bussiness_Tests\bin\Debug\Newtonsoft.Json.dll
+C:\REPO\becaPedro\Sale\Bussiness_Tests\bin\Debug\Sale_Enums.pdb
+C:\REPO\becaPedro\Sale\Bussiness_Tests\bin\Debug\Sale_Enums.exe.config
+C:\REPO\becaPedro\Sale\Bussiness_Tests\bin\Debug\Newtonsoft.Json.xml

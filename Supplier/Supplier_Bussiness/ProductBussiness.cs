@@ -47,25 +47,25 @@ namespace Supplier_Bussiness
         {
             bool ret;
 
-            //try
-            //{
+            try
+            {
                 Product productAdd = mapper.Map<ProductSpecific, Product>(productSpecific);
 
                 ret = this.productRepository.Insert(productAdd);
 
-            //}
-            //catch (SupplierException)
-            //{
-            //    throw;
-            //}
-            //catch (MissingMethodException)
-            //{
-            //    throw this.exceptionController.CreateMyException(ExceptionEnum.MethodNotExist);
-            //}
-            //catch (Exception)
-            //{
-            //    throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
-            //}
+            }
+            catch (SupplierException)
+            {
+                throw;
+            }
+            catch (MissingMethodException)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.MethodNotExist);
+            }
+            catch (Exception)
+            {
+                throw this.exceptionController.CreateMyException(ExceptionEnum.InvalidRequest);
+            }
 
             return ret;
         }

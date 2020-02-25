@@ -1,5 +1,6 @@
 ﻿using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
+using Sale_Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Sale_Bussiness.Interfaces
 {
     public interface ISaleBussiness
     {
-        bool InsertSale(SaleSpecific saleSpecific);
+        bool InsertSale(SaleSpecific saleSpecific, PaymentMethodEnum paymentMethodEnum);
 
         Sale ReadSale(int SaleId);
 

@@ -20,6 +20,7 @@ namespace Sale_Helper.ExceptionController
         private const string AuthenticationError = "The user and/or pwd introduced are wrong.";
         private const string ActionNotCompleted = "Error !!! Action could not be completed.";
         private const string ProductNotActive = "The product is not active. It can not be sold.";
+        private const string ProductCuantityExceeded = "The sale exceed the product cuantity available.";
 
 
         public string ObtainText(int exNum)
@@ -86,6 +87,11 @@ namespace Sale_Helper.ExceptionController
                 ret = ProductNotActive;
             }
 
+            if (exNum == 13)
+            {
+                ret = ProductCuantityExceeded;
+            }
+            
             return ret;
 
         }

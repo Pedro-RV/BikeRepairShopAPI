@@ -78,3 +78,7 @@ C:\REPO\becaPedro\Sale\Service_Tests\bin\Debug\Autofac.Extras.FakeItEasy.xml
 C:\REPO\becaPedro\Sale\Service_Tests\bin\Debug\Castle.Core.xml
 C:\REPO\becaPedro\Sale\Service_Tests\bin\Debug\FakeItEasy.pdb
 C:\REPO\becaPedro\Sale\Service_Tests\bin\Debug\FakeItEasy.xml
+C:\REPO\becaPedro\Sale\Service_Tests\bin\Debug\Sale_Enums.exe
+C:\REPO\becaPedro\Sale\Service_Tests\bin\Debug\InterconnectServicesLibrary.dll
+C:\REPO\becaPedro\Sale\Service_Tests\bin\Debug\Sale_Enums.pdb
+C:\REPO\becaPedro\Sale\Service_Tests\bin\Debug\Sale_Enums.exe.config

@@ -131,6 +131,10 @@
       <Project>{cb8f251e-39a0-42d0-93e8-cd1f57b0115e}</Project>
       <Name>Sale_Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sale_Enums\Sale_Enums.csproj">
+      <Project>{EEB90ECE-7475-4E9B-A491-5055C7867154}</Project>
+      <Name>Sale_Enums</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sale_Helper\Sale_Helper.csproj">
       <Project>{ef4f277f-ec4f-419f-8873-eef5bc2ae8a0}</Project>
       <Name>Sale_Helper</Name>

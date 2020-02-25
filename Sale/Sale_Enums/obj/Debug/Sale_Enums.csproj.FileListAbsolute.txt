@@ -1,0 +1,6 @@
+C:\REPO\becaPedro\Sale\Sale_Enums\bin\Debug\Sale_Enums.exe.config
+C:\REPO\becaPedro\Sale\Sale_Enums\bin\Debug\Sale_Enums.exe
+C:\REPO\becaPedro\Sale\Sale_Enums\bin\Debug\Sale_Enums.pdb
+C:\REPO\becaPedro\Sale\Sale_Enums\obj\Debug\Sale_Enums.csprojAssemblyReference.cache
+C:\REPO\becaPedro\Sale\Sale_Enums\obj\Debug\Sale_Enums.exe
+C:\REPO\becaPedro\Sale\Sale_Enums\obj\Debug\Sale_Enums.pdb

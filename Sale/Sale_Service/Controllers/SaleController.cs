@@ -2,6 +2,7 @@
 using Sale_Bussiness.Interfaces;
 using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
+using Sale_Enums;
 using Sale_Helper.Authentication;
 using Sale_Helper.ExceptionController;
 using System;
@@ -68,12 +69,14 @@ namespace Sale_Service.Controllers
         // POST
         [HttpPost]
         [Route("api/sale/InsertSale")]
-        public string InsertSale(SaleSpecific saleSpecific)
+        public string InsertSale(SaleSpecific saleSpecific, int paymentMethodType)
         {
             try
             {
                 var request = Request;
                 HttpRequestHeaders headers = null;
+
+                PaymentMethodEnum paymentMethodEnum = (PaymentMethodEnum)paymentMethodType;
 
                 if (request != null)
                 {
@@ -85,7 +88,7 @@ namespace Sale_Service.Controllers
                     throw this.exceptionController.CreateMyException(ExceptionEnum.AuthenticationError);
                 }
 
-                bool introduced_well = this.saleBussiness.InsertSale(saleSpecific);
+                bool introduced_well = this.saleBussiness.InsertSale(saleSpecific, paymentMethodEnum);
 
                 if (introduced_well == true)
                 {

@@ -31,7 +31,7 @@ namespace Sale_Data
 
             try
             {
-                if (add.Cuantity < 0)
+                if (add.ProductCuantity < 0)
                 {
                     throw this.exceptionController.CreateMyException(ExceptionEnum.MistakenCuantity);
 

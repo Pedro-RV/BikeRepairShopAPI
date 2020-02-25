@@ -11,9 +11,11 @@ namespace Sale_Entities.EntityModel
 
         }
 
-        public Sale(int Cuantity, int SupplierProductId, Client Client, Bill Bill)
-        {
-            this.Cuantity = Cuantity;            
+        public Sale(double CuantityToPay, int ProductCuantity, int SupplierProductId, Client Client, Bill Bill)
+        {           
+            this.CuantityToPay = CuantityToPay;
+
+            this.ProductCuantity = ProductCuantity;
 
             this.SupplierProductId = SupplierProductId;
 
@@ -52,7 +54,9 @@ namespace Sale_Entities.EntityModel
 
         public int SupplierProductId { get; set; }
 
-        public int Cuantity { get; set; }
+        public double CuantityToPay { get; set; }
+
+        public int ProductCuantity { get; set; }
 
         #endregion
 
