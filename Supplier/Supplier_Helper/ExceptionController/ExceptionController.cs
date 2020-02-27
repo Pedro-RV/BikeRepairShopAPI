@@ -13,7 +13,7 @@ namespace Supplier_Helper.ExceptionController
             ExceptionEnumText enum_message = new ExceptionEnumText();
             string message = enum_message.ObtainText((int)exNum);
 
-            SupplierException myEx = new SupplierException(message);
+            SupplierException myEx = new SupplierException(message, "hola");
 
             return myEx;
         }

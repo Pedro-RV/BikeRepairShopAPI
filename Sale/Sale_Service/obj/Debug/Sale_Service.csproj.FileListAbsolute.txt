@@ -122,7 +122,7 @@ C:\REPO\becaPedro\Sale\Sale_Service\bin\Autofac.Integration.WebApi.xml
 C:\REPO\becaPedro\Sale\Sale_Service\bin\Microsoft.Bcl.AsyncInterfaces.xml
 C:\REPO\becaPedro\Sale\Sale_Service\bin\System.Runtime.CompilerServices.Unsafe.xml
 C:\REPO\becaPedro\Sale\Sale_Service\bin\System.Threading.Tasks.Extensions.xml
-C:\REPO\becaPedro\Sale\Sale_Service\bin\InterconnectServicesLibrary.dll
 C:\REPO\becaPedro\Sale\Sale_Service\bin\Sale_Enums.exe
 C:\REPO\becaPedro\Sale\Sale_Service\bin\Sale_Enums.pdb
 C:\REPO\becaPedro\Sale\Sale_Service\bin\Sale_Enums.exe.config
+C:\REPO\becaPedro\Sale\Sale_Service\bin\InterconnectServicesLibrary.dll

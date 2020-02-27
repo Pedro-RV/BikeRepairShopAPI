@@ -5,6 +5,7 @@ using Sale_Entities.EntityModel;
 using Sale_Entities.Specific;
 using Sale_Helper.ExceptionController;
 using System;
+using System.Configuration;
 using InterconnectServicesLibrary;
 using System.Collections.Generic;
 using InterconnectServicesLibrary.Entities.SupplierSpecific;
@@ -41,7 +42,7 @@ namespace Sale_Bussiness
 
         public bool InsertSale(SaleSpecific saleSpecific, PaymentMethodEnum paymentMethodEnum)
         {
-            bool ret;
+            bool ret = false;
 
             try
             {
@@ -59,7 +60,7 @@ namespace Sale_Bussiness
 
                     productSpecific.Cuantity -= saleAdd.ProductCuantity;
 
-                    if(productSpecific.Cuantity >= 0)
+                    if (productSpecific.Cuantity >= 0)
                     {
                         string urlPut = "https://localhost:44315/api/product/UpdateProduct";
 
@@ -80,7 +81,7 @@ namespace Sale_Bussiness
                     else
                     {
                         throw this.exceptionController.CreateMyException(ExceptionEnum.ProductCuantityExceeded);
-                    }                    
+                    }
                 }
                 else
                 {

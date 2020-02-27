@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Sale_Helper.ExceptionController
 {
     public class SaleException : Exception
-    {
+    {       
         public SaleException()
         {
 
